@@ -1,33 +1,47 @@
 'use client'
 
-import React from "react";
-import Lottie from "lottie-react";
+import React, { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+
+// Initialize as null and create it only on the client side
+const LottieComponent = dynamic(() => import("lottie-react"), { 
+  ssr: false,
+  loading: () => <div className="w-full h-full bg-gray-200 animate-pulse rounded-lg" />
+});
 
 interface LottieAnimationProps {
-  animationPath: string;
+  animationPath: any;
   className?: string;
   loop?: boolean;
   autoplay?: boolean;
 }
 
-const LottieAnimation = ({
+const LottieAnimation: React.FC<LottieAnimationProps> = ({
   animationPath,
   className = "",
   loop = true,
   autoplay = true,
-}: LottieAnimationProps) => {
+}) => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return <div className={`w-full h-full bg-gray-200 animate-pulse rounded-lg ${className}`} />;
+  }
+
   return (
-    <div className={className}>
-      <Lottie
-        animationData={animationPath}
-        loop={loop}
-        autoplay={autoplay}
-        style={{ width: "100%", height: "100%" }}
-        rendererSettings={{
-          preserveAspectRatio: "xMidYMid slice",
-        }}
-      />
-    </div>
+    <LottieComponent
+      animationData={animationPath}
+      loop={loop}
+      autoplay={autoplay}
+      className={className}
+      rendererSettings={{
+        preserveAspectRatio: "xMidYMid slice",
+      }}
+    />
   );
 };
 

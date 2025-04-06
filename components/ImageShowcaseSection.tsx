@@ -1,7 +1,6 @@
 'use client'
 
 import React from "react";
-import Image from "next/image";
 
 const ImageShowcaseSection = () => {
   const features = [
@@ -23,17 +22,14 @@ const ImageShowcaseSection = () => {
           </p>
         </div>
         
-        <div className="relative w-full aspect-video rounded-2xl overflow-hidden">
-          <Image
-            src="/og.jpg"
-            alt="Showcase Image"
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-
         <div className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-elegant mx-auto max-w-4xl animate-on-scroll">
+          <div className="w-full">
+            <img 
+              src="/og.jpg" 
+              alt="BIM modeling and coordination showcase" 
+              className="w-full h-auto object-cover"
+            />
+          </div>
           <div className="bg-white p-4 sm:p-8">
             <h3 className="text-xl sm:text-2xl font-display font-semibold mb-3 sm:mb-4">Next Generation BIM</h3>
             <div className="space-y-4">

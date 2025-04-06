@@ -1,7 +1,12 @@
 'use client'
 
-import { useEffect } from "react";
-import Solutions from "@/components/Solutions";
+import React, { useEffect } from "react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import HumanoidSection from "@/components/HumanoidSection";
+import ImageShowcaseSection from "@/components/ImageShowcaseSection";
+import Testimonials from "@/components/Testimonials";
+import MadeByHumans from "@/components/MadeByHumans";
 
 export default function SolutionsPage() {
   // Initialize intersection observer to detect when elements enter viewport
@@ -30,8 +35,15 @@ export default function SolutionsPage() {
   }, []);
 
   return (
-    <main className="pt-20">
-      <Solutions />
-    </main>
+    <div className="min-h-screen">
+      <Navbar />
+      <main className="pt-20">
+        <HumanoidSection />
+        <ImageShowcaseSection />
+        <Testimonials />
+        <MadeByHumans />
+      </main>
+      <Footer />
+    </div>
   );
 } 

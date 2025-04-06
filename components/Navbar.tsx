@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -46,6 +47,14 @@ const Navbar = () => {
     }
   };
 
+  const menuItems = [
+    { href: '/', label: 'Home' },
+    { href: '/about', label: 'About' },
+    { href: '/services', label: 'Services' },
+    { href: '/projects', label: 'Projects' },
+    { href: '/contact', label: 'Contact' }
+  ];
+
   return (
     <header
       className={cn(
@@ -56,42 +65,44 @@ const Navbar = () => {
       )}
     >
       <div className="container flex items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a 
-          href="#" 
+        <Link 
+          href="/" 
           className="flex items-center space-x-2"
           onClick={(e) => {
-            e.preventDefault();
-            scrollToTop();
+            if (window.location.pathname === '/') {
+              e.preventDefault();
+              scrollToTop();
+            }
           }}
-          aria-label="Pulse Robot"
+          aria-label="MorphVision"
         >
           <Image 
             src="/logo.png" 
-            alt="Pulse Robot Logo" 
-            width={32}
-            height={32}
+            alt="MorphVision Logo" 
+            width={120}
+            height={48}
             className="h-7 sm:h-8 w-auto" 
+            priority
           />
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-8">
-          <a 
-            href="#" 
-            className="nav-link"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToTop();
-            }}
-          >
-            Home
-          </a>
-          <a href="/services" className="nav-link">Services</a>
-          <a href="/solutions" className="nav-link">Solutions</a>
-          <a href="/projects" className="nav-link">Projects</a>
-          <a href="/careers" className="nav-link">Careers</a>
-          <a href="#features" className="nav-link">About</a>
-          <a href="#details" className="nav-link">Contact</a>
+          {menuItems.map((item) => (
+            <Link 
+              key={item.href}
+              href={item.href} 
+              className="nav-link"
+              onClick={(e) => {
+                if (item.href === '/' && window.location.pathname === '/') {
+                  e.preventDefault();
+                  scrollToTop();
+                }
+              }}
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         {/* Mobile menu button - increased touch target */}
@@ -110,92 +121,25 @@ const Navbar = () => {
         isMenuOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full pointer-events-none"
       )}>
         <nav className="flex flex-col space-y-8 items-center mt-8">
-          <a 
-            href="#" 
-            className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToTop();
-              setIsMenuOpen(false);
-              if (typeof document !== 'undefined') {
-                document.body.style.overflow = '';
-              }
-            }}
-          >
-            Home
-          </a>
-          <a 
-            href="/services" 
-            className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-            onClick={() => {
-              setIsMenuOpen(false);
-              if (typeof document !== 'undefined') {
-                document.body.style.overflow = '';
-              }
-            }}
-          >
-            Services
-          </a>
-          <a 
-            href="/solutions" 
-            className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-            onClick={() => {
-              setIsMenuOpen(false);
-              if (typeof document !== 'undefined') {
-                document.body.style.overflow = '';
-              }
-            }}
-          >
-            Solutions
-          </a>
-          <a 
-            href="/projects" 
-            className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-            onClick={() => {
-              setIsMenuOpen(false);
-              if (typeof document !== 'undefined') {
-                document.body.style.overflow = '';
-              }
-            }}
-          >
-            Projects
-          </a>
-          <a 
-            href="/careers" 
-            className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-            onClick={() => {
-              setIsMenuOpen(false);
-              if (typeof document !== 'undefined') {
-                document.body.style.overflow = '';
-              }
-            }}
-          >
-            Careers
-          </a>
-          <a 
-            href="#features" 
-            className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-            onClick={() => {
-              setIsMenuOpen(false);
-              if (typeof document !== 'undefined') {
-                document.body.style.overflow = '';
-              }
-            }}
-          >
-            About
-          </a>
-          <a 
-            href="#details" 
-            className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
-            onClick={() => {
-              setIsMenuOpen(false);
-              if (typeof document !== 'undefined') {
-                document.body.style.overflow = '';
-              }
-            }}
-          >
-            Contact
-          </a>
+          {menuItems.map((item) => (
+            <Link 
+              key={item.href}
+              href={item.href} 
+              className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
+              onClick={(e) => {
+                if (item.href === '/' && window.location.pathname === '/') {
+                  e.preventDefault();
+                  scrollToTop();
+                }
+                setIsMenuOpen(false);
+                if (typeof document !== 'undefined') {
+                  document.body.style.overflow = '';
+                }
+              }}
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
       </div>
     </header>
