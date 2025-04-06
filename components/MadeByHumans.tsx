@@ -1,92 +1,73 @@
+'use client'
+
 import React from "react";
 import { Instagram, Linkedin, Youtube, Twitter } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 const MadeByHumans = () => {
   return (
-    <section id="made-by-humans" className="w-full bg-white py-0">
-      <div className="section-container opacity-0 animate-on-scroll pb-2">
-        <div className="w-full rounded-2xl sm:rounded-3xl overflow-hidden relative mt-4 sm:mt-8">
-          <div 
-            className="bg-no-repeat bg-cover bg-center p-6 sm:p-8 md:p-12 min-h-[400px] sm:min-h-[500px] flex flex-col" 
-            style={{
-              backgroundImage: "url('/background-section3.png')",
-              backgroundPosition: "center",
-              backgroundSize: "cover"
-            }}
-          >
-            {/* Logo Section */}
-            <div className="flex items-center text-white mb-6 sm:mb-8">
-              <img src="/logo.png" alt="Morphvison Logo" className="h-8 sm:h-12 w-auto mr-3 invert" />
-            </div>
-            
-            <div className="flex flex-col gap-8 sm:gap-12 md:gap-16 text-white max-w-3xl">
-              {/* Contact Details */}
-              <div className="space-y-4 sm:space-y-6">
-                <h3 className="text-xl sm:text-2xl font-medium mb-4">Contact Us</h3>
-                <div className="space-y-3">
-                  <p>
-                    <a href="tel:+919156888827" className="text-base sm:text-lg hover:text-[#20133d] transition-colors">
-                      +91 9156888827
-                    </a>
-                  </p>
-                  <p>
-                    <a href="mailto:info@morphbim.com" className="text-base sm:text-lg hover:text-[#20133d] transition-colors">
-                      info@morphbim.com
-                    </a>
-                  </p>
-                  <p className="text-base sm:text-lg">
-                    Plot No.13 First Floor, Bhande Plot Square
+    <section className="w-full py-20 bg-white">
+      <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Left Column - Content */}
+          <div className="space-y-8">
+            <h2 className="text-4xl sm:text-5xl font-bold">
+              Made by Humans, <br />
+              <span className="text-primary">For Humans</span>
+            </h2>
+            <p className="text-lg text-gray-600">
+              We believe in the power of human creativity and expertise. Our team of skilled professionals brings years of experience and passion to every project, ensuring the highest quality results.
+            </p>
+            <div className="space-y-4">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <span className="text-2xl">👥</span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Expert Team</h3>
+                  <p className="text-gray-600">
+                    Our team consists of industry experts with decades of combined experience in BIM and construction.
                   </p>
                 </div>
               </div>
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <span className="text-2xl">💡</span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Creative Solutions</h3>
+                  <p className="text-gray-600">
+                    We combine human creativity with cutting-edge technology to deliver innovative solutions.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <span className="text-2xl">🤝</span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Personal Touch</h3>
+                  <p className="text-gray-600">
+                    Every project receives our personal attention and care, ensuring your vision is realized.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <Button size="lg">Join Our Team</Button>
+          </div>
 
-              {/* Social Links */}
-              <div className="space-y-4">
-                <h3 className="text-xl sm:text-2xl font-medium mb-4">Connect With Us</h3>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  <a 
-                    href="https://www.linkedin.com/company/morphvison" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="group flex items-center space-x-2 text-white hover:text-[#20133d] transition-colors bg-white/10 backdrop-blur-sm p-2 rounded-lg"
-                  >
-                    <Linkedin className="w-5 h-5" />
-                    <span className="text-sm">LinkedIn</span>
-                  </a>
-                  <a 
-                    href="https://instagram.com/morphvison" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="group flex items-center space-x-2 text-white hover:text-[#20133d] transition-colors bg-white/10 backdrop-blur-sm p-2 rounded-lg"
-                  >
-                    <Instagram className="w-5 h-5" />
-                    <span className="text-sm">Instagram</span>
-                  </a>
-                  <a 
-                    href="https://youtube.com/@morphvison" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="group flex items-center space-x-2 text-white hover:text-[#20133d] transition-colors bg-white/10 backdrop-blur-sm p-2 rounded-lg"
-                  >
-                    <Youtube className="w-5 h-5" />
-                    <span className="text-sm">YouTube</span>
-                  </a>
-                  <a 
-                    href="https://twitter.com/morphvison" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="group flex items-center space-x-2 text-white hover:text-[#20133d] transition-colors bg-white/10 backdrop-blur-sm p-2 rounded-lg"
-                  >
-                    <Twitter className="w-5 h-5" />
-                    <span className="text-sm">Twitter</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-            
-            {/* White box at the bottom with overflow - Hidden on mobile */}
-            <div className="hidden sm:block w-[120%] bg-white h-10 rounded-t-lg absolute left-[-10%] bottom-0"></div>
+          {/* Right Column - Image */}
+          <div className="relative aspect-square rounded-2xl overflow-hidden">
+            <Image
+              src="/made-by-humans.jpg"
+              alt="Our team at work"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+              priority
+            />
           </div>
         </div>
       </div>

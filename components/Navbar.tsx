@@ -1,12 +1,18 @@
+'use client'
+
 import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
+    // Check if we're in the browser environment
+    if (typeof window === 'undefined') return;
+    
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
@@ -18,10 +24,14 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
     // Prevent background scrolling when menu is open
-    document.body.style.overflow = !isMenuOpen ? 'hidden' : '';
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = !isMenuOpen ? 'hidden' : '';
+    }
   };
 
   const scrollToTop = () => {
+    if (typeof window === 'undefined') return;
+    
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
@@ -30,7 +40,9 @@ const Navbar = () => {
     // Close mobile menu if open
     if (isMenuOpen) {
       setIsMenuOpen(false);
-      document.body.style.overflow = '';
+      if (typeof document !== 'undefined') {
+        document.body.style.overflow = '';
+      }
     }
   };
 
@@ -53,10 +65,12 @@ const Navbar = () => {
           }}
           aria-label="Pulse Robot"
         >
-          <img 
+          <Image 
             src="/logo.png" 
             alt="Pulse Robot Logo" 
-            className="h-7 sm:h-8" 
+            width={32}
+            height={32}
+            className="h-7 sm:h-8 w-auto" 
           />
         </a>
 
@@ -103,7 +117,9 @@ const Navbar = () => {
               e.preventDefault();
               scrollToTop();
               setIsMenuOpen(false);
-              document.body.style.overflow = '';
+              if (typeof document !== 'undefined') {
+                document.body.style.overflow = '';
+              }
             }}
           >
             Home
@@ -113,7 +129,9 @@ const Navbar = () => {
             className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
             onClick={() => {
               setIsMenuOpen(false);
-              document.body.style.overflow = '';
+              if (typeof document !== 'undefined') {
+                document.body.style.overflow = '';
+              }
             }}
           >
             Services
@@ -123,7 +141,9 @@ const Navbar = () => {
             className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
             onClick={() => {
               setIsMenuOpen(false);
-              document.body.style.overflow = '';
+              if (typeof document !== 'undefined') {
+                document.body.style.overflow = '';
+              }
             }}
           >
             Solutions
@@ -133,7 +153,9 @@ const Navbar = () => {
             className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
             onClick={() => {
               setIsMenuOpen(false);
-              document.body.style.overflow = '';
+              if (typeof document !== 'undefined') {
+                document.body.style.overflow = '';
+              }
             }}
           >
             Projects
@@ -143,7 +165,9 @@ const Navbar = () => {
             className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
             onClick={() => {
               setIsMenuOpen(false);
-              document.body.style.overflow = '';
+              if (typeof document !== 'undefined') {
+                document.body.style.overflow = '';
+              }
             }}
           >
             Careers
@@ -153,7 +177,9 @@ const Navbar = () => {
             className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
             onClick={() => {
               setIsMenuOpen(false);
-              document.body.style.overflow = '';
+              if (typeof document !== 'undefined') {
+                document.body.style.overflow = '';
+              }
             }}
           >
             About
@@ -163,7 +189,9 @@ const Navbar = () => {
             className="text-xl font-medium py-3 px-6 w-full text-center rounded-lg hover:bg-gray-100" 
             onClick={() => {
               setIsMenuOpen(false);
-              document.body.style.overflow = '';
+              if (typeof document !== 'undefined') {
+                document.body.style.overflow = '';
+              }
             }}
           >
             Contact

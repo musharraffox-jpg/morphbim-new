@@ -1,3 +1,5 @@
+'use client'
+
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { VariantProps, cva } from "class-variance-authority"
@@ -82,7 +84,9 @@ const SidebarProvider = React.forwardRef<
         }
 
         // This sets the cookie to keep the sidebar state.
-        document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
+        if (typeof document !== 'undefined') {
+          document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
+        }
       },
       [setOpenProp, open]
     )
@@ -96,6 +100,9 @@ const SidebarProvider = React.forwardRef<
 
     // Adds a keyboard shortcut to toggle the sidebar.
     React.useEffect(() => {
+      // Check if we're in the browser environment
+      if (typeof window === 'undefined') return;
+      
       const handleKeyDown = (event: KeyboardEvent) => {
         if (
           event.key === SIDEBAR_KEYBOARD_SHORTCUT &&

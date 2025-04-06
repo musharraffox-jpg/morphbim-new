@@ -1,44 +1,39 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { 
-  Building2, 
-  Factory, 
-  Map as MapIcon, 
-  ArrowRight,
-  CheckCircle2,
-  Calendar,
-  Clock,
-  ChevronRight
-} from "lucide-react";
+'use client'
 
+import React, { useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
+
+// Define the Project interface
 export interface Project {
   id: string;
   title: string;
-  type: string;
-  location: string;
   description: string;
   image: string;
-  date: string;
+  category: string;
+  year: string;
   duration: string;
   client: string;
-  icon: React.ElementType;
   highlights: string[];
-  services: string[];
+  services: {
+    title: string;
+    description: string;
+  }[];
 }
 
+// Export the projects array so it can be imported by other components
 export const projects: Project[] = [
   {
-    id: "skyline-tower",
-    title: "Skyline Tower Complex",
-    type: "High-Rise Buildings",
-    location: "New York, USA",
-    description: "A state-of-the-art mixed-use development featuring three interconnected towers with a total floor area of 500,000 sq ft. The project showcases advanced BIM implementation for complex structural systems and MEP coordination.",
+    id: "project1",
+    title: "Modern Office Complex",
+    description: "A state-of-the-art office complex featuring sustainable design and advanced BIM integration. The project showcases innovative space utilization and energy-efficient systems.",
     image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    date: "2023",
+    category: "commercial",
+    year: "2023",
     duration: "18 months",
     client: "Skyline Development Corp",
-    icon: Building2,
     highlights: [
       "Implemented 4D BIM for construction sequencing",
       "Achieved 30% reduction in coordination issues",
@@ -46,214 +41,189 @@ export const projects: Project[] = [
       "Real-time collaboration across 12 disciplines"
     ],
     services: [
-      "BIM Modeling",
-      "Clash Detection",
-      "4D Construction Sequencing",
-      "MEP Coordination",
-      "Sustainability Analysis",
-      "As-Built Documentation"
+      {
+        title: "BIM Modeling",
+        description: "Comprehensive 3D modeling of all building systems"
+      },
+      {
+        title: "Clash Detection",
+        description: "Automated clash detection and resolution"
+      },
+      {
+        title: "4D Construction Sequencing",
+        description: "Visualization of construction timeline and process"
+      }
     ]
   },
   {
-    id: "pharma-facility",
-    title: "Pharmaceutical Manufacturing Facility",
-    type: "Pharmaceutical",
-    location: "Singapore",
-    description: "A GMP-compliant pharmaceutical manufacturing facility with advanced clean room technology. BIM was crucial for ensuring compliance with strict regulatory requirements and optimizing operational efficiency.",
+    id: "project2",
+    title: "Residential Tower",
+    description: "Luxury residential tower with innovative space utilization and smart home technology. The project features premium amenities and sustainable design elements.",
     image: "https://images.unsplash.com/photo-1581093458791-9f3c3250a8b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    date: "2023",
+    category: "residential",
+    year: "2023",
     duration: "24 months",
-    client: "Global Pharma Solutions",
-    icon: Factory,
+    client: "Luxury Living Developments",
     highlights: [
-      "GMP compliance validation through BIM",
-      "Optimized clean room layouts",
-      "Enhanced operational efficiency",
-      "Comprehensive facility management system"
+      "Smart home integration throughout",
+      "Energy-efficient building envelope",
+      "Premium amenities and facilities",
+      "Sustainable materials and systems"
     ],
     services: [
-      "Process Flow Optimization",
-      "Clean Room Design",
-      "HVAC System Modeling",
-      "Equipment Layout",
-      "Compliance Documentation",
-      "FM Integration"
+      {
+        title: "Architectural BIM",
+        description: "Detailed modeling of residential spaces"
+      },
+      {
+        title: "MEP Coordination",
+        description: "Integration of mechanical, electrical, and plumbing systems"
+      },
+      {
+        title: "Sustainability Analysis",
+        description: "Environmental impact assessment and optimization"
+      }
     ]
   },
   {
-    id: "metro-station",
-    title: "Metro Station Expansion",
-    type: "Infrastructure",
-    location: "London, UK",
-    description: "Expansion of an existing metro station to accommodate increased passenger capacity. The project utilized BIM for complex underground construction and integration with existing infrastructure.",
+    id: "project3",
+    title: "Healthcare Facility",
+    description: "Modern healthcare facility designed for optimal patient care and staff efficiency. The project incorporates advanced medical technology and patient-centered design.",
     image: "https://images.unsplash.com/photo-1555952238-7d76baafc0a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    date: "2022",
+    category: "healthcare",
+    year: "2022",
     duration: "36 months",
-    client: "London Transport Authority",
-    icon: MapIcon,
+    client: "HealthCare Innovations",
     highlights: [
-      "Underground construction optimization",
-      "Minimal disruption to existing services",
-      "Enhanced passenger flow modeling",
-      "Integration with existing infrastructure"
+      "Patient-centered design approach",
+      "Advanced medical technology integration",
+      "Efficient staff workflow optimization",
+      "Compliance with healthcare regulations"
     ],
     services: [
-      "Underground Modeling",
-      "Structural Analysis",
-      "Passenger Flow Simulation",
-      "Utility Coordination",
-      "Construction Planning",
-      "As-Built Documentation"
+      {
+        title: "Healthcare BIM",
+        description: "Specialized modeling for healthcare facilities"
+      },
+      {
+        title: "Equipment Planning",
+        description: "Integration of medical equipment and systems"
+      },
+      {
+        title: "Compliance Documentation",
+        description: "Documentation for regulatory compliance"
+      }
+    ]
+  },
+  {
+    id: "project4",
+    title: "Industrial Complex",
+    description: "Large-scale industrial complex with advanced automation and safety features. The project demonstrates efficient production flow and sustainable industrial design.",
+    image: "https://images.unsplash.com/photo-1581093458791-9f3c3250a8b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    category: "industrial",
+    year: "2022",
+    duration: "30 months",
+    client: "Industrial Solutions Inc",
+    highlights: [
+      "Automated production systems",
+      "Enhanced safety protocols",
+      "Optimized material flow",
+      "Sustainable industrial practices"
+    ],
+    services: [
+      {
+        title: "Industrial BIM",
+        description: "Specialized modeling for industrial facilities"
+      },
+      {
+        title: "Process Flow Optimization",
+        description: "Analysis and optimization of production processes"
+      },
+      {
+        title: "Safety System Integration",
+        description: "Implementation of safety systems and protocols"
+      }
     ]
   }
 ];
 
-const Projects = () => {
-  const navigate = useNavigate();
-  const [activeFilter, setActiveFilter] = useState("All Projects");
+const categories = [
+  { id: "all", label: "All Projects" },
+  { id: "commercial", label: "Commercial" },
+  { id: "residential", label: "Residential" },
+  { id: "healthcare", label: "Healthcare" },
+  { id: "industrial", label: "Industrial" }
+];
 
-  const filteredProjects = activeFilter === "All Projects" 
-    ? projects 
-    : projects.filter(project => project.type === activeFilter);
+const Projects = () => {
+  const router = useRouter();
+  const [activeFilter, setActiveFilter] = useState("all");
+
+  const filteredProjects = activeFilter === "all"
+    ? projects
+    : projects.filter(project => project.category === activeFilter);
+
+  const handleProjectClick = (projectId: string) => {
+    router.push(`/projects/${projectId}`);
+  };
 
   return (
-    <section className="w-full py-20 bg-white" id="projects">
-      <div className="container px-6 lg:px-8 mx-auto">
-        {/* Header with badge and line */}
-        <div className="flex items-center gap-4 mb-8">
-          <div className="pulse-chip">
-            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">05</span>
-            <span>Projects</span>
-          </div>
-          <div className="flex-1 h-[1px] bg-gray-300"></div>
-        </div>
-
-        <div className="max-w-3xl mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-6">
-            <span className="block bg-clip-text text-transparent bg-[url('/text-mask-image.jpg')] bg-cover bg-center">
-              Showcasing BIM Excellence
-            </span>
+    <section className="w-full py-20 bg-gray-50">
+      <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+            Our Projects
           </h2>
-          <p className="text-xl text-gray-600 leading-relaxed">
-            Explore our portfolio of successful projects where we've applied advanced BIM technologies to deliver exceptional results across various industries.
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Explore our portfolio of successful projects across various sectors.
           </p>
         </div>
 
-        {/* Latest Projects Section */}
-        <div className="mb-20">
-          <h3 className="text-2xl font-semibold text-gray-900 mb-8">Latest Projects</h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            {projects.slice(0, 3).map((project) => (
-              <div 
-                key={project.id}
-                className="group relative overflow-hidden rounded-xl shadow-elegant hover:shadow-xl transition-all duration-300"
-              >
-                <div className="relative h-64">
-                  <div 
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-                    style={{
-                      backgroundImage: `url(${project.image})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center"
-                    }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <div className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-gray-800 inline-block mb-3">
-                      {project.type}
-                    </div>
-                    <h4 className="text-xl font-semibold text-white mb-1">{project.title}</h4>
-                    <div className="flex items-center text-white/80 text-sm">
-                      <MapIcon className="w-4 h-4 mr-1" />
-                      {project.location}
-                    </div>
-                  </div>
-                </div>
-                <div className="p-6 bg-white">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center text-sm text-gray-500">
-                      <Calendar className="w-4 h-4 mr-1" />
-                      {project.date}
-                    </div>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <Clock className="w-4 h-4 mr-1" />
-                      {project.duration}
-                    </div>
-                  </div>
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                    {project.description}
-                  </p>
-                  <button
-                    onClick={() => navigate(`/projects/${project.id}`)}
-                    className="inline-flex items-center text-pulse-500 font-medium text-sm hover:text-pulse-600 transition-colors"
-                  >
-                    View Case Study
-                    <ChevronRight className="w-4 h-4 ml-1" />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
+          {categories.map((category) => (
+            <Button
+              key={category.id}
+              variant={activeFilter === category.id ? "default" : "outline"}
+              onClick={() => setActiveFilter(category.id)}
+              className="min-w-[120px]"
+            >
+              {category.label}
+            </Button>
+          ))}
         </div>
 
-        {/* All Projects */}
-        <div>
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900">All Projects</h2>
-            <div className="flex gap-2">
-              {["All Projects", "High-Rise Buildings", "Pharmaceutical", "Infrastructure"].map((filter) => (
-                <button
-                  key={filter}
-                  onClick={() => setActiveFilter(filter)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    activeFilter === filter
-                      ? "bg-pulse-500 text-white"
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                  }`}
-                >
-                  {filter}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project) => (
-              <div 
-                key={project.id}
-                className="group cursor-pointer"
-                onClick={() => navigate(`/projects/${project.id}`)}
-              >
-                <div className="rounded-2xl overflow-hidden shadow-elegant mb-4">
-                  <div className="relative aspect-[4/3]">
-                    <img 
-                      src={project.image} 
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <div className="inline-block px-3 py-1 bg-white/10 backdrop-blur-sm text-white text-xs rounded-full mb-2">
-                        {project.type}
-                      </div>
-                      <h3 className="text-xl font-semibold text-white mb-2">
-                        {project.title}
-                      </h3>
-                      <div className="flex items-center text-white/80 text-sm">
-                        <MapIcon className="w-4 h-4 mr-1" />
-                        {project.location}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center text-pulse-500 group-hover:text-pulse-600">
-                  <span className="text-sm font-medium">View Case Study</span>
-                  <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredProjects.map((project) => (
+            <div
+              key={project.id}
+              className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+              onClick={() => handleProjectClick(project.id)}
+            >
+              <div className="relative h-64">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
               </div>
-            ))}
-          </div>
+
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-3">
+                  {project.title}
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  {project.description}
+                </p>
+                <Button variant="ghost" className="group">
+                  View Project
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

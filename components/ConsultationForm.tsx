@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
 
@@ -10,6 +12,9 @@ const ConsultationForm = ({ isOpen, onClose }: ConsultationFormProps) => {
   const formRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Check if we're in the browser environment
+    if (typeof document === 'undefined') return;
+    
     const handleClickOutside = (event: MouseEvent) => {
       if (formRef.current && !formRef.current.contains(event.target as Node)) {
         onClose();

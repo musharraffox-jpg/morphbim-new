@@ -1,5 +1,6 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import { 
   Building2,
   Blocks,
@@ -7,7 +8,12 @@ import {
   GraduationCap,
   Users,
   Rocket,
-  Heart
+  Heart,
+  Factory,
+  Map,
+  Calendar,
+  Clock,
+  ArrowRight
 } from 'lucide-react';
 
 interface JobPosition {
@@ -83,8 +89,13 @@ const cultureItems = [
   }
 ];
 
-const Careers = () => {
-  const navigate = useNavigate();
+export const Careers = () => {
+  const router = useRouter();
+  const [activeFilter, setActiveFilter] = useState("all");
+
+  const handleJobClick = (jobId: string) => {
+    router.push(`/careers/${jobId}`);
+  };
 
   return (
     <section className="w-full py-20 bg-white" id="careers">
@@ -163,13 +174,13 @@ const Careers = () => {
                   </div>
                   <div className="flex items-center gap-4">
                     <button
-                      onClick={() => navigate(`/careers/${position.id}`)}
+                      onClick={() => handleJobClick(position.id)}
                       className="inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-pulse-500 hover:bg-pulse-600 text-white font-medium text-sm transition-colors"
                     >
                       Apply Now
                     </button>
                     <button
-                      onClick={() => navigate(`/careers/${position.id}`)}
+                      onClick={() => handleJobClick(position.id)}
                       className="text-gray-500 hover:text-pulse-500"
                     >
                       View Details

@@ -1,220 +1,106 @@
-import React, { useEffect, useRef, useState } from "react";
+'use client'
+
+import React from "react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
+
+const features = [
+  {
+    id: "collaboration",
+    title: "Enhanced Collaboration",
+    description: "Real-time collaboration tools that bring teams together, regardless of location.",
+    image: "/features/collaboration.jpg",
+    benefits: [
+      "Real-time Updates",
+      "Team Communication",
+      "File Sharing",
+      "Version Control"
+    ]
+  },
+  {
+    id: "efficiency",
+    title: "Improved Efficiency",
+    description: "Streamlined workflows and automated processes to save time and reduce errors.",
+    image: "/features/efficiency.jpg",
+    benefits: [
+      "Automated Tasks",
+      "Workflow Optimization",
+      "Error Reduction",
+      "Time Savings"
+    ]
+  },
+  {
+    id: "innovation",
+    title: "Continuous Innovation",
+    description: "Stay ahead with cutting-edge technology and innovative solutions.",
+    image: "/features/innovation.jpg",
+    benefits: [
+      "Latest Technology",
+      "Creative Solutions",
+      "Future-Proof",
+      "Competitive Edge"
+    ]
+  }
+];
 
 const HumanoidSection = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const cardsContainerRef = useRef<HTMLDivElement>(null);
-  const [activeCardIndex, setActiveCardIndex] = useState(0);
-  const [isIntersecting, setIsIntersecting] = useState(false);
-  const ticking = useRef(false);
-  const lastScrollY = useRef(0);
-
-  // More responsive timing function with shorter duration
-  const cardStyle = {
-    height: '60vh',
-    maxHeight: '600px',
-    borderRadius: '20px',
-    transition: 'transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1)',
-    willChange: 'transform, opacity'
-  };
-
-  useEffect(() => {
-    // Create intersection observer to detect when section is in view
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        setIsIntersecting(entry.isIntersecting);
-      },
-      { threshold: 0.1 } // Start observing when 10% of element is visible
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    
-    // Optimized scroll handler using requestAnimationFrame
-    const handleScroll = () => {
-      if (!ticking.current) {
-        lastScrollY.current = window.scrollY;
-        
-        window.requestAnimationFrame(() => {
-          if (!sectionRef.current) return;
-          
-          const sectionRect = sectionRef.current.getBoundingClientRect();
-          const viewportHeight = window.innerHeight;
-          const totalScrollDistance = viewportHeight * 2;
-          
-          // Calculate the scroll progress
-          let progress = 0;
-          if (sectionRect.top <= 0) {
-            progress = Math.min(1, Math.max(0, Math.abs(sectionRect.top) / totalScrollDistance));
-          }
-          
-          // Determine which card should be visible based on progress
-          if (progress >= 0.66) {
-            setActiveCardIndex(2);
-          } else if (progress >= 0.33) {
-            setActiveCardIndex(1);
-          } else {
-            setActiveCardIndex(0);
-          }
-          
-          ticking.current = false;
-        });
-        
-        ticking.current = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial calculation
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
-
-  // Card visibility based on active index instead of direct scroll progress
-  const isFirstCardVisible = isIntersecting;
-  const isSecondCardVisible = activeCardIndex >= 1;
-  const isThirdCardVisible = activeCardIndex >= 2;
-
   return (
-    <div 
-      ref={sectionRef} 
-      className="relative" 
-      style={{ height: '300vh' }}
-    >
-      <section className="w-full h-screen py-10 md:py-16 sticky top-0 overflow-hidden bg-white" id="why-humanoid">
-        <div className="container px-6 lg:px-8 mx-auto h-full flex flex-col">
-          <div className="mb-2 md:mb-3">
-            <div className="flex items-center gap-4 mb-2 md:mb-2 pt-8 sm:pt-6 md:pt-4">
-              <div className="pulse-chip opacity-0 animate-fade-in" style={{
-                animationDelay: "0.1s"
-              }}>
-                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">02</span>
-                <span>Why BIM Matters</span>
-              </div>
-            </div>
-            
-            <h2 className="section-title text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-1 md:mb-2">
-              Why BIM Matters
-            </h2>
-          </div>
-          
-          <div ref={cardsContainerRef} className="relative flex-1 perspective-1000">
-            {/* First Card */}
-            <div 
-              className={`absolute inset-0 overflow-hidden shadow-xl ${isFirstCardVisible ? 'animate-card-enter' : ''}`} 
-              style={{
-                ...cardStyle,
-                zIndex: 10,
-                transform: `translateY(${isFirstCardVisible ? '90px' : '200px'}) scale(0.9)`,
-                opacity: isFirstCardVisible ? 0.9 : 0
-              }}
-            >
-              <div
-                className="absolute inset-0 z-0 bg-gradient-to-b from-pulse-900/40 to-dark-900/80"
-                style={{
-                  backgroundImage: "url('/background-section1.png')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "top center",
-                  backgroundBlendMode: "overlay"
-                }}
-              ></div>
-              
-              <div className="absolute top-4 right-4 z-20">
-                <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm text-white">
-                  <span className="text-sm font-medium">The vision</span>
-                </div>
-              </div>
-              
-              <div className="relative z-10 p-5 sm:p-6 md:p-8 h-full flex items-center">
-                <div className="max-w-lg">
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-display text-white font-bold leading-tight mb-4">
-                    BIM is more than a tool—it's a transformative approach that enhances collaboration, reduces costs, and minimizes risks.
-                  </h3>
-                </div>
-              </div>
-            </div>
-            
-            {/* Second Card */}
-            <div 
-              className={`absolute inset-0 overflow-hidden shadow-xl ${isSecondCardVisible ? 'animate-card-enter' : ''}`} 
-              style={{
-                ...cardStyle,
-                zIndex: 20,
-                transform: `translateY(${isSecondCardVisible ? activeCardIndex === 1 ? '55px' : '45px' : '200px'}) scale(0.95)`,
-                opacity: isSecondCardVisible ? 1 : 0,
-                pointerEvents: isSecondCardVisible ? 'auto' : 'none'
-              }}
-            >
-              <div
-                className="absolute inset-0 z-0 bg-gradient-to-b from-pulse-900/40 to-dark-900/80"
-                style={{
-                  backgroundImage: "url('/background-section2.png')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundBlendMode: "overlay"
-                }}
-              ></div>
-              
-              <div className="absolute top-4 right-4 z-20">
-                <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm text-white">
-                  <span className="text-sm font-medium">The vision</span>
-                </div>
-              </div>
-              
-              <div className="relative z-10 p-5 sm:p-6 md:p-8 h-full flex items-center">
-                <div className="max-w-lg">
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-display text-white font-bold leading-tight mb-4">
-                    We're enabling construction teams to work smarter, reduce errors, and improve decision-making through precise BIM workflows.
-                  </h3>
-                </div>
-              </div>
-            </div>
-            
-            {/* Third Card */}
-            <div 
-              className={`absolute inset-0 overflow-hidden shadow-xl ${isThirdCardVisible ? 'animate-card-enter' : ''}`} 
-              style={{
-                ...cardStyle,
-                zIndex: 30,
-                transform: `translateY(${isThirdCardVisible ? activeCardIndex === 2 ? '15px' : '0' : '200px'}) scale(1)`,
-                opacity: isThirdCardVisible ? 1 : 0,
-                pointerEvents: isThirdCardVisible ? 'auto' : 'none'
-              }}
-            >
-              <div
-                className="absolute inset-0 z-0 bg-gradient-to-b from-pulse-900/40 to-dark-900/80"
-                style={{
-                  backgroundImage: "url('/background-section3.png')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "bottom center",
-                  backgroundBlendMode: "overlay"
-                }}
-              ></div>
-              
-              <div className="absolute top-4 right-4 z-20">
-                <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm text-white">
-                  <span className="text-sm font-medium">The vision</span>
-                </div>
-              </div>
-              
-              <div className="relative z-10 p-5 sm:p-6 md:p-8 h-full flex items-center">
-                <div className="max-w-lg">
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-display text-white font-bold leading-tight mb-4">
-                    We're building digital-first construction experiences that blend innovation with efficiency.
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </div>
+    <section className="w-full py-20 bg-white">
+      <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+            The Human Touch
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            We combine human expertise with advanced technology to deliver exceptional results.
+          </p>
         </div>
-      </section>
-    </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {features.map((feature) => (
+            <div 
+              key={feature.id}
+              className="group relative bg-gray-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+            >
+              {/* Feature Image */}
+              <div className="relative h-48">
+                <Image
+                  src={feature.image}
+                  alt={feature.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <h3 className="absolute bottom-4 left-4 text-xl font-semibold text-white">
+                  {feature.title}
+                </h3>
+              </div>
+
+              {/* Feature Content */}
+              <div className="p-6">
+                <p className="text-gray-600 mb-6">
+                  {feature.description}
+                </p>
+                <ul className="space-y-3 mb-6">
+                  {feature.benefits.map((benefit, index) => (
+                    <li key={index} className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
+                      <span>{benefit}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Button className="w-full group">
+                  Learn More
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 

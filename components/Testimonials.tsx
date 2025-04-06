@@ -1,79 +1,107 @@
-import React, { useRef } from "react";
+'use client'
 
-interface TestimonialProps {
-  content: string;
-  author: string;
-  role: string;
-  gradient: string;
-  backgroundImage?: string;
-}
+import React from "react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Star } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
-const testimonials: TestimonialProps[] = [{
-  content: "Morphvison's BIM expertise transformed our project, reducing costs by 15% and ensuring on-time delivery.",
-  author: "Amit Sharma",
-  role: "Project Manager, UrbanCore Infra Pvt. Ltd.",
-  gradient: "from-blue-700 via-indigo-800 to-purple-900",
-  backgroundImage: "/background-section1.png"
-}, {
-  content: "Their attention to detail and innovative BIM workflows made all the difference in our pharma facility project.",
-  author: "Dr. Sneha Iyer",
-  role: "Facility Planning Head, NexPharma Group",
-  gradient: "from-indigo-900 via-purple-800 to-orange-500",
-  backgroundImage: "/background-section2.png"
-}, {
-  content: "We were able to streamline all our MEP coordination tasks thanks to Morphvison's clash detection and 5D BIM capabilities.",
-  author: "Ravi Mehta",
-  role: "Senior Engineer, MetroBuild Technologies",
-  gradient: "from-purple-800 via-pink-700 to-red-500",
-  backgroundImage: "/background-section3.png"
-}, {
-  content: "Morphvison delivered accurate Civil 3D modeling for our highway expansion—saving us weeks of rework.",
-  author: "Neha Kulkarni",
-  role: "Lead Civil Engineer, Highline InfraTech",
-  gradient: "from-orange-600 via-red-500 to-purple-600",
-  backgroundImage: "/background-section1.png"
-}];
-
-const TestimonialCard = ({
-  content,
-  author,
-  role,
-  backgroundImage = "/background-section1.png"
-}: TestimonialProps) => {
-  return <div className="bg-cover bg-center rounded-lg p-8 h-full flex flex-col justify-between text-white transform transition-transform duration-300 hover:-translate-y-2 relative overflow-hidden" style={{
-    backgroundImage: `url('${backgroundImage}')`
-  }}>
-      <div className="absolute top-0 right-0 w-24 h-24 bg-white z-10"></div>
-      
-      <div className="relative z-0">
-        <p className="text-xl mb-8 font-medium leading-relaxed pr-20">{`"${content}"`}</p>
-        <div>
-          <h4 className="font-semibold text-xl">{author}</h4>
-          <p className="text-white/80">{role}</p>
-        </div>
-      </div>
-    </div>;
-};
+const testimonials = [
+  {
+    id: 1,
+    name: "John Smith",
+    role: "Project Manager",
+    company: "ABC Construction",
+    image: "/testimonials/person1.jpg",
+    rating: 5,
+    text: "Working with MorphBIM has transformed our project delivery process. Their expertise in BIM implementation and coordination has significantly improved our efficiency and reduced errors."
+  },
+  {
+    id: 2,
+    name: "Sarah Johnson",
+    role: "Architect",
+    company: "XYZ Architects",
+    image: "/testimonials/person2.jpg",
+    rating: 5,
+    text: "The team's attention to detail and commitment to quality is outstanding. They've helped us deliver complex projects on time and within budget."
+  },
+  {
+    id: 3,
+    name: "Michael Brown",
+    role: "Engineering Director",
+    company: "DEF Engineering",
+    image: "/testimonials/person3.jpg",
+    rating: 5,
+    text: "MorphBIM's BIM solutions have revolutionized our workflow. Their technical expertise and professional approach make them an invaluable partner."
+  }
+];
 
 const Testimonials = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  return <section className="py-12 bg-white relative" id="testimonials" ref={sectionRef}> {/* Reduced from py-20 */}
-      <div className="section-container opacity-0 animate-on-scroll">
-        <div className="flex items-center gap-4 mb-6">
-          <div className="pulse-chip">
-            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">04</span>
-            <span>Testimonials</span>
-          </div>
+  return (
+    <section className="w-full py-20 bg-white">
+      <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+            What Our Clients Say
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Don't just take our word for it. Here's what our clients have to say about their experience working with us.
+          </p>
         </div>
-        
-        <h2 className="text-5xl font-display font-bold mb-12 text-left">What Our Clients Say</h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {testimonials.map((testimonial, index) => <TestimonialCard key={index} content={testimonial.content} author={testimonial.author} role={testimonial.role} gradient={testimonial.gradient} backgroundImage={testimonial.backgroundImage} />)}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {testimonials.map((testimonial) => (
+            <div 
+              key={testimonial.id}
+              className="bg-gray-50 rounded-2xl p-6 sm:p-8"
+            >
+              {/* Rating */}
+              <div className="flex gap-1 mb-4">
+                {[...Array(testimonial.rating)].map((_, index) => (
+                  <Star 
+                    key={index}
+                    className="w-5 h-5 fill-primary text-primary"
+                  />
+                ))}
+              </div>
+
+              {/* Testimonial Text */}
+              <p className="text-gray-600 mb-6">
+                "{testimonial.text}"
+              </p>
+
+              {/* Author Info */}
+              <div className="flex items-center gap-4">
+                <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                  <Image
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    fill
+                    sizes="48px"
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <h4 className="font-semibold">{testimonial.name}</h4>
+                  <p className="text-sm text-gray-600">
+                    {testimonial.role} at {testimonial.company}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA Section */}
+        <div className="mt-16 text-center">
+          <Button size="lg" className="group">
+            Start Your Project
+            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Button>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
 
 export default Testimonials;
