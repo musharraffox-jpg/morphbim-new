@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   title: "MorphBIM - Your BIM Solution",
   description: "Advanced BIM solutions for modern architecture and construction",
   authors: [{ name: "Rezaul Karim Arif" }],
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
   openGraph: {
     images: ["/og-image-update.png"],
   },

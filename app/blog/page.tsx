@@ -148,7 +148,7 @@ const blogPostsData = [
   },
   {
     id: 'bim-sustainability-green-building',
-    title: 'BIM's Role in Sustainable Design and Green Building Certification',
+    title: 'BIM\'s Role in Sustainable Design and Green Building Certification',
     slug: 'bim-sustainability-green-building',
     author: {
       name: 'Zara Sheikh',

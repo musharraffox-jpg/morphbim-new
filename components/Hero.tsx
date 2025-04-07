@@ -44,29 +44,18 @@ const Hero = () => {
     const fetchLottieData = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch('/loop-header.lottie');
         
-        if (!response.ok) {
-          throw new Error(`Failed to fetch Lottie animation: ${response.status}`);
-        }
+        // Instead of trying to fetch and parse the Lottie file directly,
+        // we'll use a different approach for binary Lottie files
+        // Option 1: Use a JSON version of the Lottie animation
+        // Option 2: Use a different animation format like WebM (which you already have)
         
-        // Remove strict content-type checking since some servers might not set it correctly
-        // const contentType = response.headers.get('content-type');
-        // if (!contentType || !contentType.includes('application/json')) {
-        //   throw new Error('Invalid content type for Lottie animation');
-        // }
+        // For now, we'll set an error to prevent the JSON parsing error
+        setLottieError(true);
+        console.log("Using WebM video instead of Lottie animation");
         
-        // Try to parse as JSON regardless of content-type header
-        try {
-          const data = await response.json();
-          setLottieData(data);
-          setLottieError(false);
-        } catch (jsonError) {
-          console.error("Error parsing Lottie JSON:", jsonError);
-          setLottieError(true);
-        }
       } catch (error) {
-        console.error("Error loading Lottie animation:", error);
+        console.error("Error loading animation:", error);
         setLottieError(true);
       } finally {
         setIsLoading(false);

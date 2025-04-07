@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import ProjectCTA from '@/components/ProjectCTA';
 
+
 interface Service {
   id: string;
   title: string;
@@ -164,10 +165,8 @@ export default function ServicesPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
       <main>
-        {/* Hero section */}
-        <section className="bg-gradient-to-r from-[#20133d] to-[#512888] text-white">
+        <section className=" ">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
             <div className="max-w-3xl">
               <div className="pulse-chip mb-6">
@@ -179,7 +178,7 @@ export default function ServicesPage() {
                 Our Services
               </h1>
               
-              <p className="text-xl text-white/90 mb-8">
+              <p className="text-xl  mb-8">
                 Comprehensive BIM solutions to enhance your construction projects.
               </p>
             </div>
@@ -298,7 +297,7 @@ export default function ServicesPage() {
               </div>
               
               <div className="relative">
-                <div className="aspect-[4/3] rounded-xl overflow-hidden">
+                <div className="aspect-[4/3] rounded-xl overflow-hidden relative">
                   <Image 
                     src="/background-section2.png" 
                     alt="Our BIM Approach" 
