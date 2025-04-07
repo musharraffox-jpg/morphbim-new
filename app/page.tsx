@@ -312,9 +312,7 @@ export default function Home() {
         {/* Project CTA section - using new ProjectCTA component */}
         <ProjectCTA />
         
-        <MadeByHumans />
       </main>
-      <Footer />
     </div>
   )
 }

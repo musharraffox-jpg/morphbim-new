@@ -587,7 +587,6 @@ export default function Blog() {
         
         <ProjectCTA />
       </main>
-      <Footer />
     </div>
   );
 } 

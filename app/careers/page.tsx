@@ -605,7 +605,6 @@ export default function Careers() {
         
         <ProjectCTA />
       </main>
-      <Footer />
     </div>
   );
 } 

@@ -41,9 +41,7 @@ export default function SolutionsPage() {
         <HumanoidSection />
         <ImageShowcaseSection />
         <Testimonials />
-        <MadeByHumans />
       </main>
-      <Footer />
     </div>
   );
 } 

@@ -194,7 +194,6 @@ export default function BlogPostDetail({ params }: { params: { postId: string }}
             </Link>
           </div>
         </main>
-        <Footer />
       </div>
     );
   }

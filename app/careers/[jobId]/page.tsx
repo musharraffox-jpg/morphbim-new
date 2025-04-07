@@ -4,7 +4,6 @@ import React from 'react'
 import Link from 'next/link'
 import { ArrowRight, MapPin, Briefcase, Calendar, Clock } from 'lucide-react'
 import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
 import ProjectCTA from '@/components/ProjectCTA'
 
 interface Job {
@@ -84,7 +83,6 @@ export default function JobDetail({ params }: { params: { jobId: string } }) {
             </Link>
           </div>
         </main>
-        <Footer />
       </div>
     )
   }
@@ -212,7 +210,6 @@ export default function JobDetail({ params }: { params: { jobId: string } }) {
         
         <ProjectCTA />
       </main>
-      <Footer />
     </div>
   )
 } 

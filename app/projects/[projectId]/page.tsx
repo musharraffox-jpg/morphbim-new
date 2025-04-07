@@ -113,7 +113,6 @@ export default function ProjectDetail({ params }: { params: { projectId: string 
             </Link>
           </div>
         </main>
-        <Footer />
       </div>
     );
   }
@@ -373,7 +372,6 @@ export default function ProjectDetail({ params }: { params: { projectId: string 
         <ProjectCTA />
         <Newsletter />
       </main>
-      <Footer />
     </div>
   );
 } 

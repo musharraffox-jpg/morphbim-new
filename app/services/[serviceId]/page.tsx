@@ -152,7 +152,6 @@ export default function ServiceDetail({ params }: { params: { serviceId: string 
             </Link>
           </div>
         </main>
-        <Footer />
       </div>
     )
   }
@@ -318,7 +317,6 @@ export default function ServiceDetail({ params }: { params: { serviceId: string 
         
         <ProjectCTA />
       </main>
-      <Footer />
     </div>
   )
 } 

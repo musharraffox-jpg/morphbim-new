@@ -440,7 +440,6 @@ export default function ContactPage() {
         
         <MadeByHumans />
       </main>
-      <Footer />
     </div>
   );
 } 

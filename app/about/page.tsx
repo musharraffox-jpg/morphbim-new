@@ -4,8 +4,6 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import MadeByHumans from "@/components/MadeByHumans";
 
 export default function AboutPage() {
   // Initialize intersection observer for animations
@@ -379,9 +377,7 @@ export default function AboutPage() {
           </div>
         </section>
         
-        <MadeByHumans />
       </main>
-      <Footer />
     </div>
   );
 } 
