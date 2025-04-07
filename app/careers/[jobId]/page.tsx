@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import Link from 'next/link'
 import { ArrowRight, MapPin, Briefcase, Calendar, Clock } from 'lucide-react'
@@ -63,8 +61,8 @@ const jobsData: Job[] = [
   }
 ]
 
-export default function JobDetail({ params }: { params: { jobId: string } }) {
-  const { jobId } = params
+export default async function JobDetail({ params }: { params: Promise<{ jobId: string }> }) {
+  const { jobId } = await params
   const job = jobsData.find(j => j.id === jobId)
 
   if (!job) {

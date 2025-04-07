@@ -91,8 +91,8 @@ const projectsData = [
   }
 ];
 
-export default function ProjectDetail({ params }: { params: { projectId: string }}) {
-  const { projectId } = params;
+export default async function ProjectDetail({ params }: { params: Promise<{ projectId: string }> }) {
+  const { projectId } = await params;
   const project = projectsData.find(p => p.id === projectId);
   const [activeTab, setActiveTab] = useState('overview');
   

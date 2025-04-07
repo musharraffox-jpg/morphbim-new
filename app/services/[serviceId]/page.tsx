@@ -132,8 +132,9 @@ const servicesData: Service[] = [
   }
 ]
 
-export default function ServiceDetail({ params }: { params: { serviceId: string } }) {
-  const service = servicesData.find(s => s.id === params.serviceId)
+export default async function ServiceDetail({ params }: { params: Promise<{ serviceId: string }> }) {
+  const { serviceId } = await params
+  const service = servicesData.find(s => s.id === serviceId)
 
   if (!service) {
     return (
