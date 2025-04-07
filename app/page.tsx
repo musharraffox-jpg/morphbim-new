@@ -9,6 +9,11 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Hero from '@/components/Hero'
 import MadeByHumans from '@/components/MadeByHumans'
+import HumanoidSection from '@/components/HumanoidSection'
+import Testimonials from '@/components/Testimonials'
+import Newsletter from '@/components/Newsletter'
+import ProjectCTA from '@/components/ProjectCTA'
+import FaqSection from '@/components/FaqSection'
 
 export default function Home() {
   const featuredProjectsRef = useRef<HTMLDivElement>(null)
@@ -91,42 +96,24 @@ export default function Home() {
 
   const projects = [
     {
-      title: 'Pharmaceutical Clean Room',
-      category: 'Pharmaceutical',
-      description: 'Detailed BIM and engineering solutions for a state-of-the-art pharmaceutical manufacturing facility with clean room environments.',
-      image: '/background-section1.png'
-    },
-    {
+      id: 'hospital-complex',
       title: 'Hospital Complex',
       category: 'Healthcare',
       description: 'Comprehensive modeling and coordination for a multi-specialty hospital with advanced medical facilities and patient-centered design.',
       image: '/background-section2.png'
     },
     {
-      title: 'Industrial Manufacturing Plant',
-      category: 'Industrial',
-      description: 'Complete BIM implementation for a large-scale manufacturing facility, including production lines, utilities, and warehouse spaces.',
-      image: '/background-section3.png'
-    }
-  ]
-  
-  const testimonials = [
-    {
-      quote: 'MorphVision\'s BIM expertise transformed our project delivery process. Their attention to detail and collaborative approach helped us avoid costly errors and complete on schedule.',
-      author: 'Rajesh Patel',
-      position: 'Project Director, AchieveConstruct Ltd.',
+      id: 'pharma-cleanroom',
+      title: 'Pharmaceutical Clean Room',
+      category: 'Pharmaceutical',
+      description: 'Detailed BIM and engineering solutions for a state-of-the-art pharmaceutical manufacturing facility with clean room environments.',
       image: '/background-section1.png'
     },
     {
-      quote: 'The team at MorphVision delivered exceptional results for our pharmaceutical facility. Their understanding of clean room requirements and regulatory standards was invaluable.',
-      author: 'Dr. Priya Sharma',
-      position: 'Facility Manager, MediPharm Industries',
-      image: '/background-section2.png'
-    },
-    {
-      quote: 'Working with MorphVision on our hospital redevelopment was a seamless experience. Their VR presentations helped our stakeholders understand the design intent clearly.',
-      author: 'Vikram Singh',
-      position: 'CEO, Healthcare Development Group',
+      id: 'manufacturing-plant',
+      title: 'Industrial Manufacturing Plant',
+      category: 'Industrial',
+      description: 'Complete BIM implementation for a large-scale manufacturing facility, including production lines, utilities, and warehouse spaces.',
       image: '/background-section3.png'
     }
   ]
@@ -192,72 +179,8 @@ export default function Home() {
           </div>
         </section>
         
-        {/* Services section */}
-        <section className='py-20 bg-white'>
-          <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-            <div className='text-center mb-16 animate-on-scroll'>
-              <div className='pulse-chip inline-flex mb-6'>
-                <span className='inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2'>02</span>
-                <span>Our Services</span>
-              </div>
-              <h2 className='text-3xl md:text-4xl font-display font-bold mb-6'>Comprehensive Solutions for Modern Industries</h2>
-              <p className='text-gray-600 max-w-3xl mx-auto'>
-                From detailed BIM modeling to turnkey project management, we provide end-to-end solutions that transform your vision into reality.
-              </p>
-            </div>
-            
-            <div className='grid md:grid-cols-3 gap-12'>
-              <div className='col-span-1 animate-on-scroll'>
-                <div className='sticky top-20'>
-                  <h3 className='text-2xl font-semibold mb-6'>Our Expertise</h3>
-                  <div className='space-y-4'>
-                    {services.map((service, index) => (
-                      <button
-                        key={index}
-                        className={`w-full text-left px-6 py-4 rounded-xl transition-all duration-300 flex items-center ${
-                          activeService === index 
-                            ? 'bg-pulse-500 text-white shadow-elegant' 
-                            : 'bg-gray-50 hover:bg-gray-100'
-                        }`}
-                        onClick={() => setActiveService(index)}
-                      >
-                        <div className={`mr-3 ${activeService === index ? 'text-white' : 'text-pulse-500'}`}>
-                          {service.icon}
-                        </div>
-                        <span className='font-medium'>{service.title}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              
-              <div className='col-span-2 animate-on-scroll'>
-                <div className='bg-gray-50 rounded-2xl p-8 h-full'>
-                  <h3 className='text-2xl font-semibold mb-4'>{services[activeService].title}</h3>
-                  <p className='text-gray-600 mb-8'>{services[activeService].description}</p>
-                  
-                  <h4 className='text-lg font-medium mb-4'>Key Features</h4>
-                  <ul className='space-y-3 mb-8'>
-                    {services[activeService].features.map((feature, index) => (
-                      <li key={index} className='flex items-start'>
-                        <CheckCircle2 className='w-5 h-5 text-pulse-500 mr-3 flex-shrink-0 mt-0.5' />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  
-                  <Link
-                    href='/contact'
-                    className='inline-flex items-center justify-center px-6 py-3 bg-pulse-500 text-white font-medium rounded-full hover:bg-pulse-600 transition-colors duration-300'
-                  >
-                    Discuss Your Project
-                    <ArrowRight className='ml-2 w-5 h-5' />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Services Section - Using the new HumanoidSection */}
+        <HumanoidSection />
         
         {/* Industries section */}
         <section className='py-20 bg-gray-50'>
@@ -320,138 +243,74 @@ export default function Home() {
           </div>
         </section>
         
-        {/* Featured projects section */}
-        <section ref={featuredProjectsRef} className='py-20 bg-white'>
-          <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-            <div className='text-center mb-16 animate-on-scroll'>
-              <div className='pulse-chip inline-flex mb-6'>
-                <span className='inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2'>04</span>
-                <span>Featured Projects</span>
-              </div>
-              <h2 className='text-3xl md:text-4xl font-display font-bold mb-6'>Showcasing Our Excellence</h2>
-              <p className='text-gray-600 max-w-3xl mx-auto'>
-                Explore some of our most impactful projects that demonstrate our expertise, innovation, and commitment to quality.
+        {/* Featured Projects Section */}
+        <section id="projects" className="py-24 bg-gray-50">
+          <div className="container px-6 mx-auto">
+            <div className="text-center mb-20">
+              <h2 className="text-4xl font-bold mb-4">Featured Projects</h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Our BIM solutions have delivered measurable results for clients across diverse industries.
               </p>
             </div>
-            
-            <div className='grid md:grid-cols-3 gap-8'>
-              {projects.map((project, index) => (
-                <div 
-                  key={index}
-                  className='group rounded-2xl overflow-hidden shadow-elegant hover:shadow-elegant-hover transition-all duration-300 animate-on-scroll'
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className='h-64 relative'>
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className='object-cover transition-transform duration-500 group-hover:scale-105'
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                {
+                  id: "hospital-complex",
+                  title: "Hospital Complex",
+                  description: "State-of-the-art healthcare facility with integrated BIM systems for optimal patient care.",
+                  category: "Healthcare"
+                },
+                {
+                  id: "pharma-cleanroom",
+                  title: "Pharmaceutical Clean Room",
+                  description: "Precision-engineered clean room designed to meet strict pharmaceutical manufacturing standards.",
+                  category: "Pharmaceutical"
+                },
+                {
+                  id: "manufacturing-plant",
+                  title: "Industrial Manufacturing Plant",
+                  description: "Advanced manufacturing facility with optimized production flows and integrated systems.",
+                  category: "Industrial"
+                }
+              ].map((project, index) => (
+                <div key={index} className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
+                  <div className="relative h-60">
+                    <Image 
+                      src={`/background-section${index + 1}.png`} 
+                      alt={project.title} 
+                      fill 
+                      className="object-cover" 
                     />
-                    <div className='absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end'>
-                      <div className='p-6'>
-                        <div className='text-sm font-medium text-pulse-50 mb-2'>{project.category}</div>
-                        <h3 className='text-xl font-semibold text-white'>{project.title}</h3>
-                      </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent"></div>
+                    <div className="absolute bottom-0 left-0 p-6">
+                      <span className="text-xs font-semibold px-2 py-1 rounded-full bg-white/20 text-white backdrop-blur-sm mb-2 inline-block">{project.category}</span>
+                      <h3 className="text-xl font-bold text-white">{project.title}</h3>
                     </div>
                   </div>
-                  <div className='p-6 bg-white'>
-                    <p className='text-gray-600 mb-4'>{project.description}</p>
-                    <a href='#' className='inline-flex items-center text-pulse-500 font-medium'>
-                      View Project Details
-                      <ArrowRight className='ml-2 w-4 h-4 transition-transform group-hover:translate-x-1' />
+                  <div className="p-6">
+                    <p className="text-gray-700 mb-4">{project.description}</p>
+                    <a href={`/projects/${project.id}`} className="text-primary font-medium inline-flex items-center">
+                      View Project <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </a>
                   </div>
                 </div>
               ))}
             </div>
-            
-            <div className='text-center mt-12 animate-on-scroll'>
-              <Link 
-                href='/projects' 
-                className='inline-flex items-center justify-center px-8 py-3 bg-pulse-500 text-white font-medium rounded-full hover:bg-pulse-600 transition-colors duration-300'
-              >
-                Explore All Projects
-                <ArrowRight className='ml-2 w-5 h-5' />
-              </Link>
-            </div>
           </div>
         </section>
         
-        {/* Testimonials section */}
-        <section className='py-20 bg-gray-50'>
-          <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-            <div className='text-center mb-16 animate-on-scroll'>
-              <div className='pulse-chip inline-flex mb-6'>
-                <span className='inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2'>05</span>
-                <span>Client Testimonials</span>
-              </div>
-              <h2 className='text-3xl md:text-4xl font-display font-bold mb-6'>What Our Clients Say</h2>
-              <p className='text-gray-600 max-w-3xl mx-auto'>
-                Don't just take our word for it—hear from the clients who have experienced the MorphVision difference.
-              </p>
-            </div>
-            
-            <div className='grid md:grid-cols-3 gap-8'>
-              {testimonials.map((testimonial, index) => (
-                <div 
-                  key={index} 
-                  className='bg-white rounded-2xl p-8 shadow-elegant hover:shadow-elegant-hover transition-all duration-300 animate-on-scroll'
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className='mb-6'>
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className='text-yellow-400 text-xl'>★</span>
-                    ))}
-                  </div>
-                  <p className='text-gray-600 italic mb-6'>"{testimonial.quote}"</p>
-                  <div className='flex items-center'>
-                    <div className='w-12 h-12 rounded-full overflow-hidden mr-4 relative'>
-                      <Image
-                        src={testimonial.image}
-                        alt={testimonial.author}
-                        fill
-                        className='object-cover'
-                      />
-                    </div>
-                    <div>
-                      <div className='font-semibold'>{testimonial.author}</div>
-                      <div className='text-sm text-gray-500'>{testimonial.position}</div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* Testimonials section - using new Testimonials component */}
+        <Testimonials />
         
-        {/* CTA section */}
-        <section className='py-20 bg-white'>
-          <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-            <div className='bg-pulse-500 rounded-2xl p-12 text-center text-white max-w-5xl mx-auto animate-on-scroll shadow-elegant'>
-              <h2 className='text-3xl md:text-4xl font-display font-bold mb-6'>Ready to Transform Your Vision?</h2>
-              <p className='text-xl opacity-90 mb-8 max-w-2xl mx-auto'>
-                Partner with MorphVision to bring your projects to life with innovation, precision, and expertise.
-              </p>
-              <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-                <Link 
-                  href='/contact' 
-                  className='inline-flex items-center justify-center px-8 py-3 bg-white text-pulse-500 font-medium rounded-full hover:bg-gray-100 transition-colors duration-300'
-                >
-                  Contact Us Today
-                  <ArrowRight className='ml-2 w-5 h-5' />
-                </Link>
-                <button 
-                  onClick={scrollToProjects}
-                  className='inline-flex items-center justify-center px-8 py-3 bg-pulse-600 text-white font-medium rounded-full hover:bg-pulse-700 transition-colors duration-300'
-                >
-                  View Our Work
-                  <ArrowDown className='ml-2 w-5 h-5' />
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* FAQ Section */}
+        <FaqSection />
+        
+        {/* Newsletter Section */}
+        <Newsletter />
+        
+        {/* Project CTA section - using new ProjectCTA component */}
+        <ProjectCTA />
         
         <MadeByHumans />
       </main>
