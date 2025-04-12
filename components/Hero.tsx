@@ -167,7 +167,7 @@ const Hero = () => {
         >
           <div className="relative w-full h-full aspect-square">
             <Image 
-              src="/og.jpg" 
+              src="/city.png" 
               alt="MorphVision BIM" 
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
@@ -176,7 +176,7 @@ const Hero = () => {
             />
             <div className="absolute inset-0">
               <Image
-                src="/og.jpg"
+                src="/city.png"
                 alt="MorphVision BIM Overlay"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -195,7 +195,7 @@ const Hero = () => {
       className="overflow-hidden relative bg-cover" 
       id="hero" 
       style={{
-        backgroundImage: 'url("/Header-background.webp")',
+        backgroundImage: 'url("/hero.svg")',
         backgroundPosition: 'center 30%', 
         padding: isMobile ? '100px 12px 40px' : '120px 20px 60px'
       }}
@@ -235,7 +235,7 @@ const Hero = () => {
                 href="/contact" 
                 className="flex items-center justify-center group w-full sm:w-auto text-center" 
                 style={{
-                  backgroundColor: '#FE5C02',
+                  backgroundColor: '#0d74b4',
                   borderRadius: '1440px',
                   boxSizing: 'border-box',
                   color: '#FFFFFF',

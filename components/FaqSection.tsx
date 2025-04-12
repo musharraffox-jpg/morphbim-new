@@ -43,21 +43,21 @@ const FaqItem = ({ faq, isActive, onToggle, index }: { faq: FaqItem; isActive: b
   
   return (
     <div 
-      className={`overflow-hidden rounded-xl mb-4 ${isActive ? 'bg-gradient-to-r from-[#20133d]/10 to-[#512888]/10 shadow-md' : 'bg-white hover:bg-gray-50 border border-gray-100'} transition-all duration-300`}
+      className={`overflow-hidden rounded-xl mb-4 ${isActive ? 'bg-white shadow-md border border-gray-200' : 'bg-white hover:bg-gray-50 border border-gray-100'} transition-all duration-300`}
     >
       <button
         className="w-full flex justify-between items-center p-5 text-left focus:outline-none group"
         onClick={onToggle}
       >
         <div className="flex items-center">
-          <div className={`flex-shrink-0 mr-4 w-8 h-8 rounded-full flex items-center justify-center ${isActive ? 'bg-[#20133d] text-white' : 'bg-gray-100 text-gray-500 group-hover:bg-gray-200'} transition-colors duration-300`}>
+          <div className={`flex-shrink-0 mr-4 w-8 h-8 rounded-full flex items-center justify-center ${isActive ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-500 group-hover:bg-gray-200'} transition-colors duration-300`}>
             <span className="font-medium text-sm">{index + 1}</span>
           </div>
-          <h3 className={`text-lg font-semibold ${isActive ? 'text-[#20133d]' : 'text-gray-900'} transition-colors duration-300`}>
+          <h3 className={`text-lg font-semibold ${isActive ? 'text-gray-800' : 'text-gray-700'} transition-colors duration-300`}>
             {faq.question}
           </h3>
         </div>
-        <div className={`flex-shrink-0 ml-4 p-1 rounded-full ${isActive ? 'bg-[#20133d]/10 text-[#20133d]' : 'bg-gray-100 text-gray-500 group-hover:bg-gray-200'} transform transition-all duration-300 ${isActive ? 'rotate-180' : ''}`}>
+        <div className={`flex-shrink-0 ml-4 p-1 rounded-full ${isActive ? 'bg-gray-100 text-gray-800' : 'bg-gray-100 text-gray-500 group-hover:bg-gray-200'} transform transition-all duration-300 ${isActive ? 'rotate-180' : ''}`}>
           <ChevronDown className="w-5 h-5" />
         </div>
       </button>
@@ -114,14 +114,14 @@ const FaqSection = () => {
   return (
     <section className="w-full py-16 md:py-24 bg-gray-50 relative overflow-hidden" ref={sectionRef}>
       {/* Background decorative elements */}
-      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-b from-[#20133d]/10 to-transparent rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3"></div>
-      <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-t from-[#512888]/10 to-transparent rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3"></div>
+      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-b from-gray-100 to-transparent rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3"></div>
+      <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-t from-gray-200/30 to-transparent rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3"></div>
       
       <div className="container px-4 sm:px-6 lg:px-8 mx-auto relative z-10">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-4 mb-8 opacity-0 animate-on-scroll">
-            <div className="pulse-chip">
-              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">05</span>
+            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200">
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-800 text-white mr-2">05</span>
               <span>FAQs</span>
             </div>
             <div className="flex-1 h-[1px] bg-gray-200"></div>
@@ -151,7 +151,7 @@ const FaqSection = () => {
             <p className="text-gray-600 mb-4">Don't see your question here?</p>
             <a 
               href="/contact" 
-              className="inline-flex items-center px-6 py-3 bg-[#20133d] text-white rounded-full hover:bg-[#2d1b56] transition-colors"
+              className="inline-flex items-center px-6 py-3 bg-gray-800 text-white rounded-full hover:bg-gray-700 transition-colors"
             >
               <PlusCircle className="w-5 h-5 mr-2" />
               Ask a Question

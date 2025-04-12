@@ -152,7 +152,7 @@ export default function Home() {
                   <span className='inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2'>01</span>
                   <span>About Us</span>
                 </div>
-                <h2 className='text-3xl md:text-4xl font-display font-bold mb-6'>India\'s Leading BIM & Design Innovation Specialists</h2>
+                <h2 className='text-3xl md:text-4xl font-display font-bold mb-6'>India's Leading BIM & Design Innovation Specialists</h2>
                 <p className='text-gray-600 mb-6'>
                   Founded in 2020, MorphVision LLP has rapidly grown into a trusted name in BIM, Detailed Designing, Scanning, Redevelopment, and Turnkey Project Solutions. Our 40+ skilled professionals have completed over 190 successful projects across various industries.
                 </p>

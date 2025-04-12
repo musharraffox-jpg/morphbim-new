@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, MapPin, Briefcase, Search, Filter, Calendar } from 'lucide-react';
+import { ArrowRight, MapPin, Briefcase, Search, Filter, Calendar, CheckCircle, Users, Rocket, Heart } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ProjectCTA from '@/components/ProjectCTA';
@@ -301,309 +301,182 @@ export default function Careers() {
   });
   
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main>
-        {/* Hero section */}
-        <section className="bg-gradient-to-r from-[#20133d] to-[#512888] text-white">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
-            <div className="max-w-3xl">
-              <div className="pulse-chip mb-6">
-                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">01</span>
-                <span>Careers</span>
-              </div>
-              
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-                Join Our Team of BIM Innovators
-              </h1>
-              
-              <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl">
-                Discover exciting career opportunities where you can make an impact in the world of Building Information Modeling and digital construction.
-              </p>
-              
-              <a 
-                href="#open-positions" 
-                className="px-8 py-3 bg-white text-[#20133d] font-medium rounded-full hover:bg-gray-100 transition-colors inline-flex items-center"
-              >
-                View Open Positions
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </a>
+    <div className="min-h-screen flex flex-col pt-16">
+      <main className="flex-grow bg-gray-50 pt-16 pb-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Page Header with Gradient Background */}
+          <div className="bg-gradient-to-br from-dark-800 to-pulse-700 rounded-3xl p-8 md:p-12 shadow-xl mb-16">
+            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 text-white border border-white/30 backdrop-blur-sm mb-4">
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">01</span>
+              <span>Careers</span>
             </div>
+            <h1 className="text-4xl md:text-5xl font-display font-bold text-white">
+              Build the Future with MorphVision
+            </h1>
+            <p className="mt-4 text-lg text-white/90 max-w-3xl">
+              Explore exciting opportunities to shape the world of BIM and digital construction with a passionate and innovative team.
+            </p>
           </div>
-          
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="relative -bottom-16 bg-white rounded-xl shadow-lg p-6">
-              <div className="flex flex-col md:flex-row gap-4">
-                <div className="flex-1">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                    <input 
-                      type="text" 
-                      placeholder="Search for positions..." 
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pulse-500 focus:border-transparent"
-                    />
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4 md:w-[60%]">
-                  <div>
-                    <select 
-                      value={selectedDepartment}
-                      onChange={(e) => setSelectedDepartment(e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pulse-500 focus:border-transparent appearance-none bg-select-arrow bg-no-repeat bg-[center_right_1rem]"
-                      style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%236b7280\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")' }}
-                    >
-                      {departments.map(dept => (
-                        <option key={dept} value={dept}>{dept}</option>
-                      ))}
-                    </select>
-                  </div>
-                  
-                  <div>
-                    <select 
-                      value={selectedLocation}
-                      onChange={(e) => setSelectedLocation(e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pulse-500 focus:border-transparent appearance-none bg-select-arrow bg-no-repeat bg-[center_right_1rem]"
-                      style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%236b7280\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")' }}
-                    >
-                      {locations.map(loc => (
-                        <option key={loc} value={loc}>{loc}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        
-        {/* Job listings */}
-        <section id="open-positions" className="py-28 bg-gray-50">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="mb-8 flex items-center justify-between">
-              <h2 className="text-2xl font-semibold">
-                {filteredJobs.length > 0 ? (
-                  <>
-                    Showing {filteredJobs.length} Open Position{filteredJobs.length !== 1 && 's'}
-                  </>
-                ) : (
-                  'No matching positions found'
-                )}
-              </h2>
-              
-              {(searchTerm || selectedDepartment !== 'All Departments' || selectedLocation !== 'All Locations') && (
-                <button 
-                  onClick={() => {
-                    setSearchTerm('');
-                    setSelectedDepartment('All Departments');
-                    setSelectedLocation('All Locations');
-                  }}
-                  className="text-pulse-500 hover:text-pulse-600 font-medium"
-                >
-                  Clear Filters
-                </button>
-              )}
-            </div>
-            
-            <div className="space-y-6">
-              {filteredJobs.map((job) => (
-                <Link 
-                  key={job.id}
-                  href={`/careers/${job.id}`}
-                  className="block bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 group"
-                >
-                  <div className="p-6">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <div className="mb-2">
-                          <span className="inline-block px-3 py-1 bg-pulse-500/10 text-pulse-500 text-sm font-medium rounded-full">
-                            {job.department}
-                          </span>
-                        </div>
-                        
-                        <h3 className="text-xl font-semibold mb-2 group-hover:text-pulse-500 transition-colors">
-                          {job.title}
-                        </h3>
-                        
-                        <div className="flex flex-wrap gap-4 text-gray-600 mb-4">
-                          <div className="flex items-center">
-                            <MapPin className="w-4 h-4 mr-2" />
-                            <span>{job.location}</span>
-                          </div>
-                          <div className="flex items-center">
-                            <Briefcase className="w-4 h-4 mr-2" />
-                            <span>{job.type}</span>
-                          </div>
-                          <div className="flex items-center">
-                            <Calendar className="w-4 h-4 mr-2" />
-                            <span>Posted: {new Date(job.posted).toLocaleDateString()}</span>
-                          </div>
-                        </div>
-                        
-                        <p className="text-gray-700 mb-4 line-clamp-2">{job.overview}</p>
-                        
-                        <div className="flex items-center text-sm text-gray-500">
-                          <span className="mr-2">Apply by:</span>
-                          <span className="font-medium">{new Date(job.deadline).toLocaleDateString()}</span>
-                        </div>
-                      </div>
-                      
-                      <div className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 group-hover:bg-pulse-500 group-hover:text-white transition-colors">
-                        <ArrowRight className="w-5 h-5" />
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-              
-              {filteredJobs.length === 0 && (
-                <div className="bg-white rounded-xl p-8 text-center">
-                  <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
-                    <Filter className="w-8 h-8 text-gray-400" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">No matching positions found</h3>
-                  <p className="text-gray-600 mb-6">
-                    Try adjusting your search filters or check back later for new opportunities.
-                  </p>
-                  <button 
-                    onClick={() => {
-                      setSearchTerm('');
-                      setSelectedDepartment('All Departments');
-                      setSelectedLocation('All Locations');
-                    }}
-                    className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition-colors"
+
+          {/* Open Positions Section - Revert to white background */}
+          <section id="open-positions" className="mb-20">
+            <div className="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100">
+              <h2 className="text-3xl font-display font-bold text-gray-900 mb-8">Current Openings</h2>
+              <div className="space-y-6">
+                {jobsData.map((job) => (
+                  <Link 
+                    key={job.id}
+                    href={`/careers/${job.id}`}
+                    /* Use standard card styling */
+                    className="block bg-gray-50 rounded-xl shadow-sm hover:bg-gray-100 transition-all duration-300 group border border-gray-200 hover:border-gray-300"
                   >
-                    Clear All Filters
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-        
-        {/* Why join us section */}
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6">Why Join MorphVision?</h2>
-              <p className="text-gray-600 max-w-3xl mx-auto">
-                We're more than just a BIM company—we're a team of innovators passionate about transforming the built environment through technology and collaboration.
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  title: 'Innovation & Growth',
-                  description: 'Work with cutting-edge BIM technologies and methodologies, with continuous learning opportunities and professional development support.',
-                  icon: (
-                    <svg className="w-12 h-12 text-pulse-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 2L20 7V17L12 22L4 17V7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M12 22V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M20 7L12 12L4 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  )
-                },
-                {
-                  title: 'Collaborative Culture',
-                  description: 'Join a diverse, inclusive team that values collaboration, open communication, and mutual respect. We succeed together.',
-                  icon: (
-                    <svg className="w-12 h-12 text-pulse-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M16 3.13C16.8604 3.35031 17.6232 3.85071 18.1676 4.55232C18.712 5.25392 19.0051 6.11683 19.0051 7.005C19.0051 7.89318 18.7112 8.75608 18.1676 9.45769C17.6232 10.1593 16.8604 10.6597 16 10.88" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  )
-                },
-                {
-                  title: 'Impactful Projects',
-                  description: 'Work on diverse, high-impact projects that shape the future of infrastructure and leave a lasting legacy in the built environment.',
-                  icon: (
-                    <svg className="w-12 h-12 text-pulse-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M3 21H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M5 21V7L13 3V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M19 21V12L13 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M9 9V9.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M9 12V12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M9 15V15.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      <path d="M9 18V18.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  )
-                }
-              ].map((benefit, index) => (
-                <div key={index} className="bg-gray-50 rounded-xl p-8 hover:shadow-md transition-shadow">
-                  <div className="mb-6">
-                    {benefit.icon}
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3">{benefit.title}</h3>
-                  <p className="text-gray-600">{benefit.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-        
-        {/* Application Process */}
-        <section className="py-20 bg-gray-50">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6">Our Application Process</h2>
-              <p className="text-gray-600 max-w-3xl mx-auto">
-                We've designed a straightforward yet thorough hiring process to find the right talent and ensure a good mutual fit.
-              </p>
-            </div>
-            
-            <div className="max-w-4xl mx-auto">
-              {[
-                {
-                  step: 1,
-                  title: 'Application Review',
-                  description: 'Our team reviews your application, resume, and portfolio to assess your skills and experience.'
-                },
-                {
-                  step: 2,
-                  title: 'Initial Interview',
-                  description: 'A conversation with our HR team to discuss your background, skills, and career aspirations.'
-                },
-                {
-                  step: 3,
-                  title: 'Technical Assessment',
-                  description: 'Depending on the role, you may be asked to complete a technical assessment or showcase your portfolio.'
-                },
-                {
-                  step: 4,
-                  title: 'Team Interview',
-                  description: 'Meet with potential team members and managers to discuss technical skills and cultural fit.'
-                },
-                {
-                  step: 5,
-                  title: 'Offer & Onboarding',
-                  description: 'Upon selection, we\'ll present an offer and work with you on a smooth onboarding process.'
-                }
-              ].map((step, index) => (
-                <div key={index} className="flex gap-6 mb-8">
-                  <div className="flex-shrink-0">
-                    <div className="w-12 h-12 rounded-full bg-pulse-500 text-white flex items-center justify-center font-bold">
-                      {step.step}
+                    <div className="p-6">
+                      <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <div className="mb-2 flex flex-wrap gap-2">
+                            {/* Use standard tag styling */}
+                            <span className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full">
+                              {job.department}
+                            </span>
+                             <span className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full">
+                              {job.type}
+                            </span>
+                             <span className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full">
+                              {job.location}
+                            </span>
+                          </div>
+                          
+                          {/* Use standard text colors */}
+                          <h3 className="text-xl font-semibold mb-2 text-gray-900 group-hover:text-pulse-700 transition-colors">
+                            {job.title}
+                          </h3>
+                          
+                          <p className="text-gray-600 mb-4 line-clamp-2 text-sm">{job.overview}</p>
+                          
+                          <div className="flex flex-wrap gap-4 text-xs text-gray-500">
+                            <div className="flex items-center">
+                              <Calendar className="w-3 h-3 mr-1.5" />
+                              <span>Posted: {new Date(job.posted).toLocaleDateString()}</span>
+                            </div>
+                            <div className="flex items-center">
+                              <Calendar className="w-3 h-3 mr-1.5" />
+                              <span>Apply by: {new Date(job.deadline).toLocaleDateString()}</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Use standard arrow styling */}
+                        <div className="flex-shrink-0 mt-4 sm:mt-0 flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 group-hover:bg-pulse-500 group-hover:text-white text-gray-600 transition-colors">
+                          <ArrowRight className="w-5 h-5" />
+                        </div>
+                      </div>
                     </div>
-                    {index < 4 && (
-                      <div className="h-full w-0.5 bg-gray-200 mx-auto mt-2"></div>
-                    )}
-                  </div>
-                  <div className="bg-white rounded-xl p-6 shadow-sm flex-1">
-                    <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                    <p className="text-gray-600">{step.description}</p>
-                  </div>
-                </div>
-              ))}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+          
+          {/* Why join us section - Revert to white background */}
+          <section className="mb-20">
+             <div className="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100">
+              <h2 className="text-3xl font-display font-bold text-gray-900 mb-8">Why Join MorphVision?</h2>
+              <p className="text-lg text-gray-600 max-w-3xl mb-10">
+                  We're more than just a BIM company—we're a team of innovators passionate about transforming the built environment through technology and collaboration.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                 {/* Keep internal card styling as is */}
+                {[ 
+                   // ... (icon data) ...
+                  {
+                    title: 'Innovation & Growth',
+                    description: 'Work on cutting-edge BIM projects and access ongoing professional development opportunities to enhance your skills and career trajectory.',
+                    icon: Rocket
+                  },
+                  {
+                    title: 'Collaborative Culture',
+                    description: 'Join a diverse team that values your input and works together to solve complex challenges in the built environment.',
+                    icon: Users
+                  },
+                  {
+                    title: 'Work-Life Balance',
+                    description: 'Enjoy flexible work arrangements, competitive benefits, and a company culture that prioritizes your wellbeing alongside project success.',
+                    icon: Heart
+                  },
+                 ].map((item, index) => (
+                   <div key={index} className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
+                      <div className="w-12 h-12 rounded-lg bg-pulse-100 flex items-center justify-center mb-4">
+                        <item.icon className="w-6 h-6 text-pulse-600" />
+                      </div>
+                     <h3 className="text-xl font-semibold mb-3 text-gray-800">{item.title}</h3>
+                     <p className="text-gray-600 text-sm">{item.description}</p>
+                   </div>
+                 ))}
+               </div>
+             </div>
+           </section>
+          
+          {/* Application process - Already white background */}
+          <section className="mb-20">
+            <div className="bg-white rounded-3xl p-8 md:p-12 shadow-lg border border-gray-100">
+             {/* Keep content as is */}
+              <h2 className="text-3xl font-display font-bold text-gray-900 mb-8">How We Hire</h2>
+               <p className="text-lg text-gray-600 max-w-3xl mb-10">
+                  We've designed a straightforward recruitment process to help you showcase your skills and learn more about our company culture.
+                </p>
+              <div className="max-w-3xl mx-auto">
+                 {/* Keep steps list as is */}
+                {[
+                   // ... (step data) ...
+                  {
+                    step: 1,
+                    title: 'Application Submission',
+                    description: 'Submit your resume and cover letter through our online application form.'
+                  },
+                  {
+                    step: 2,
+                    title: 'Initial Screening',
+                    description: 'Our recruitment team will review your application and reach out to qualified candidates.'
+                  },
+                  {
+                    step: 3,
+                    title: 'Technical Assessment',
+                    description: 'Complete a skills assessment relevant to the position you are applying for.'
+                  },
+                  {
+                    step: 4,
+                    title: 'Interview Process',
+                    description: 'Meet with potential team members and managers to discuss technical skills and cultural fit.'
+                  },
+                  {
+                    step: 5,
+                    title: 'Offer & Onboarding',
+                    description: 'Upon selection, we\'ll present an offer and work with you on a smooth onboarding process.'
+                  }
+                ].map((stepItem, index, arr) => (
+                  <div key={index} className="flex gap-6 mb-8 last:mb-0">
+                    <div className="flex flex-col items-center">
+                       <div className="flex-shrink-0">
+                          <div className="w-10 h-10 rounded-full bg-pulse-500 text-white flex items-center justify-center font-bold text-sm">
+                            {stepItem.step}
+                          </div>
+                       </div>
+                       {index < arr.length - 1 && (
+                          <div className="w-px h-full bg-gray-200 mt-2"></div>
+                        )}
+                    </div>
+                    <div className="pb-8 flex-1">
+                      <h3 className="text-xl font-semibold mb-2 text-gray-900">{stepItem.title}</h3>
+                      <p className="text-gray-600 text-sm">{stepItem.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
         
-        <ProjectCTA />
+          <ProjectCTA />
+        </div>
       </main>
     </div>
   );

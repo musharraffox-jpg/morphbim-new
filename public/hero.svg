@@ -1,0 +1,12 @@
+<svg viewBox="0 0 1519 768" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <defs>
+    <radialGradient id="blueGradient" cx="50%" cy="20%" r="80%" fx="50%" fy="20%">
+      <stop offset="0%" stop-color="white" />
+      <stop offset="30%" stop-color="#cce5f5" />
+      <stop offset="60%" stop-color="#5ba8d4" />
+      <stop offset="85%" stop-color="#0d74b4" />
+      <stop offset="100%" stop-color="#00000000" />
+    </radialGradient>
+  </defs>
+  <rect width="1519" height="768" fill="url(#blueGradient)" />
+</svg>
