@@ -328,9 +328,9 @@ export default function ServicesPage() {
         {/* Industries section */}
         <section className="py-20 bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
+            <div className="mb-16">
               <h2 className="text-3xl font-display font-bold mb-4">Industries We Serve</h2>
-              <p className="text-gray-600 max-w-3xl mx-auto">
+              <p className="text-gray-600 max-w-3xl">
                 Our BIM services cater to a wide range of sectors, each with their unique requirements and challenges.
               </p>
             </div>
@@ -362,7 +362,7 @@ export default function ServicesPage() {
                   icon: '/images/services/default-icon.svg'
                 }
               ].map((industry, index) => (
-                <div key={index} className="bg-gray-50 rounded-xl p-6 text-center hover:bg-pulse-50 transition-colors">
+                <div key={index} className="bg-gray-50 rounded-xl p-6 hover:bg-pulse-50 transition-colors">
                   <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center mx-auto mb-4">
                     <Image 
                       src={industry.icon} 
@@ -371,7 +371,7 @@ export default function ServicesPage() {
                       height={32}
                     />
                   </div>
-                  <h3 className="font-medium">{industry.name}</h3>
+                  <h3 className="font-medium text-center">{industry.name}</h3>
                 </div>
               ))}
             </div>

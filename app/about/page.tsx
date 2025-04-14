@@ -37,7 +37,7 @@ export default function AboutPage() {
         {/* Hero Section */}
         <section className="w-full bg-white py-16 md:py-24">
           <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-4xl">
               <div className="pulse-chip mb-6">
                 <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">01</span>
                 <span>About Us</span>
@@ -153,7 +153,7 @@ export default function AboutPage() {
         {/* Our Expertise Section */}
         <section className="w-full bg-gray-50 py-16 md:py-24">
           <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
-            <div className="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+            <div className="max-w-3xl mb-16 animate-on-scroll">
               <div className="pulse-chip inline-flex mb-6">
                 <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">05</span>
                 <span>Our Expertise</span>
@@ -202,7 +202,7 @@ export default function AboutPage() {
         {/* Portfolio Section */}
         <section className="w-full bg-white py-16 md:py-24">
           <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
-            <div className="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+            <div className="max-w-3xl mb-16 animate-on-scroll">
               <div className="pulse-chip inline-flex mb-6">
                 <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">06</span>
                 <span>Diverse Portfolio</span>
@@ -242,7 +242,7 @@ export default function AboutPage() {
         {/* Leadership Team Section */}
         <section className="w-full bg-gray-50 py-16 md:py-24">
           <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
-            <div className="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+            <div className="max-w-3xl mb-16 animate-on-scroll">
               <div className="pulse-chip inline-flex mb-6">
                 <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">07</span>
                 <span>Leadership</span>

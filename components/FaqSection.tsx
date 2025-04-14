@@ -118,7 +118,7 @@ const FaqSection = () => {
       <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-t from-gray-200/30 to-transparent rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3"></div>
       
       <div className="container px-4 sm:px-6 lg:px-8 mx-auto relative z-10">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl">
           <div className="flex items-center gap-4 mb-8 opacity-0 animate-on-scroll">
             <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200">
               <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-800 text-white mr-2">05</span>
@@ -147,7 +147,7 @@ const FaqSection = () => {
             ))}
           </div>
           
-          <div className="mt-12 text-center opacity-0 animate-on-scroll">
+          <div className="mt-12 opacity-0 animate-on-scroll">
             <p className="text-gray-600 mb-4">Don't see your question here?</p>
             <a 
               href="/contact" 

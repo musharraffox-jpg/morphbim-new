@@ -185,13 +185,13 @@ export default function Home() {
         {/* Industries section */}
         <section className='py-20 bg-gray-50'>
           <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
-            <div className='text-center mb-16 animate-on-scroll'>
+            <div className='mb-16 animate-on-scroll'>
               <div className='pulse-chip inline-flex mb-6'>
                 <span className='inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2'>03</span>
                 <span>Industries We Serve</span>
               </div>
               <h2 className='text-3xl md:text-4xl font-display font-bold mb-6'>Specialized Solutions for Diverse Sectors</h2>
-              <p className='text-gray-600 max-w-3xl mx-auto'>
+              <p className='text-gray-600 max-w-3xl'>
                 We deliver tailored BIM and engineering solutions for a wide range of industries, ensuring compliance with specific requirements and standards.
               </p>
             </div>
@@ -246,9 +246,9 @@ export default function Home() {
         {/* Featured Projects Section */}
         <section id="projects" className="py-24 bg-gray-50">
           <div className="container px-6 mx-auto">
-            <div className="text-center mb-20">
+            <div className="mb-20">
               <h2 className="text-4xl font-bold mb-4">Featured Projects</h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              <p className="text-lg text-gray-600 max-w-2xl">
                 Our BIM solutions have delivered measurable results for clients across diverse industries.
               </p>
             </div>
