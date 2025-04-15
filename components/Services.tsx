@@ -20,6 +20,7 @@ import {
   Scan,
   LayoutGrid
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface ServiceCategory {
   title: string;
@@ -118,87 +119,119 @@ const serviceCategories: ServiceCategory[] = [
 
 const Services = () => {
   return (
-    <section className="w-full py-20 bg-gradient-to-b from-white to-gray-50">
-      <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
-        <div className="text-center mb-16">
-          <span className="inline-flex mb-6 items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
-            Our Expertise
-          </span>
-          <h2 className="text-4xl sm:text-5xl font-display font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">
-            Comprehensive BIM Services
-          </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            From conceptual design to facility management, we offer end-to-end BIM solutions tailored to your project's unique requirements.
-          </p>
+    <section className="w-full relative overflow-hidden py-24 md:py-32 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute w-[800px] h-[800px] -top-64 -left-64 bg-gradient-to-r from-primary/20 to-blue-600/20 rounded-full blur-3xl" />
+        <div className="absolute w-[600px] h-[600px] -bottom-64 -right-64 bg-gradient-to-l from-primary/20 to-blue-600/20 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container relative px-4 sm:px-6 lg:px-8 mx-auto">
+        {/* Hero Section */}
+        <div className="text-center mb-20 lg:mb-28">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-block mb-6 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-primary-200 text-sm font-medium"
+          >
+            Transformative BIM Solutions
+          </motion.span>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-5xl md:text-7xl font-display font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary-300 to-blue-400 leading-tight"
+          >
+            Building Digital Twins
+            <br />
+            <span className="text-3xl md:text-5xl font-light bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
+              of Tomorrow's Infrastructure
+            </span>
+          </motion.h1>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {serviceCategories.map((category, categoryIndex) => (
-            <div 
+        {/* Service Categories Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-12">
+          {serviceCategories.map((category, idx) => (
+            <motion.div
               key={category.title}
-              className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 transform hover:-translate-y-1"
-              style={{
-                animationDelay: `${categoryIndex * 0.15}s`,
-              }}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.15 }}
+              className="group relative bg-white/5 backdrop-blur-lg border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-all duration-500 hover:border-primary-300/30"
             >
-              {/* Service Header with Icon and Title */}
-              <div className="relative h-56 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/80 to-blue-600/90 opacity-90 transition-opacity group-hover:opacity-100"></div>
-                <Image
-                  src={`/background-section${categoryIndex + 1}.png`}
-                  alt={`${category.title} background`}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-6 text-center">
-                  <category.icon className="h-12 w-12 mb-4" />
-                  <h3 className="text-2xl font-bold">{category.title}</h3>
-                  <p className="mt-2 text-white/90 font-light">{category.description}</p>
+              {/* Category Header */}
+              <div className="flex items-start gap-4 mb-6">
+                <div className="p-3 bg-gradient-to-br from-primary-500 to-blue-600 rounded-xl">
+                  <category.icon className="h-8 w-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-1">{category.title}</h3>
+                  <p className="text-sm text-primary-100">{category.description}</p>
                 </div>
               </div>
 
-              {/* Service Content */}
-              <div className="p-6">
-                <h4 className="font-semibold text-lg mb-4 text-gray-800">Services Offered:</h4>
-                <ul className="space-y-4 mb-6">
-                  {category.services.map((service, index) => (
-                    <li key={index} className="flex items-start gap-3 group/item">
-                      <div className="mt-1 p-1.5 rounded-lg bg-primary/10 text-primary group-hover/item:bg-primary group-hover/item:text-white transition-colors">
-                        <service.icon className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-gray-800">{service.title}</p>
-                        <p className="text-sm text-gray-500 mt-1">{service.description}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-                <Button className="w-full group bg-white hover:bg-primary border border-primary text-primary hover:text-white transition-colors">
-                  Explore Services
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              {/* Service List */}
+              <ul className="space-y-4">
+                {category.services.map((service, sIdx) => (
+                  <li
+                    key={service.title}
+                    className="flex items-start gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
+                  >
+                    <div className="flex-shrink-0 mt-1 p-2 bg-primary-500/10 rounded-lg">
+                      <service.icon className="h-5 w-5 text-primary-400" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white">{service.title}</h4>
+                      <p className="text-sm text-primary-100 mt-1">{service.description}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Hover Effect */}
+              <div className="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute -inset-1 bg-gradient-to-br from-primary-500/20 to-blue-600/20 rounded-3xl blur-xl" />
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* CTA Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-20 lg:mt-28 text-center"
+        >
+          <div className="inline-block relative bg-gradient-to-br from-primary-500 to-blue-600 rounded-2xl p-1">
+            <div className="bg-gray-900/90 backdrop-blur-sm rounded-xl px-8 py-12">
+              <h3 className="text-3xl font-bold text-white mb-4">
+                Ready to Revolutionize
+                <br />
+                Your Construction Workflow?
+              </h3>
+              <p className="text-lg text-primary-200 mb-8 max-w-2xl mx-auto">
+                Let's co-create digital twins of your next landmark project with millimeter precision and AI-powered insights.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button
+                  size="xl"
+                  className="bg-white text-gray-900 hover:bg-gray-100 group font-semibold gap-2"
+                >
+                  Schedule Demo
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="xl"
+                  className="text-white border border-white/20 hover:border-primary-300 hover:text-primary-300 gap-2"
+                >
+                  Explore Case Studies
+                  <ArrowRight className="h-5 w-5" />
                 </Button>
               </div>
             </div>
-          ))}
-        </div>
-        
-        {/* CTA Section */}
-        <div className="mt-20 rounded-2xl bg-gradient-to-r from-primary to-blue-600 p-8 md:p-12 text-white text-center">
-          <h3 className="text-2xl md:text-3xl font-bold mb-4">Ready to elevate your projects with BIM excellence?</h3>
-          <p className="text-lg text-white/90 max-w-2xl mx-auto mb-8">
-            Let's discuss how our expertise can bring your vision to life with precision and innovation.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button className="bg-white text-primary hover:bg-gray-100 group">
-              Get a Free Consultation
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Button>
-            <Button variant="outline" className="border-white text-white hover:bg-white/10">
-              View Our Portfolio
-            </Button>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

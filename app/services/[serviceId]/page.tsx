@@ -1,53 +1,93 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { 
-  ArrowRight, Check, Home, ChevronRight, Sparkles, Layers, Wrench, Briefcase, MessageSquare, 
-  CheckCircle, Star, Phone, Target, PencilRuler, Building2, Layers3, Leaf, Users2, ShieldCheck, Ruler, Clock, X
-} from 'lucide-react' // Keeping essential icons
+  ArrowRight, ChevronRight, CheckCircle, Star, 
+  Clock, Layers, Users2, Target, X, Plus,
+  PencilRuler, Building2, Layers3, Leaf, ShieldCheck, Ruler,
+  Sparkles, Wrench
+} from 'lucide-react'
 import { notFound } from 'next/navigation'
-import { LayoutWrapper, SectionWrapper, SectionHeader } from '@/components/LayoutWrapper'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 import { services, Service } from '@/app/data/services'
 import { projects } from '@/app/data/projects'
-import { Button } from '@/components/ui/button'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 
-// --- Helper Functions & Data ---
+// Fallback image if a service doesn't have one - using reliable online sources
+const FALLBACK_IMAGES = {
+  hero: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2400&q=80",
+  content: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2400&q=80",
+  whoWeAre: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2400&q=80",
+  projectGallery: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2400&q=80",
+  finalCta: "https://images.unsplash.com/photo-1461914152595-a86cd63ad790?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2400&q=80"
+};
 
-const LucideIcons = { 
-  ArrowRight, Check, Home, ChevronRight, Sparkles, Layers, Wrench, Briefcase, MessageSquare, 
-  CheckCircle, Star, Phone, Target, PencilRuler, Building2, Layers3, Leaf, Users2, ShieldCheck, Ruler, Clock, X
-}
+type FallbackImageKey = keyof typeof FALLBACK_IMAGES;
 
-const FALLBACK_IMAGE = '/placeholder.png'; // Use placeholder
-
-// Consistent Image Fetching with Fallback
-const getServiceImagery = (service?: Service): { hero: string; content: string } => {
-  const defaultImages = { hero: FALLBACK_IMAGE, content: FALLBACK_IMAGE }
-  // Use service.image if available, otherwise fallback
-  const contentImg = service?.image || FALLBACK_IMAGE;
-  // Keep a different hero or use content as fallback too
-  const heroImg = service?.image || FALLBACK_IMAGE; // Or define specific hero images if needed
-  return { hero: heroImg, content: contentImg }; 
-}
-
-// Animation Variants (Subtle) - Copied from project page for consistency
+// Animation variants
 const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } }
 };
 
-const stagger = {
-  visible: { transition: { staggerChildren: 0.15 } }
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.5 } }
 };
 
-// --- Service Page Component ---
+const stagger = {
+  visible: { transition: { staggerChildren: 0.12 } }
+};
+
+const iconVariants = {
+  hidden: { scale: 0.8, opacity: 0 },
+  visible: { scale: 1, opacity: 1, transition: { duration: 0.5 } },
+  hover: { scale: 1.2, rotate: 5, transition: { duration: 0.2, type: "spring", stiffness: 300 } }
+};
+
+// Helper function to get service imagery with fallbacks
+const getServiceImagery = (service?: Service, type: FallbackImageKey = 'hero'): { hero: string; content: string } => {
+  const defaultImages = { 
+    hero: FALLBACK_IMAGES[type] || FALLBACK_IMAGES.hero, 
+    content: FALLBACK_IMAGES[type] || FALLBACK_IMAGES.content
+  }
+  
+  if (!service) return defaultImages;
+  
+  // Use service.image if available, otherwise fallback
+  const contentImg = service.image || FALLBACK_IMAGES[type];
+  const heroImg = service.image || FALLBACK_IMAGES[type];
+  
+  return { hero: heroImg, content: contentImg }; 
+}
+
+// Icon mapping for dynamic icons
+const IconMap: Record<string, React.ElementType> = {
+  ArrowRight, ChevronRight, CheckCircle, Star, 
+  Clock, Layers, Users2, Target, X, Plus,
+  PencilRuler, Building2, Layers3, Leaf, ShieldCheck, Ruler,
+  Sparkles, Wrench
+};
 
 type ProjectGalleryItem = {
   image: string
@@ -58,87 +98,199 @@ type ProjectGalleryItem = {
 }
 
 export default function ServicePage({ params }: { params: Promise<{ serviceId: string }> }) {
-  const unwrappedParams = React.use(params)
-  const service = services.find(s => s.id === unwrappedParams.serviceId)
-  const [modal, setModal] = React.useState<ProjectGalleryItem | null>(null)
-  if (!service) return null
+  const unwrappedParams = React.use(params);
+  const service = services.find(s => s.id === unwrappedParams.serviceId);
+  const [modal, setModal] = useState<ProjectGalleryItem | null>(null);
+  
+  if (!service) return notFound();
 
   // Project gallery: filter projects by service.id
-  const relatedProjects = projects.filter(p => (p.services || []).some(svc => svc.toLowerCase().replace(/[^a-z0-9]/g, '').includes(service.id.replace(/[^a-z0-9]/g, '')))).slice(0, 3)
+  const relatedProjects = projects
+    .filter(p => (p.services || [])
+    .some(svc => svc.toLowerCase()
+    .replace(/[^a-z0-9]/g, '')
+    .includes(service.id.replace(/[^a-z0-9]/g, ''))))
+    .slice(0, 3);
 
   // Helper for icons
-  const Icon = (name: string) => (LucideIcons as any)[name] || (LucideIcons as any)['Circle']
+  const getIcon = (name: string) => {
+    const Icon = IconMap[name] || IconMap["Target"];
+    return <Icon className="w-5 h-5" />;
+  };
 
-  const heroImage = service.image || '/placeholder.png'
+  // Get service imagery
+  const { hero: heroImage } = getServiceImagery(service);
 
   // Parallax for hero image
-  const { scrollY } = useScroll()
-  const y = useTransform(scrollY, [0, 400], [0, 80])
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 400], [0, 80]);
 
   return (
-    <div className="bg-white text-gray-900 min-h-screen">
+    <div className="bg-white min-h-screen">
       {/* Hero Section */}
-      <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }} variants={fadeInUp} className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
-        <Image src={heroImage} alt={service.heroHeadline || service.title} fill priority className="object-cover object-center w-full h-full" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-transparent z-10" />
-        <div className="relative z-20 flex flex-col items-center justify-center text-center w-full px-4 py-32">
-          <motion.h1 variants={fadeInUp} className="font-display text-5xl md:text-7xl font-extrabold text-white mb-6 drop-shadow-xl tracking-tight">
-            {service.heroHeadline}
-          </motion.h1>
-          <motion.p variants={fadeInUp} transition={{ delay: 0.2 }} className="text-white/90 text-2xl md:text-3xl mb-10 max-w-2xl mx-auto">
-            {service.heroSubheadline}
-          </motion.p>
-          <motion.div variants={fadeInUp} transition={{ delay: 0.4 }}>
-            <Button size="lg" className="bg-pulse-500 text-white font-semibold px-10 py-4 rounded-full shadow-xl text-lg" whileHover={{ scale: 1.05 }}>
-              Start Your Project
-            </Button>
+      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+        <motion.div 
+          style={{ y }}
+          className="absolute inset-0 z-0"
+        >
+          <Image 
+            src={heroImage} 
+            alt={service.heroHeadline || service.title} 
+            fill 
+            priority 
+            className="object-cover object-center" 
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-transparent" />
+        </motion.div>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div 
+            initial="hidden"
+            animate="visible"
+            variants={stagger}
+            className="max-w-5xl mx-auto text-center"
+          >
+            <motion.div variants={fadeInUp}>
+              <Badge 
+                className="mb-6 px-4 py-1.5 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm"
+              >
+                {service.id.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+              </Badge>
+            </motion.div>
+            
+            <motion.h1 
+              variants={fadeInUp} 
+              className="font-display text-5xl md:text-7xl font-extrabold text-white mb-6 drop-shadow-lg tracking-tight"
+            >
+              {service.heroHeadline || service.title}
+            </motion.h1>
+            
+            <motion.p 
+              variants={fadeInUp} 
+              className="text-xl md:text-2xl text-white/80 mb-8 max-w-3xl mx-auto"
+            >
+              {service.heroSubheadline || service.description}
+            </motion.p>
+            
+            <motion.div 
+              variants={fadeInUp} 
+              className="flex flex-wrap gap-4 justify-center"
+            >
+              <Button 
+                size="lg" 
+                className="bg-white text-gray-900 hover:bg-gray-100 font-medium"
+              >
+                Request a Consultation
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-white text-white hover:bg-white/10"
+              >
+                View Projects
+              </Button>
+            </motion.div>
           </motion.div>
         </div>
-      </motion.section>
+      </section>
 
       {/* Who We Are Section */}
       {service.whoWeAre && (
-        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeInUp} className="py-24 bg-white">
-          <div className="container mx-auto px-4 sm:px-8 grid md:grid-cols-2 gap-16 items-center">
-            <motion.div variants={fadeInUp} className="relative h-[400px] rounded-2xl overflow-hidden shadow-elegant">
-              <Image src={service.whoWeAre.image || '/placeholder.png'} alt={service.whoWeAre.title} fill className="object-cover w-full h-full" />
-            </motion.div>
-            <motion.div variants={fadeInUp} className="flex flex-col justify-center">
-              <div className="pulse-chip mb-6">
-                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">01</span>
-                <span>Who We Are</span>
+        <motion.section 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={fadeInUp}
+          className="py-24 bg-white"
+        >
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div className="order-2 lg:order-1">
+                <Badge className="mb-4 bg-blue-100 text-blue-700 hover:bg-blue-200">
+                  Who We Are
+                </Badge>
+                <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 bg-clip-text text-transparent">
+                  {service.whoWeAre.title}
+                </h2>
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  {service.whoWeAre.paragraph}
+                </p>
               </div>
-              <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">{service.whoWeAre.title}</h2>
-              <p className="text-gray-600 text-lg md:text-xl leading-relaxed max-w-xl">
-                {service.whoWeAre.paragraph}
-              </p>
-            </motion.div>
+              
+              <div className="order-1 lg:order-2 relative">
+                <div className="relative rounded-xl overflow-hidden aspect-[4/3]">
+                  <Image 
+                    src={service.whoWeAre?.image || FALLBACK_IMAGES.whoWeAre} 
+                    alt={service.whoWeAre?.title || "Who We Are"}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                
+                {/* Decorative elements */}
+                <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-blue-50 rounded-full opacity-70 z-0" />
+                <div className="absolute -top-6 -left-6 w-24 h-24 bg-purple-50 rounded-full opacity-70 z-0" />
+              </div>
+            </div>
           </div>
         </motion.section>
       )}
 
       {/* Core Services Section */}
-      {service.coreServices && (
-        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp} className="py-24 bg-gray-50">
-          <div className="container mx-auto px-4 sm:px-8">
-            <div className="pulse-chip mb-6">
-              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">02</span>
-              <span>Our Core Services</span>
+      {service.coreServices && service.coreServices.length > 0 && (
+        <motion.section 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={fadeInUp}
+          className="py-24 bg-gray-50"
+        >
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <div className="text-center mb-16">
+              <Badge className="mb-4 bg-blue-100 text-blue-700 hover:bg-blue-200">
+                Our Core Services
+              </Badge>
+              <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 bg-clip-text text-transparent">
+                Our Specialized Offerings
+              </h2>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                We provide a comprehensive range of professional services tailored to meet your specific project needs.
+              </p>
             </div>
-            <h2 className="font-display text-4xl md:text-5xl font-bold mb-12">What We Offer</h2>
-            <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {service.coreServices.map((card, i) => {
-                const CardIcon = Icon(card.icon)
+            
+            <motion.div 
+              variants={stagger}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+            >
+              {service.coreServices.map((item, i) => {
                 return (
-                  <motion.div key={i} variants={fadeInUp} whileHover={{ scale: 1.04, boxShadow: '0 8px 32px rgba(0,0,0,0.10)' }} className="bg-white rounded-2xl p-8 flex flex-col items-center text-center shadow-elegant hover:shadow-elegant-hover transition-all">
-                    <motion.div whileHover={{ scale: 1.15 }} transition={{ type: 'spring', stiffness: 300 }}>
-                      <CardIcon className="w-12 h-12 text-pulse-500 mb-4" />
+                  <motion.div 
+                    key={i} 
+                    variants={fadeInUp}
+                    className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full"
+                  >
+                    <motion.div 
+                      variants={iconVariants} 
+                      whileHover="hover" 
+                      className="bg-blue-50 w-14 h-14 rounded-xl flex items-center justify-center text-blue-600 mb-6"
+                    >
+                      {getIcon(item.icon)}
                     </motion.div>
-                    <h3 className="font-semibold text-xl mb-2">{card.title}</h3>
-                    <p className="text-gray-600 text-base mb-2">{card.description}</p>
-                    {card.link && <Link href={card.link} className="text-pulse-500 font-medium hover:underline text-sm">Learn More</Link>}
+                    
+                    <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                    <p className="text-gray-600 flex-1">{item.description}</p>
+                    
+                    {item.link && (
+                      <Link 
+                        href={item.link} 
+                        className="inline-flex items-center text-blue-600 font-medium mt-4 hover:text-blue-800 group"
+                      >
+                        Learn more
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      </Link>
+                    )}
                   </motion.div>
-                )
+                );
               })}
             </motion.div>
           </div>
@@ -146,100 +298,153 @@ export default function ServicePage({ params }: { params: Promise<{ serviceId: s
       )}
 
       {/* Project Gallery Section */}
-      <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp} className="py-24 bg-white">
-        <div className="container mx-auto px-4 sm:px-8">
-          <div className="pulse-chip mb-6">
-            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">03</span>
-            <span>Project Gallery</span>
-          </div>
-          <h2 className="font-display text-4xl md:text-5xl font-bold mb-12">Selected Work</h2>
-          {relatedProjects.length > 0 ? (
-            <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {relatedProjects.map((proj, i) => (
-                <motion.div key={i} variants={fadeInUp} whileHover={{ scale: 1.03, boxShadow: '0 8px 32px rgba(0,0,0,0.10)' }} className="group bg-white rounded-xl shadow-elegant overflow-hidden hover:shadow-elegant-hover transition-all duration-300 cursor-pointer" onClick={() => setModal({
-                  image: proj.image || '/placeholder.png',
-                  title: proj.title,
-                  location: proj.location,
-                  scope: proj.category,
-                  highlights: proj.features || []
-                })}>
-                  <div className="relative h-60">
-                    <Image src={proj.image || '/placeholder.png'} alt={proj.title} fill className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                    <span className="absolute top-4 right-4 bg-pulse-500 text-white text-xs font-medium px-3 py-1 rounded-full">
-                      {proj.location}
-                    </span>
+      {service.projectGallery && service.projectGallery.length > 0 && (
+        <motion.section 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={fadeInUp}
+          className="py-24 bg-white"
+        >
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <div className="text-center mb-16">
+              <Badge className="mb-4 bg-blue-100 text-blue-700 hover:bg-blue-200">
+                Project Gallery
+              </Badge>
+              <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 bg-clip-text text-transparent">
+                Featured Projects
+              </h2>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                Explore our portfolio of successful projects that demonstrate our expertise and capabilities.
+              </p>
+            </div>
+            
+            <motion.div 
+              variants={stagger}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+              {service.projectGallery.map((project, i) => (
+                <motion.div 
+                  key={i} 
+                  variants={fadeInUp}
+                  className="group cursor-pointer"
+                  onClick={() => setModal(project)}
+                >
+                  <div className="relative aspect-[4/3] rounded-xl overflow-hidden mb-4">
+                    <Image 
+                      src={project.image || FALLBACK_IMAGES.projectGallery} 
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                      <div>
+                        <h3 className="text-white font-bold text-xl mb-1">{project.title}</h3>
+                        <p className="text-white/80 text-sm">{project.location}</p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold mb-2 group-hover:text-pulse-500 transition-colors">
-                      {proj.title}
-                    </h3>
-                    <p className="text-gray-600 text-sm line-clamp-2">
-                      {proj.category}
-                    </p>
-                  </div>
+                  
+                  <h3 className="font-bold text-lg mb-1 group-hover:text-blue-700 transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm">{project.location} &bull; {project.scope}</p>
                 </motion.div>
               ))}
             </motion.div>
-          ) : (
-            <div className="text-center text-gray-500 py-16 text-xl">No projects found for this service yet.</div>
-          )}
-        </div>
-        {/* Modal for project details */}
-        <Dialog open={!!modal} onOpenChange={() => setModal(null)}>
-          <DialogContent className="p-0 bg-white rounded-2xl overflow-hidden shadow-xl max-w-xl w-full">
-            {modal && (
-              <>
-                <DialogTitle className="sr-only">{modal.title}</DialogTitle>
-                <div className="relative w-full h-56 md:h-72">
-                  <Image src={modal.image || '/placeholder.png'} alt={modal.title} fill className="object-cover w-full h-full" />
-                  <button
-                    onClick={() => setModal(null)}
-                    className="absolute top-4 right-4 bg-white/80 hover:bg-white rounded-full p-2 shadow transition"
-                    aria-label="Close"
-                  >
-                    <X className="w-5 h-5 text-gray-700" />
-                  </button>
-                </div>
-                <div className="p-8 flex flex-col items-center text-center space-y-2">
-                  <h3 className="text-2xl font-bold text-gray-900">{modal.title}</h3>
-                  <div className="text-gray-500 text-sm">{modal.location} &mdash; <span className="font-medium">{modal.scope}</span></div>
-                  <ul className="flex flex-wrap justify-center gap-2 mt-4">
-                    {modal.highlights.length > 0
-                      ? modal.highlights.map((h, i) => (
-                          <li key={i} className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">{h}</li>
+          </div>
+          
+          {/* Project Modal */}
+          <Dialog open={!!modal} onOpenChange={(open) => !open && setModal(null)}>
+            <DialogContent className="max-w-3xl p-0 overflow-hidden bg-white">
+              {modal && (
+                <>
+                  <div className="relative aspect-video">
+                    <Image 
+                      src={modal.image || FALLBACK_IMAGES.projectGallery} 
+                      alt={modal.title}
+                      fill
+                      className="object-cover"
+                    />
+                    <Button 
+                      variant="ghost"
+                      size="icon"
+                      className="absolute top-4 right-4 bg-white/80 hover:bg-white rounded-full shadow"
+                      onClick={() => setModal(null)}
+                    >
+                      <X className="w-5 h-5 text-gray-700" />
+                    </Button>
+                  </div>
+                  <div className="p-8">
+                    <DialogTitle className="text-2xl font-bold text-gray-900 mb-2">
+                      {modal.title}
+                    </DialogTitle>
+                    <DialogDescription className="text-gray-500 mb-4">
+                      {modal.location} — <span className="font-medium">{modal.scope}</span>
+                    </DialogDescription>
+                    <Separator className="my-4" />
+                    <h4 className="font-medium text-gray-900 mb-3">Project Highlights</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {modal.highlights.length > 0 ? (
+                        modal.highlights.map((highlight, i) => (
+                          <Badge key={i} className="bg-blue-50 text-blue-700 hover:bg-blue-100">
+                            {highlight}
+                          </Badge>
                         ))
-                      : <li className="text-gray-400">No highlights available.</li>
-                    }
-                  </ul>
-                </div>
-              </>
-            )}
-          </DialogContent>
-        </Dialog>
-      </motion.section>
+                      ) : (
+                        <p className="text-gray-400">No highlights available</p>
+                      )}
+                    </div>
+                  </div>
+                </>
+              )}
+            </DialogContent>
+          </Dialog>
+        </motion.section>
+      )}
 
       {/* Why Choose Us Section */}
-      {service.whyChooseUs && (
-        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp} className="py-24 bg-gray-50">
-          <div className="container mx-auto px-4 sm:px-8">
-            <div className="pulse-chip mb-6">
-              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">04</span>
-              <span>Why Industry Leaders Work With Us</span>
+      {service.whyChooseUs && service.whyChooseUs.length > 0 && (
+        <motion.section 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={fadeInUp}
+          className="py-24 bg-gray-50"
+        >
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <div className="text-center mb-16">
+              <Badge className="mb-4 bg-blue-100 text-blue-700 hover:bg-blue-200">
+                Why Choose Us
+              </Badge>
+              <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 bg-clip-text text-transparent">
+                Our Competitive Advantages
+              </h2>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                What sets us apart and makes us the ideal partner for your next project.
+              </p>
             </div>
-            <h2 className="font-display text-4xl md:text-5xl font-bold mb-12">Why Choose Us</h2>
-            <motion.div variants={stagger} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
-              {service.whyChooseUs.map((item, i) => {
-                const ItemIcon = Icon(item.icon)
-                return (
-                  <motion.div key={i} variants={fadeInUp} whileHover={{ scale: 1.08 }} className="flex flex-col items-center text-center">
-                    <motion.div whileHover={{ scale: 1.2, y: -6 }} transition={{ type: 'spring', stiffness: 300 }}>
-                      <ItemIcon className="w-10 h-10 text-pulse-500 mb-3" />
-                    </motion.div>
-                    <span className="font-semibold text-lg mb-1">{item.text}</span>
+            
+            <motion.div 
+              variants={stagger}
+              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8"
+            >
+              {service.whyChooseUs.map((item, i) => (
+                <motion.div 
+                  key={i} 
+                  variants={fadeInUp}
+                  className="flex flex-col items-center text-center"
+                >
+                  <motion.div 
+                    whileHover="hover"
+                    variants={iconVariants}
+                    className="mb-4 w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white shadow-md"
+                  >
+                    {getIcon(item.icon)}
                   </motion.div>
-                )
-              })}
+                  <h3 className="font-bold text-lg mb-2">{item.text}</h3>
+                </motion.div>
+              ))}
             </motion.div>
           </div>
         </motion.section>
@@ -247,19 +452,67 @@ export default function ServicePage({ params }: { params: Promise<{ serviceId: s
 
       {/* Final CTA Section */}
       {service.finalCta && (
-        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp} className="relative min-h-[40vh] flex items-center justify-center bg-pulse-500">
-          <Image src={service.finalCta.image || '/placeholder.png'} alt={service.finalCta.title} fill className="object-cover object-center z-0 opacity-30" />
-          <div className="absolute inset-0 bg-pulse-500/80 z-10" />
-          <div className="relative z-20 flex flex-col items-center justify-center text-center w-full px-4 py-20">
-            <h2 className="text-white font-display text-4xl md:text-5xl font-bold mb-4 tracking-tight drop-shadow-xl">{service.finalCta.title}</h2>
-            <p className="text-white/90 text-lg md:text-xl mb-8 max-w-2xl mx-auto">{service.finalCta.subtext}</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              {service.finalCta.buttons.map((btn, i) => (
-                <Button asChild key={i} size="lg" variant={btn.variant as any || 'default'} className={btn.variant === 'secondary' ? 'bg-white/80 text-pulse-500' : 'bg-white text-pulse-500 font-bold'} whileHover={{ scale: 1.05 }}>
-                  <Link href={btn.link}>{btn.label}</Link>
-                </Button>
-              ))}
-            </div>
+        <motion.section 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={fadeInUp}
+          className="relative py-32 overflow-hidden"
+        >
+          <Image 
+            src={service.finalCta?.image || FALLBACK_IMAGES.finalCta} 
+            alt={service.finalCta?.title || "Get Started"} 
+            fill 
+            className="object-cover object-center z-0 opacity-25" 
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-blue-900 via-indigo-900 to-purple-900 opacity-90 z-0" />
+          
+          {/* Creative floating elements for visual interest */}
+          <div className="absolute left-10 top-1/4 w-20 h-20 rounded-full border-4 border-white/20 animate-pulse-slow opacity-40" />
+          <div className="absolute right-10 bottom-1/4 w-32 h-32 rounded-full border-4 border-white/20 animate-pulse-slow opacity-30 [animation-delay:1s]" />
+          <div className="absolute right-1/4 top-10 w-16 h-16 rounded-full border-2 border-white/30 animate-float opacity-50 [animation-delay:2s]" />
+          
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl relative z-10">
+            <motion.div 
+              variants={stagger}
+              className="text-center"
+            >
+              <motion.h2 
+                variants={fadeInUp}
+                className="text-4xl md:text-5xl font-display font-bold mb-6 text-white"
+              >
+                {service.finalCta.title}
+              </motion.h2>
+              
+              <motion.p 
+                variants={fadeInUp}
+                className="text-xl text-white/90 mb-10 max-w-3xl mx-auto"
+              >
+                {service.finalCta.subtext}
+              </motion.p>
+              
+              <motion.div 
+                variants={fadeInUp}
+                className="flex flex-wrap gap-4 justify-center"
+              >
+                {service.finalCta.buttons.map((btn, i) => (
+                  <Button 
+                    key={i}
+                    asChild 
+                    size="lg" 
+                    variant={btn.variant as any || 'default'} 
+                    className={btn.variant === 'secondary' 
+                      ? 'bg-white/20 backdrop-blur-sm text-white hover:bg-white/30' 
+                      : 'bg-white text-blue-900 hover:bg-gray-100'
+                    }
+                  >
+                    <Link href={btn.link}>
+                      {btn.label}
+                    </Link>
+                  </Button>
+                ))}
+              </motion.div>
+            </motion.div>
           </div>
         </motion.section>
       )}

@@ -1,428 +1,637 @@
 'use client'
 
-import React, { useEffect } from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import SpecsSection from "@/components/SpecsSection";
-import Features from "@/components/Features";
-import DetailsSection from "@/components/DetailsSection";
-import MadeByHumans from "@/components/MadeByHumans";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Filter, Search } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { 
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from "@/components/ui/accordion";
 import ProjectCTA from '@/components/ProjectCTA';
 import { services } from '@/app/data/services'; // Import services data
 
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
+};
 
-interface Service {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-  image: string;
-  features: string[];
-  benefits: string[];
-  process: {
-    title: string;
-    description: string;
-    steps: string[];
-  };
-  tools: {
-    title: string;
-    description: string;
-    list: string[];
-  };
-  caseStudies: {
-    title: string;
-    description: string;
-    projects: {
-      id: string;
-      title: string;
-      description: string;
-      image: string;
-    }[];
-  };
-  faq: {
-    title: string;
-    description: string;
-    questions: {
-      question: string;
-      answer: string;
-    }[];
-  };
-}
-
-const servicesData: Service[] = [
-  {
-    id: 'bim-modeling-coordination',
-    title: 'BIM Modeling & Coordination',
-    description: 'Our comprehensive BIM modeling and coordination services help you create accurate, detailed 3D models that facilitate better decision-making and collaboration throughout your project lifecycle.',
-    icon: '/images/services/bim-modeling.svg',
-    image: '/images/services/bim-modeling-bg.jpg',
-    features: [
-      '3D modeling of architectural, structural, and MEP systems',
-      'Clash detection and resolution',
-      '4D and 5D BIM integration',
-      'As-built modeling and documentation',
-      'BIM standards development and implementation',
-      'Model quality assurance and validation'
-    ],
-    benefits: [
-      'Improved project coordination and collaboration',
-      'Reduced rework and construction delays',
-      'Better cost estimation and control',
-      'Enhanced visualization and communication',
-      'Streamlined project delivery',
-      'Increased efficiency and productivity'
-    ],
-    process: {
-      title: 'Our BIM Process',
-      description: 'We follow a systematic approach to ensure the highest quality of BIM deliverables.',
-      steps: [
-        'Initial consultation and requirements gathering',
-        'BIM execution plan development',
-        'Model creation and development',
-        'Coordination and clash detection',
-        'Review and quality assurance',
-        'Documentation and delivery'
-      ]
-    },
-    tools: {
-      title: 'Tools & Technologies',
-      description: 'We use industry-leading software and tools to deliver exceptional BIM services.',
-      list: [
-        'Autodesk Revit',
-        'Navisworks',
-        'BIM 360',
-        'Dynamo',
-        'Tekla Structures',
-        'Solibri Model Checker'
-      ]
-    },
-    caseStudies: {
-      title: 'Case Studies',
-      description: 'Explore how our BIM services have helped clients achieve their project goals.',
-      projects: [
-        {
-          id: 'hospital-complex',
-          title: 'Hospital Complex',
-          description: 'BIM modeling and coordination for a 500-bed hospital complex.',
-          image: '/images/projects/hospital-complex.jpg'
-        },
-        {
-          id: 'pharmaceutical-clean-room',
-          title: 'Pharmaceutical Clean Room',
-          description: 'Detailed MEP modeling for a pharmaceutical manufacturing facility.',
-          image: '/images/projects/pharmaceutical-clean-room.jpg'
-        }
-      ]
-    },
-    faq: {
-      title: 'Frequently Asked Questions',
-      description: 'Find answers to common questions about our BIM services.',
-      questions: [
-        {
-          question: 'What is BIM and why is it important?',
-          answer: 'Building Information Modeling (BIM) is a digital representation of physical and functional characteristics of a facility. It serves as a shared knowledge resource for information about a facility, forming a reliable basis for decisions during its lifecycle. BIM is important because it enables better coordination, reduces errors, improves efficiency, and facilitates better decision-making throughout the project lifecycle.'
-        },
-        {
-          question: 'How long does it take to create a BIM model?',
-          answer: 'The time required to create a BIM model depends on various factors such as the size and complexity of the project, the level of detail required, and the availability of information. A simple model might take a few days, while a complex project could take several weeks or months.'
-        },
-        {
-          question: 'What software do you use for BIM modeling?',
-          answer: 'We use industry-leading software including Autodesk Revit, Navisworks, BIM 360, and other specialized tools depending on the project requirements. Our team is proficient in multiple BIM platforms and can adapt to your preferred software.'
-        }
-      ]
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
     }
   }
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.5 }
+  },
+  hover: { 
+    y: -8,
+    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+    transition: { duration: 0.2, ease: 'easeOut' }
+  }
+};
+
+// Service categories for filtering
+const categories = [
+  "All",
+  "BIM",
+  "Architectural",
+  "Structural",
+  "Visualization",
+  "Facilities"
+];
+
+// Service tags for more detailed filtering
+const serviceTags = [
+  "Modeling",
+  "Coordination",
+  "Design",
+  "Engineering",
+  "VR/AR",
+  "Family Creation",
+  "Documentation"
 ];
 
 export default function ServicesPage() {
-  // Initialize intersection observer to detect when elements enter viewport
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeTags, setActiveTags] = useState<string[]>([]);
+  const [filteredServices, setFilteredServices] = useState(services);
+
+  // Filter services based on search, category, and tags
   useEffect(() => {
-    // Check if we're in the browser environment
-    if (typeof window === 'undefined') return;
+    let result = services;
     
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-fade-in");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+    // Filter by search term
+    if (searchTerm) {
+      result = result.filter(service => 
+        service.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        service.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
     
-    const elements = document.querySelectorAll(".animate-on-scroll");
-    elements.forEach((el) => observer.observe(el));
+    // Filter by category
+    if (activeCategory !== "All") {
+      result = result.filter(service => {
+        // Map service IDs to categories
+        const serviceCategories: Record<string, string[]> = {
+          "BIM": ["bim-modeling-coordination", "4d-5d-simulation"],
+          "Architectural": ["architectural-structural", "architectural-visualization"],
+          "Structural": ["architectural-structural", "structural-analysis"],
+          "Visualization": ["architectural-visualization", "vr-ar-experiences"],
+          "Facilities": ["family-creation", "facilities-management"]
+        };
+        
+        // Check if service id is in the selected category
+        return serviceCategories[activeCategory]?.includes(service.id);
+      });
+    }
     
-    return () => {
-      elements.forEach((el) => observer.unobserve(el));
-    };
-  }, []);
+    // Filter by tags
+    if (activeTags.length > 0) {
+      result = result.filter(service => {
+        // Check if any of the service features match active tags
+        return service.features?.some(feature => 
+          activeTags.some(tag => 
+            feature.toLowerCase().includes(tag.toLowerCase())
+          )
+        );
+      });
+    }
+    
+    setFilteredServices(result);
+  }, [searchTerm, activeCategory, activeTags]);
+
+  // Toggle tag selection
+  const toggleTag = (tag: string) => {
+    if (activeTags.includes(tag)) {
+      setActiveTags(activeTags.filter(t => t !== tag));
+    } else {
+      setActiveTags([...activeTags, tag]);
+    }
+  };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        <section className=" ">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
-            <div className="max-w-3xl">
-              <div className="pulse-chip mb-6">
-                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">01</span>
-                <span>Our Services</span>
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      {/* Hero Section */}
+      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
+        <Image 
+          src="/images/services/services-hero.jpg" 
+          alt="MorphVision Services" 
+          fill 
+          className="object-cover object-center" 
+          priority
+        />
+        <div className="absolute inset-0 bg-black/50 mix-blend-multiply" />
+        
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto"
+        >
+          <Badge className="mb-6 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm">
+            Professional Services
+          </Badge>
+          <h1 className="font-display text-4xl md:text-6xl font-bold mb-6 text-white">
+            <span className="block">Transforming the Built Environment</span>
+            <span className="bg-gradient-to-r from-blue-400 to-purple-600 text-transparent bg-clip-text">
+              Through Digital Innovation
+            </span>
+          </h1>
+          <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
+            Comprehensive digital design solutions that elevate architecture, engineering, and construction projects.
+          </p>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Button asChild size="lg" className="bg-white text-gray-900 hover:bg-gray-100">
+              <Link href="#service-grid">
+                Explore Services <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+              <Link href="/contact">
+                Request a Consultation
+              </Link>
+            </Button>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Service Filter & Directory */}
+      <section id="service-grid" className="py-24 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto max-w-7xl">
+          {/* Section Header */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
+            className="text-center mb-16"
+          >
+            <Badge className="mb-4 bg-blue-100 text-blue-700 hover:bg-blue-200">
+              Our Services
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 bg-clip-text text-transparent">
+              Expert Services for Complex Projects
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Our comprehensive service offerings are designed to meet the unique challenges of modern AEC projects, from concept to completion.
+            </p>
+          </motion.div>
+
+          {/* Filter Controls */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
+            className="mb-12"
+          >
+            <div className="flex flex-col md:flex-row gap-6 items-center justify-between mb-8">
+              <div className="relative w-full md:w-1/3">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                <Input
+                  type="text"
+                  placeholder="Search services..."
+                  className="pl-10 bg-white border-gray-200 focus:border-blue-500"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
               </div>
               
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-                Comprehensive Engineering & BIM Solutions
-              </h1>
-              
-              <p className="text-xl mb-8">
-                We offer a variety of specialized services across different sectors, leveraging cutting-edge technology and deep expertise to deliver optimized project outcomes.
-              </p>
-            </div>
-          </div>
-        </section>
-        
-        {/* Services overview grid (Updated to use data from services.ts) */}
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-7xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {services.map((service) => (
-                  <Link
-                    key={service.id}
-                    href={`/services/${service.id}`}
-                    className="group bg-white rounded-xl p-6 border border-gray-200 hover:border-pulse-500 transition-all duration-300 hover:shadow-lg animate-on-scroll"
+              <div className="flex flex-wrap gap-2 justify-center">
+                <Badge className="flex items-center gap-1 bg-gray-100 text-gray-700 hover:bg-gray-200">
+                  <Filter className="h-3.5 w-3.5" />
+                  Filters: {activeCategory !== "All" ? activeCategory : ""} {activeTags.length > 0 && `+${activeTags.length} tags`}
+                </Badge>
+                {activeTags.length > 0 && (
+                  <Button 
+                    variant="ghost" 
+                    className="h-8 text-xs"
+                    onClick={() => setActiveTags([])}
                   >
-                    <div className="mb-6">
-                      <div className="w-12 h-12 rounded-lg bg-pulse-500/10 flex items-center justify-center mb-4">
-                         {/* Placeholder Icon - Can be improved later */}
-                         <svg className="w-6 h-6 text-pulse-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                      </div>
-                      
-                      <h3 className="text-xl font-semibold mb-2 group-hover:text-pulse-500 transition-colors">
-                        {service.title}
-                      </h3>
-                      
-                      <p className="text-gray-600 line-clamp-3">
-                        {service.description}
-                      </p>
-                    </div>
-                    
-                    <div className="flex items-center text-pulse-500 group-hover:translate-x-2 transition-transform">
-                      <span className="font-medium mr-2">Learn More</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </div>
-                  </Link>
+                    Clear tags
+                  </Button>
+                )}
+              </div>
+            </div>
+
+            {/* Category Tabs */}
+            <Tabs 
+              defaultValue="All" 
+              value={activeCategory}
+              onValueChange={setActiveCategory}
+              className="mb-8"
+            >
+              <TabsList className="w-full justify-start overflow-x-auto flex-nowrap gap-2 bg-transparent">
+                {categories.map((category) => (
+                  <TabsTrigger 
+                    key={category} 
+                    value={category}
+                    className="data-[state=active]:bg-blue-100 data-[state=active]:text-blue-900 rounded-full"
+                  >
+                    {category}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
+
+            {/* Tags */}
+            <ScrollArea className="whitespace-nowrap pb-4">
+              <div className="flex gap-2">
+                {serviceTags.map((tag) => (
+                  <Badge 
+                    key={tag}
+                    variant={activeTags.includes(tag) ? "default" : "outline"}
+                    className={`cursor-pointer ${
+                      activeTags.includes(tag) 
+                        ? "bg-blue-100 text-blue-800 hover:bg-blue-200 border-blue-200" 
+                        : "bg-white hover:bg-gray-100"
+                    }`}
+                    onClick={() => toggleTag(tag)}
+                  >
+                    {tag}
+                  </Badge>
                 ))}
               </div>
-            </div>
-          </div>
-        </section>
+            </ScrollArea>
+          </motion.div>
 
-        {/* Detailed BIM Services Section (from PDF) */}
-        <section className="py-20 bg-gray-50">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto mb-16 animate-on-scroll">
-              <div className="pulse-chip inline-flex mb-6">
-                  <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">02</span>
-                  <span>BIM Specialization</span>
-              </div>
-              <h2 className="text-3xl font-display font-bold mb-4">Comprehensive BIM Solutions</h2>
-              <p className="text-gray-600 mb-6">
-                We provide comprehensive BIM solutions tailored to client needs, covering the entire project lifecycle.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-on-scroll">
-              {[
-                {
-                  title: "BIM Implementation & Strategy",
-                  description: "Tailored solutions for adopting and strategizing BIM implementation on projects."
-                },
-                {
-                  title: "Design Modeling & Clash Detection",
-                  description: "Creating detailed 3D visualizations to identify and resolve design conflicts early."
-                },
-                {
-                  title: "4D Scheduling & 5D Cost Estimation",
-                  description: "Integrating time and cost into the BIM model for efficient project management."
-                },
-                {
-                  title: "Facility Management with As-Built Models",
-                  description: "Delivering accurate as-built documentation for efficient facility operations and maintenance."
-                },
-                {
-                  title: "Data Analytics & Software Integration",
-                  description: "Customizing solutions and integrating software to optimize project outcomes through data insights."
-                }
-              ].map((item, index) => (
-                <div key={index} className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
-                  <h3 className="text-lg font-semibold mb-2 text-pulse-600">{item.title}</h3>
-                  <p className="text-gray-600 text-sm">{item.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-        
-        {/* Approach section - Kept for context */}
-        <section className="py-20 bg-white"> 
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="animate-on-scroll">
-                <div className="pulse-chip inline-flex mb-6">
-                    <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">03</span>
-                    <span>Our Approach</span>
-                </div>
-                <h2 className="text-3xl font-display font-bold mb-6">Our Approach to BIM Excellence</h2>
-                <p className="text-gray-700 mb-8">
-                  At MorphVision, we believe that effective Building Information Modeling goes beyond just creating 3D models. Our comprehensive approach integrates people, processes, and technology to deliver exceptional results.
-                </p>
-                
-                <div className="space-y-6">
-                  {[
-                    {
-                      title: 'Collaborative Workflow',
-                      description: 'We work closely with all project stakeholders to ensure seamless integration of BIM into your existing processes.'
-                    },
-                    {
-                      title: 'Technical Excellence',
-                      description: 'Our team stays at the forefront of BIM technology, implementing best practices and innovative solutions.'
-                    },
-                    {
-                      title: 'Tailored Solutions',
-                      description: 'We customize our approach to meet your specific project requirements and business objectives.'
-                    },
-                    {
-                      title: 'Continuous Improvement',
-                      description: 'We constantly refine our methods and processes based on project feedback and industry developments.'
-                    }
-                  ].map((item, index) => (
-                    <div key={index} className="flex">
-                      <div className="mr-4 flex-shrink-0">
-                        <div className="w-10 h-10 rounded-full bg-pulse-500 text-white flex items-center justify-center font-bold">
-                          {index + 1}
+          {/* Services Grid */}
+          <motion.div 
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {filteredServices.length > 0 ? (
+              filteredServices.map((service) => (
+                <motion.div
+                  key={service.id}
+                  variants={cardVariant}
+                  whileHover="hover"
+                  className="h-full"
+                >
+                  <Link href={`/services/${service.id}`} className="h-full block">
+                    <Card className="overflow-hidden h-full flex flex-col transition-all duration-300 border-gray-200 hover:border-blue-300">
+                      <div className="relative h-60 overflow-hidden">
+                        <Image
+                          src={service.image || "/placeholder.png"}
+                          alt={service.title}
+                          fill
+                          className="object-cover object-center transition-transform duration-700 hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      </div>
+                      <CardHeader className="pb-2">
+                        <CardTitle className="text-2xl font-display font-bold tracking-tight">
+                          {service.title}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="flex-1">
+                        <CardDescription className="text-gray-600 line-clamp-3">
+                          {service.description}
+                        </CardDescription>
+                      </CardContent>
+                      <CardFooter className="flex justify-between items-center pt-2 border-t border-gray-100">
+                        <div className="flex flex-wrap gap-2">
+                          {service.features?.slice(0, 2).map((feature, index) => (
+                            <Badge key={index} variant="secondary" className="text-xs bg-gray-100">
+                              {feature.split(' ')[0]}
+                            </Badge>
+                          ))}
+                          {(service.features?.length || 0) > 2 && (
+                            <Badge variant="outline" className="text-xs">
+                              +{(service.features?.length || 0) - 2} more
+                            </Badge>
+                          )}
                         </div>
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                        <p className="text-gray-600">{item.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                        <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 -mr-2">
+                          Learn more <ArrowRight className="ml-1 h-4 w-4" />
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  </Link>
+                </motion.div>
+              ))
+            ) : (
+              <div className="col-span-full py-20 text-center">
+                <h3 className="text-2xl font-medium text-gray-800 mb-2">No services found</h3>
+                <p className="text-gray-600 mb-6">Try adjusting your search criteria or filters</p>
+                <Button onClick={() => {
+                  setSearchTerm("");
+                  setActiveCategory("All");
+                  setActiveTags([]);
+                }}>
+                  Reset filters
+                </Button>
               </div>
-              
-              <div className="relative animate-on-scroll" style={{ animationDelay: "0.1s" }}>
-                <div className="aspect-[4/3] rounded-xl overflow-hidden relative">
+            )}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Service Process Section */}
+      <section className="py-24 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
+          >
+            <Badge className="mb-4 bg-blue-100 text-blue-700 hover:bg-blue-200">Our Process</Badge>
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-12 bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 bg-clip-text text-transparent">
+              How We Deliver Excellence
+            </h2>
+          </motion.div>
+
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-4 gap-8"
+          >
+            {[
+              {
+                number: "01",
+                title: "Discovery & Analysis",
+                description: "We begin by understanding your project goals, challenges, and requirements.",
+                icon: "Search"
+              },
+              {
+                number: "02",
+                title: "Strategic Planning",
+                description: "Our team develops a comprehensive plan tailored to your specific needs.",
+                icon: "FileText"
+              },
+              {
+                number: "03",
+                title: "Execution & Development",
+                description: "We implement the plan with precision, using cutting-edge tools and methodologies.",
+                icon: "Code2"
+              },
+              {
+                number: "04",
+                title: "Review & Delivery",
+                description: "Final quality checks ensure deliverables meet our high standards before handover.",
+                icon: "CheckCircle"
+              }
+            ].map((step, index) => (
+              <motion.div 
+                key={index} 
+                variants={fadeInUp}
+                className="relative"
+              >
+                <div className="bg-white rounded-xl p-8 h-full shadow-sm hover:shadow-md transition-shadow duration-300">
+                  {/* Number badge with gradient */}
+                  <div className="absolute -top-4 -left-4 w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-md">
+                    {step.number}
+                  </div>
+                  
+                  <h3 className="text-xl font-bold mt-4 mb-4">{step.title}</h3>
+                  <p className="text-gray-600">{step.description}</p>
+                </div>
+                
+                {/* Connector line between steps (hidden on mobile) */}
+                {index < 3 && (
+                  <div className="hidden md:block absolute top-1/2 -right-4 w-8 border-t-2 border-dashed border-gray-300" />
+                )}
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Testimonial Section */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
+            className="text-center mb-16"
+          >
+            <Badge className="mb-4 bg-blue-100 text-blue-700 hover:bg-blue-200">Client Success</Badge>
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 bg-clip-text text-transparent">
+              What Our Clients Say
+            </h2>
+          </motion.div>
+
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
+            className="bg-gray-50 rounded-2xl p-8 md:p-12 shadow-md"
+          >
+            <div className="flex flex-col md:flex-row gap-8 items-center">
+              <div className="md:w-1/3">
+                <div className="relative w-24 h-24 md:w-32 md:h-32 mx-auto">
                   <Image 
-                    src="/background-section2.png" 
-                    alt="Our BIM Approach" 
+                    src="/images/testimonials/client1.jpg" 
+                    alt="Client" 
                     fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover"
+                    className="rounded-full object-cover border-4 border-white shadow-md"
                   />
                 </div>
-                
-                <div className="absolute -bottom-8 -left-8 bg-white rounded-xl p-6 shadow-lg max-w-xs">
-                  <div className="flex items-start mb-4">
-                    <div className="w-10 h-10 rounded-full bg-pulse-50 flex items-center justify-center mr-4">
-                      <svg className="w-5 h-5 text-pulse-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold">ISO 19650 Compliant</h4>
-                      <p className="text-sm text-gray-600">Our processes follow international BIM standards</p>
-                    </div>
-                  </div>
-                </div>
               </div>
-            </div>
-          </div>
-        </section>
-        
-        {/* Industries section - Simplified */}
-        <section className="py-20 bg-gray-50"> 
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="mb-16 animate-on-scroll">
-               <div className="pulse-chip inline-flex mb-6">
-                    <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">04</span>
-                    <span>Industries Served</span>
-                </div>
-              <h2 className="text-3xl font-display font-bold mb-4">Industries We Empower</h2>
-              <p className="text-gray-600 max-w-3xl">
-                Our versatile BIM services cater to a wide spectrum of sectors, adapting to the unique demands and challenges of each.
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 animate-on-scroll">
-              {[
-                "Healthcare & Pharma",
-                "Hotel & Residency",
-                "Industrial",
-                "Commercial",
-                "Infrastructure", // Added based on general capabilities
-                "Scan to BIM Projects"
-              ].map((industry, index) => (
-                <div key={index} className="bg-white rounded-xl p-4 text-center border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
-                  <h3 className="font-medium text-gray-700">{industry}</h3>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-        
-        {/* Removed Testimonial Section - Assuming it exists elsewhere or can be added later */}
-        
-        {/* FAQ section - Simplified for main services page */}
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-16 animate-on-scroll">
-                 <div className="pulse-chip inline-flex mb-6">
-                    <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">05</span>
-                    <span>Common Questions</span>
-                </div>
-                <h2 className="text-3xl font-semibold mb-4">Frequently Asked Questions</h2>
-                <p className="text-gray-600">
-                  Answers to common inquiries about our general BIM services and processes.
+              <div className="md:w-2/3">
+                <svg className="h-12 w-12 text-blue-200 mb-4" fill="currentColor" viewBox="0 0 32 32">
+                  <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
+                </svg>
+                <p className="text-gray-800 text-xl mb-6 italic">
+                  "MorphVision's BIM services transformed our complex healthcare project. Their attention to detail and collaborative approach resulted in significant cost savings and a smoother construction process."
                 </p>
-              </div>
-              
-              <div className="space-y-4 animate-on-scroll">
-                {[
-                  {
-                    question: "What makes MorphVision different in the BIM space?",
-                    answer: "Our key differentiators include our multidisciplinary team of 40+ experts, a proven track record of 190+ projects, commitment to global standards, a client-first approach, and continuous focus on innovation using tools like Revit, Navisworks, and Unreal Engine."
-                  },
-                  {
-                    question: "How do you ensure quality in your BIM models and services?",
-                    answer: "We employ rigorous quality assurance processes, adhere to international standards like ISO 19650, use advanced clash detection techniques, and maintain clear communication protocols throughout the project lifecycle to ensure high-quality deliverables."
-                  },
-                  {
-                    question: "Can you handle projects of different sizes and complexities?",
-                    answer: "Yes, our team has experience across a wide range of project scales, from specific component modeling (like Family Creation or Scan to BIM) to large-scale, complex projects involving architectural, structural, and MEPF coordination for sectors like healthcare, industrial, and commercial developments."
-                  }
-                ].map((faq, index) => (
-                  <div key={index} className="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-                    <h3 className="text-lg font-semibold mb-2">{faq.question}</h3>
-                    <p className="text-gray-600">{faq.answer}</p>
-                  </div>
-                ))}
+                <div>
+                  <h4 className="font-bold text-gray-900">David Chen</h4>
+                  <p className="text-gray-500">Project Director, Global Construction Partners</p>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </motion.div>
+        </div>
+      </section>
 
-        {/* Project CTA */}
-        <ProjectCTA />
+      {/* Industries Section */}
+      <section className="py-24 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
+            className="text-center mb-16"
+          >
+            <Badge className="mb-4 bg-blue-100 text-blue-700 hover:bg-blue-200">Sectors</Badge>
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 bg-clip-text text-transparent">
+              Industries We Serve
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Our expertise spans across various sectors, each with unique requirements and challenges.
+            </p>
+          </motion.div>
 
-      </main>
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6"
+          >
+            {[
+              "Healthcare & Pharma",
+              "Commercial & Office",
+              "Residential & Mixed-Use",
+              "Industrial & Manufacturing",
+              "Infrastructure",
+              "Education & Institutional"
+            ].map((industry, index) => (
+              <motion.div 
+                key={index} 
+                variants={cardVariant}
+                whileHover="hover"
+                className="bg-white rounded-xl p-6 text-center border border-gray-200 shadow-sm flex flex-col items-center justify-center aspect-square"
+              >
+                <h3 className="font-bold text-gray-800">{industry}</h3>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
+            className="text-center mb-16"
+          >
+            <Badge className="mb-4 bg-blue-100 text-blue-700 hover:bg-blue-200">FAQs</Badge>
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 bg-clip-text text-transparent">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Find answers to common questions about our services and approach.
+            </p>
+          </motion.div>
+
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={fadeInUp}
+          >
+            {[
+              {
+                question: "What makes MorphVision different in the BIM space?",
+                answer: "Our key differentiators include our multidisciplinary team of experts, a proven track record of 190+ projects, commitment to global standards, a client-first approach, and continuous focus on innovation using tools like Revit, Navisworks, and Unreal Engine."
+              },
+              {
+                question: "How do you ensure quality in your BIM models and services?",
+                answer: "We employ rigorous quality assurance processes, adhere to international standards like ISO 19650, use advanced clash detection techniques, and maintain clear communication protocols throughout the project lifecycle to ensure high-quality deliverables."
+              },
+              {
+                question: "Can you handle projects of different sizes and complexities?",
+                answer: "Yes, our team has experience across a wide range of project scales, from specific component modeling to large-scale, complex projects involving architectural, structural, and MEPF coordination for sectors like healthcare, industrial, and commercial developments."
+              },
+              {
+                question: "What is your typical project timeline?",
+                answer: "Project timelines vary based on scope, complexity, and specific requirements. We work closely with clients to establish realistic schedules and milestones, ensuring timely delivery without compromising quality."
+              }
+            ].map((faq, index) => (
+              <Accordion type="single" collapsible key={index} className="mb-4">
+                <AccordionItem value={`item-${index}`} className="border border-gray-200 rounded-lg">
+                  <AccordionTrigger className="px-6 py-4 text-left font-semibold text-gray-900 hover:text-blue-700 transition-colors">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4 text-gray-600">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CTA Section - Updated with background image instead of gradient */}
+      <section className="py-24 relative overflow-hidden">
+        {/* Background image */}
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2400&q=80" 
+            alt="Architecture background" 
+            fill 
+            className="object-cover object-center" 
+          />
+          <div className="absolute inset-0 bg-blue-900/80 mix-blend-multiply" />
+        </div>
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl relative z-10">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
+            className="text-center"
+          >
+            <Badge className="mb-4 bg-white/20 text-white hover:bg-white/30">Get Started</Badge>
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-white">
+              Ready to Transform Your Project?
+            </h2>
+            <p className="text-xl text-white/80 mb-10 max-w-3xl mx-auto">
+              Let's discuss how our services can elevate your next project and deliver exceptional results.
+            </p>
+            
+            {/* Creative floating elements */}
+            <div className="absolute left-10 top-1/4 w-20 h-20 rounded-full border-4 border-white/20 animate-pulse-slow opacity-40" />
+            <div className="absolute right-10 bottom-1/4 w-32 h-32 rounded-full border-4 border-white/20 animate-pulse-slow opacity-30 [animation-delay:1s]" />
+            <div className="absolute right-1/4 top-10 w-16 h-16 rounded-full border-2 border-white/30 animate-pulse-slow opacity-50 [animation-delay:2s]" />
+            
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Button asChild size="lg" className="bg-white text-blue-900 hover:bg-gray-100">
+                <Link href="/contact">
+                  Schedule a Consultation
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                <Link href="/projects">
+                  View Our Projects
+                </Link>
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Project CTA */}
+      <ProjectCTA />
     </div>
   );
-} 
+}
