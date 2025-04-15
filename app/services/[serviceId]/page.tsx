@@ -18,65 +18,16 @@ import { Badge } from "@/components/ui/badge"
 
 // --- Helper Functions & Data ---
 
-const FALLBACK_IMAGE = '/background-section1.png'; // Use the specified fallback
+const FALLBACK_IMAGE = '/placeholder.png'; // Use placeholder
 
 // Consistent Image Fetching with Fallback
-const getServiceImagery = (id: string): { hero: string; content: string } => {
-  const imageBaseUrl = 'https://images.unsplash.com'
+const getServiceImagery = (service?: Service): { hero: string; content: string } => {
   const defaultImages = { hero: FALLBACK_IMAGE, content: FALLBACK_IMAGE }
-  const serviceImages: Record<string, { hero: string; content: string }> = {
-    'pharmaceutical': { 
-      hero: `${imageBaseUrl}/photo-1579165466941-7493f1c65016?w=1920&q=80`, 
-      content: `${imageBaseUrl}/photo-1567427017947-545c5f8d16cb?w=1080&q=80` 
-    },
-    'industrial': { 
-      hero: `${imageBaseUrl}/photo-1581092916730-2c35b55a7ae7?w=1920&q=80`, 
-      content: `${imageBaseUrl}/photo-1611641625213-63e070f5079e?w=1080&q=80` 
-    },
-    'infrastructure': { 
-      hero: `${imageBaseUrl}/photo-1516788833579-b414f9801299?w=1920&q=80`, 
-      content: `${imageBaseUrl}/photo-1621929747188-0b4dc28498d2?w=1080&q=80` 
-    },
-    'bim-modeling-coordination': {
-      hero: `${imageBaseUrl}/photo-1554224154-26032ffc0d07?w=1920&q=80`, 
-      content: `${imageBaseUrl}/photo-1593642634524-b40b5baae6bb?w=1080&q=80` 
-    },
-    'pre-construction': {
-      hero: `${imageBaseUrl}/photo-1503387762-592deb58ef4e?w=1920&q=80`, 
-      content: `${imageBaseUrl}/photo-1487611459768-bd414656ea10?w=1080&q=80` 
-    },
-    'facility-management': {
-      hero: `${imageBaseUrl}/photo-1565951866579-ae78953b8a3a?w=1920&q=80`, 
-      content: `${imageBaseUrl}/photo-1556761175-b413da4baf72?w=1080&q=80` 
-    }
-  }
-  return serviceImages[id] || defaultImages;
-}
-
-// Simplified Tool Logos - prioritize official logos, fallback to text
-const toolLogos: Record<string, string> = {
-  'Autodesk Revit': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Autodesk_Revit_Logo.svg/128px-Autodesk_Revit_Logo.svg.png',
-  'Navisworks': 'https://www.vectorlogo.zone/logos/autodesknavisworks/autodesknavisworks-icon.svg',
-  'BIM 360': 'https://cdn.worldvectorlogo.com/logos/autodesk-bim-360.svg',
-  'Dynamo': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Dynamo_logo.svg/128px-Dynamo_logo.svg.png',
-  'Tekla Structures': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Tekla_Structures_logo.svg/128px-Tekla_Structures_logo.svg.png',
-  'Solibri Model Checker': 'https://solibri.com/images/logo/solibri-logo-blue.svg',
-  'Civil 3D': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Autodesk_Civil_3D_logo.svg/128px-Autodesk_Civil_3D_logo.svg.png',
-  'Plant 3D': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Autodesk_Plant_3D_logo.svg/128px-Autodesk_Plant_3D_logo.svg.png',
-  'InfraWorks': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Autodesk_InfraWorks_logo.svg/128px-Autodesk_InfraWorks_logo.svg.png',
-}
-
-const getToolLogoUrl = (toolName: string): string | null => {
-  const lowerToolName = toolName.toLowerCase();
-  if (toolLogos[toolName]) return toolLogos[toolName];
-  
-  const keys = Object.keys(toolLogos);
-  for (const key of keys) {
-    if (lowerToolName.includes(key.toLowerCase()) || key.toLowerCase().includes(lowerToolName)) {
-      return toolLogos[key];
-    }
-  }
-  return null; // Return null if no logo found
+  // Use service.image if available, otherwise fallback
+  const contentImg = service?.image || FALLBACK_IMAGE;
+  // Keep a different hero or use content as fallback too
+  const heroImg = service?.image || FALLBACK_IMAGE; // Or define specific hero images if needed
+  return { hero: heroImg, content: contentImg }; 
 }
 
 // Animation Variants (Subtle) - Copied from project page for consistency
@@ -104,7 +55,7 @@ export default function ServicePage({ params }: { params: Promise<{ serviceId: s
     notFound()
   }
 
-  const { hero: heroImage, content: contentImage } = getServiceImagery(service.id);
+  const { hero: heroImage, content: contentImage } = getServiceImagery(service);
 
   const handleImageError = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
     event.currentTarget.src = FALLBACK_IMAGE;
@@ -185,26 +136,45 @@ export default function ServicePage({ params }: { params: Promise<{ serviceId: s
           <div className="lg:col-span-2 space-y-12 md:space-y-16">
             
              {/* Visual Context Section */}
-            <SectionWrapper id="visual-overview" className="pt-0">
-               <SectionHeader num={1} title="Visual Context" icon={Sparkles} /> {/* Added SectionHeader */} 
-               <div className="relative aspect-video rounded-lg overflow-hidden shadow-md border border-gray-200 mt-6"> {/* Added border */} 
-                 <Image 
-                   src={contentImage}
-                   alt={`${service.title} Content Image`}
-                   fill sizes="(max-width: 1024px) 100vw, 66vw"
-                   className="object-cover"
-                   onError={handleImageError}
-                 />
-               </div>
-            </SectionWrapper>
+            {contentImage && contentImage !== FALLBACK_IMAGE && ( // Only show if not fallback
+              <SectionWrapper id="visual-overview" className="pt-0">
+                 <SectionHeader num={1} title="Visual Context" icon={Sparkles} />
+                 <div className="relative aspect-video rounded-lg overflow-hidden shadow-md border border-gray-200 mt-6">
+                   <Image 
+                     src={contentImage}
+                     alt={`${service.title} Content Image`}
+                     fill sizes="(max-width: 1024px) 100vw, 66vw"
+                     className="object-cover"
+                     onError={handleImageError}
+                   />
+                 </div>
+              </SectionWrapper>
+            )}
+
+            {/* Features Section */}
+            {service.features && service.features.length > 0 && (
+              <SectionWrapper id="features">
+                 <SectionHeader num={service.process ? 2 : 1} title="Key Features" icon={CheckCircle} /> 
+                 <motion.ul 
+                   className="space-y-3 grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6"
+                   variants={staggerContainer} initial="initial" whileInView="animate" viewport={{ once: true, amount: 0.2 }}
+                 >
+                  {service.features.map((feature, index) => (
+                    <motion.li key={index} variants={fadeInUp} className="flex items-start p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
+                      <CheckCircle size={18} className="text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                      <span className="text-gray-700">{feature}</span>
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              </SectionWrapper>
+            )}
             
-            {/* Process Section - Using simplified list style */} 
+            {/* Process Section - Conditionally Rendered */}
             {service.process?.steps && service.process.steps.length > 0 && (
               <SectionWrapper id="process">
-                 <SectionHeader num={2} title={service.process.title || 'Our Process'} icon={Layers} /> {/* Updated icon */} 
-                 {service.process.description && <p className="text-base text-gray-600 mt-4 mb-6 max-w-3xl leading-relaxed">{service.process.description}</p>} 
-                 {/* Simplified Numbered List for Process - Refined Styling */}
-                <motion.ol 
+                 <SectionHeader num={3} title={service.process.title || 'Our Process'} icon={Layers} />
+                 {service.process.description && <p className="text-base text-gray-600 mt-4 mb-6 max-w-3xl leading-relaxed">{service.process.description}</p>}
+                 <motion.ol 
                     className="space-y-4" 
                     variants={staggerContainer} initial="initial" whileInView="animate" viewport={{ once: true, amount: 0.2 }}>
                   {service.process.steps.map((step, index) => (
@@ -223,26 +193,20 @@ export default function ServicePage({ params }: { params: Promise<{ serviceId: s
               </SectionWrapper>
             )}
 
-            {/* Tools & Technologies Section */} 
+            {/* Tools & Technologies Section - Conditionally Rendered */} 
             {service.tools?.list && service.tools.list.length > 0 && (
               <SectionWrapper id="tools">
-                 <SectionHeader num={3} title={service.tools.title || 'Technology Stack'} icon={Wrench} /> 
+                 <SectionHeader num={4} title={service.tools.title || 'Technology Stack'} icon={Wrench} /> 
                  {service.tools.description && <p className="text-base text-gray-600 mt-4 mb-6 max-w-3xl leading-relaxed">{service.tools.description}</p>} 
                 <motion.div 
                   className="flex flex-wrap gap-3"
                   variants={staggerContainer} initial="initial" whileInView="animate" viewport={{ once: true, amount: 0.2 }}
                 >
                   {service.tools.list.map((tool, index) => {
-                    const logoUrl = getToolLogoUrl(tool);
                     return (
                       <motion.div key={index} variants={fadeInUp}>
-                         {/* Slightly smaller badges */}
                         <Badge variant="secondary" className="flex items-center px-3 py-1.5 bg-gray-100 border-gray-200 text-gray-700 text-sm font-medium rounded-md">
-                          {logoUrl ? (
-                            <Image src={logoUrl} alt={tool} width={16} height={16} className="mr-1.5 object-contain" onError={handleImageError} />
-                          ) : (
-                            <Wrench size={14} className="mr-1.5 text-gray-500" /> 
-                          )}
+                           <Wrench size={14} className="mr-1.5 text-gray-500" /> 
                           {tool}
                         </Badge>
                       </motion.div>
@@ -252,10 +216,10 @@ export default function ServicePage({ params }: { params: Promise<{ serviceId: s
               </SectionWrapper>
             )}
 
-            {/* Case Studies Section */} 
+            {/* Case Studies Section - Conditionally Rendered */} 
             {service.caseStudies?.projects && service.caseStudies.projects.length > 0 && (
               <SectionWrapper id="case-studies">
-                 <SectionHeader num={4} title={service.caseStudies.title || 'Related Projects'} icon={Briefcase} /> 
+                 <SectionHeader num={5} title={service.caseStudies.title || 'Related Projects'} icon={Briefcase} /> 
                  {service.caseStudies.description && <p className="text-base text-gray-600 mt-4 mb-6 max-w-3xl leading-relaxed">{service.caseStudies.description}</p>} 
                 <motion.div 
                   className="grid gap-6 grid-cols-1 sm:grid-cols-2"
@@ -292,10 +256,10 @@ export default function ServicePage({ params }: { params: Promise<{ serviceId: s
               </SectionWrapper>
             )}
 
-            {/* FAQ Section - Consistent Styling */} 
+            {/* FAQ Section - Conditionally Rendered */} 
             {service.faq?.questions && service.faq.questions.length > 0 && (
               <SectionWrapper id="faq">
-                 <SectionHeader num={5} title={service.faq.title || 'Frequently Asked Questions'} icon={MessageSquare} /> 
+                 <SectionHeader num={6} title={service.faq.title || 'Frequently Asked Questions'} icon={MessageSquare} /> 
                  {service.faq.description && <p className="text-base text-gray-600 mt-4 mb-6 max-w-3xl leading-relaxed">{service.faq.description}</p>} 
                  <Accordion type="single" collapsible className="w-full space-y-3 mt-6">
                   {service.faq.questions.map((faq, index) => (

@@ -22,7 +22,7 @@ export default function Home() {
   // Initialize intersection observer for animations
   useEffect(() => {
     if (typeof window === 'undefined') return
-    
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -34,10 +34,10 @@ export default function Home() {
       },
       { threshold: 0.1 }
     )
-    
+
     const elements = document.querySelectorAll('.animate-on-scroll')
     elements.forEach((el) => observer.observe(el))
-    
+
     return () => {
       elements.forEach((el) => observer.unobserve(el))
     }
@@ -123,7 +123,7 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        
+
         {/* Key metrics section */}
         <section className='py-16 bg-white'>
           <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
@@ -142,25 +142,25 @@ export default function Home() {
             </div>
           </div>
         </section>
-        
+
         {/* About section */}
         <section className='py-20 bg-gray-50'>
           <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
             <div className='grid md:grid-cols-2 gap-12 items-center'>
               <div className='animate-on-scroll'>
                 <div className='pulse-chip mb-6'>
-                  <span className='inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2'>01</span>
+                  <span className='inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2'>02</span>
                   <span>About Us</span>
                 </div>
-                <h2 className='text-3xl md:text-4xl font-display font-bold mb-6'>India's Leading BIM & Design Innovation Specialists</h2>
+                <h2 className='text-3xl md:text-4xl font-display font-bold mb-6'>Committed Professionals Delivering Cutting-Edge Engineering Solutions</h2>
                 <p className='text-gray-600 mb-6'>
-                  Founded in 2020, MorphVision LLP has rapidly grown into a trusted name in BIM, Detailed Designing, Scanning, Redevelopment, and Turnkey Project Solutions. Our 40+ skilled professionals have completed over 190 successful projects across various industries.
+                  Morph Vision LLP is a group of committed professionals passionate about delivering cutting-edge engineering solutions. We specialize in providing comprehensive BIM (Building Information Modeling) services to assist our clients in achieving optimized project outcomes through strategic design, modeling, and coordination.
                 </p>
                 <p className='text-gray-600 mb-8'>
-                  Based in India with offices in Nagpur, Nashik, and Mumbai, we\'re committed to delivering cutting-edge solutions that combine innovation, technology, and a client-centric approach to transform industries.
+                  With a global footprint spanning countries like Canada, USA, Qatar, Saudi Arabia, UAE, Bahrain, Benin, Sri Lanka, Singapore, Uzbekistan, and India, we are dedicated to excellence and innovation in the AEC industry.
                 </p>
-                <Link 
-                  href='/about' 
+                <Link
+                  href='/about'
                   className='inline-flex items-center text-pulse-500 font-medium group'
                 >
                   Learn more about our journey
@@ -178,59 +178,59 @@ export default function Home() {
             </div>
           </div>
         </section>
-        
+
         {/* Services Section - Using the new HumanoidSection */}
         <HumanoidSection />
-        
+
         {/* Industries section */}
         <section className='py-20 bg-gray-50'>
           <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
             <div className='mb-16 animate-on-scroll'>
               <div className='pulse-chip inline-flex mb-6'>
-                <span className='inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2'>03</span>
+                <span className='inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2'>04</span>
                 <span>Industries We Serve</span>
               </div>
               <h2 className='text-3xl md:text-4xl font-display font-bold mb-6'>Specialized Solutions for Diverse Sectors</h2>
               <p className='text-gray-600 max-w-3xl'>
-                We deliver tailored BIM and engineering solutions for a wide range of industries, ensuring compliance with specific requirements and standards.
+                Our diverse portfolio encompasses a wide range of industries. We deliver tailored BIM and engineering solutions ensuring compliance and optimized project outcomes.
               </p>
             </div>
-            
+
             <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-8'>
               {[
                 {
-                  title: 'Pharmaceutical',
-                  description: 'Clean room design, manufacturing facilities, and compliance with pharmaceutical regulations.',
+                  title: 'Healthcare & Pharma',
+                  description: 'Advanced BIM for hospitals, labs, and pharmaceutical facilities, ensuring compliance and efficiency.',
                   icon: <Hospital className='w-8 h-8 text-pulse-500' />
                 },
                 {
-                  title: 'Industrial & Manufacturing',
-                  description: 'Factory layouts, production lines, utility systems, and warehouse facilities.',
+                  title: 'Hotel & Residency',
+                  description: 'Comprehensive modeling and coordination for luxury hotels and residential complexes.',
+                  icon: <Building2 className='w-8 h-8 text-pulse-500' /> 
+                },
+                {
+                  title: 'Industrial',
+                  description: 'Solutions for manufacturing plants, substations, and complex industrial processes.',
                   icon: <Factory className='w-8 h-8 text-pulse-500' />
                 },
                 {
-                  title: 'Commercial & Residential',
-                  description: 'Office buildings, shopping complexes, residential developments, and mixed-use projects.',
+                  title: 'Commercial',
+                  description: 'BIM for airports, data centers, office buildings, and large-scale commercial developments.',
                   icon: <Building2 className='w-8 h-8 text-pulse-500' />
                 },
                 {
-                  title: 'Healthcare',
-                  description: 'Hospitals, clinics, laboratories, and specialized medical facilities.',
-                  icon: <Hospital className='w-8 h-8 text-pulse-500' />
-                },
-                {
-                  title: 'Data Centers & Tech',
-                  description: 'Data center facilities, server rooms, and technology infrastructure.',
-                  icon: <Sparkles className='w-8 h-8 text-pulse-500' />
-                },
-                {
-                  title: 'Infrastructure',
-                  description: 'Urban development, transportation facilities, and civic structures.',
+                  title: 'Scan to BIM',
+                  description: 'Accurate conversion of laser scans into detailed 3D models for renovation and retrofits.',
                   icon: <Landmark className='w-8 h-8 text-pulse-500' />
+                },
+                {
+                  title: 'Family Creation',
+                  description: 'Custom parametric and non-parametric BIM families tailored to specific project needs.',
+                  icon: <Sparkles className='w-8 h-8 text-pulse-500' />
                 }
               ].map((industry, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className='bg-white rounded-xl shadow-elegant hover:shadow-elegant-hover transition-all duration-300 p-6 animate-on-scroll'
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
@@ -242,76 +242,64 @@ export default function Home() {
             </div>
           </div>
         </section>
-        
+
         {/* Featured Projects Section */}
         <section id="projects" className="py-24 bg-gray-50">
           <div className="container px-6 mx-auto">
-            <div className="mb-20">
-              <h2 className="text-4xl font-bold mb-4">Featured Projects</h2>
-              <p className="text-lg text-gray-600 max-w-2xl">
-                Our BIM solutions have delivered measurable results for clients across diverse industries.
-              </p>
+            <div className='pulse-chip inline-flex mb-6'>
+              <span className='inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2'>05</span>
+              <span>Featured Projects</span>
             </div>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">Showcasing Our Expertise</h2>
+            <p className="text-lg text-gray-600 mb-12 max-w-3xl">From complex healthcare facilities to large-scale industrial plants, our portfolio highlights our capability to deliver excellence across diverse sectors.</p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  id: "hospital-complex",
-                  title: "Hospital Complex",
-                  description: "State-of-the-art healthcare facility with integrated BIM systems for optimal patient care.",
-                  category: "Healthcare"
-                },
-                {
-                  id: "pharma-cleanroom",
-                  title: "Pharmaceutical Clean Room",
-                  description: "Precision-engineered clean room designed to meet strict pharmaceutical manufacturing standards.",
-                  category: "Pharmaceutical"
-                },
-                {
-                  id: "manufacturing-plant",
-                  title: "Industrial Manufacturing Plant",
-                  description: "Advanced manufacturing facility with optimized production flows and integrated systems.",
-                  category: "Industrial"
-                }
-              ].map((project, index) => (
-                <div key={index} className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {projects.slice(0, 3).map((project, index) => (
+                <Link
+                  key={project.id}
+                  href={`/projects/${project.id}`}
+                  className="group bg-white rounded-xl shadow-elegant overflow-hidden hover:shadow-elegant-hover transition-all duration-300 animate-on-scroll"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
                   <div className="relative h-60">
-                    <Image 
-                      src={`/background-section${index + 1}.png`} 
-                      alt={project.title} 
-                      fill 
-                      className="object-cover" 
+                    <Image
+                      src={project.image || '/placeholder.png'}
+                      alt={project.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent"></div>
-                    <div className="absolute bottom-0 left-0 p-6">
-                      <span className="text-xs font-semibold px-2 py-1 rounded-full bg-white/20 text-white backdrop-blur-sm mb-2 inline-block">{project.category}</span>
-                      <h3 className="text-xl font-bold text-white">{project.title}</h3>
-                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <span className="absolute top-4 right-4 bg-pulse-500 text-white text-xs font-medium px-3 py-1 rounded-full">
+                      {project.category}
+                    </span>
                   </div>
                   <div className="p-6">
-                    <p className="text-gray-700 mb-4">{project.description}</p>
-                    <a href={`/projects/${project.id}`} className="text-primary font-medium inline-flex items-center">
-                      View Project <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </a>
+                    <h3 className="text-xl font-semibold mb-2 group-hover:text-pulse-500 transition-colors">
+                      {project.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm line-clamp-2">
+                      {project.description}
+                    </p>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
         </section>
-        
+
         {/* Testimonials section - using new Testimonials component */}
         <Testimonials />
-        
+
         {/* FAQ Section */}
-        <FaqSection />
-        
+        {/* <FaqSection /> */}
+
         {/* Newsletter Section */}
         <Newsletter />
-        
+
         {/* Project CTA section - using new ProjectCTA component */}
         <ProjectCTA />
-        
+
       </main>
     </div>
   )

@@ -24,7 +24,7 @@ const Footer = () => {
               Your trusted partner for BIM, Detailed Designing, Scanning, Redevelopment, and Turnkey Project Solutions.
             </p>
             <p className="text-gray-600 font-medium italic">
-              "YOUR VISION, OUR INNOVATION"
+              "One Stop Engineering Solutions"
             </p>
           </div>
           

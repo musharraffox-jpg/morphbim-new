@@ -11,6 +11,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import ProjectCTA from '@/components/ProjectCTA';
+import { services } from '@/app/data/services'; // Import services data
 
 
 interface Service {
@@ -171,65 +172,35 @@ export default function ServicesPage() {
             <div className="max-w-3xl">
               <div className="pulse-chip mb-6">
                 <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">01</span>
-                <span>Services</span>
+                <span>Our Services</span>
               </div>
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-                Our Services
+                Comprehensive Engineering & BIM Solutions
               </h1>
               
-              <p className="text-xl  mb-8">
-                Comprehensive BIM solutions to enhance your construction projects.
+              <p className="text-xl mb-8">
+                We offer a variety of specialized services across different sectors, leveraging cutting-edge technology and deep expertise to deliver optimized project outcomes.
               </p>
             </div>
           </div>
         </section>
         
-        {/* Services overview */}
+        {/* Services overview grid (Updated to use data from services.ts) */}
         <section className="py-20 bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {[
-                  {
-                    id: 'pharmaceutical',
-                    title: 'Pharmaceutical Cleanrooms and Manufacturing Units',
-                    description: 'Specialized BIM solutions for pharmaceutical facilities, ensuring compliance with GMP standards and cleanroom requirements.',
-                    icon: (
-                      <svg className="w-6 h-6 text-pulse-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                      </svg>
-                    )
-                  },
-                  {
-                    id: 'industrial',
-                    title: 'Industrial Plants and Utility Systems',
-                    description: 'Comprehensive BIM modeling and coordination for complex industrial facilities and utility infrastructure.',
-                    icon: (
-                      <svg className="w-6 h-6 text-pulse-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                      </svg>
-                    )
-                  },
-                  {
-                    id: 'infrastructure',
-                    title: 'Redevelopment of Urban Infrastructure',
-                    description: 'Smart city solutions and infrastructure redevelopment using advanced BIM technologies.',
-                    icon: (
-                      <svg className="w-6 h-6 text-pulse-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
-                      </svg>
-                    )
-                  }
-                ].map((service) => (
+                {services.map((service) => (
                   <Link
                     key={service.id}
                     href={`/services/${service.id}`}
-                    className="group bg-white rounded-xl p-6 border border-gray-200 hover:border-pulse-500 transition-all duration-300 hover:shadow-lg"
+                    className="group bg-white rounded-xl p-6 border border-gray-200 hover:border-pulse-500 transition-all duration-300 hover:shadow-lg animate-on-scroll"
                   >
                     <div className="mb-6">
                       <div className="w-12 h-12 rounded-lg bg-pulse-500/10 flex items-center justify-center mb-4">
-                        {service.icon}
+                         {/* Placeholder Icon - Can be improved later */}
+                         <svg className="w-6 h-6 text-pulse-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                       </div>
                       
                       <h3 className="text-xl font-semibold mb-2 group-hover:text-pulse-500 transition-colors">
@@ -251,12 +222,62 @@ export default function ServicesPage() {
             </div>
           </div>
         </section>
-        
-        {/* Approach section */}
+
+        {/* Detailed BIM Services Section (from PDF) */}
         <section className="py-20 bg-gray-50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto mb-16 animate-on-scroll">
+              <div className="pulse-chip inline-flex mb-6">
+                  <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">02</span>
+                  <span>BIM Specialization</span>
+              </div>
+              <h2 className="text-3xl font-display font-bold mb-4">Comprehensive BIM Solutions</h2>
+              <p className="text-gray-600 mb-6">
+                We provide comprehensive BIM solutions tailored to client needs, covering the entire project lifecycle.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-on-scroll">
+              {[
+                {
+                  title: "BIM Implementation & Strategy",
+                  description: "Tailored solutions for adopting and strategizing BIM implementation on projects."
+                },
+                {
+                  title: "Design Modeling & Clash Detection",
+                  description: "Creating detailed 3D visualizations to identify and resolve design conflicts early."
+                },
+                {
+                  title: "4D Scheduling & 5D Cost Estimation",
+                  description: "Integrating time and cost into the BIM model for efficient project management."
+                },
+                {
+                  title: "Facility Management with As-Built Models",
+                  description: "Delivering accurate as-built documentation for efficient facility operations and maintenance."
+                },
+                {
+                  title: "Data Analytics & Software Integration",
+                  description: "Customizing solutions and integrating software to optimize project outcomes through data insights."
+                }
+              ].map((item, index) => (
+                <div key={index} className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
+                  <h3 className="text-lg font-semibold mb-2 text-pulse-600">{item.title}</h3>
+                  <p className="text-gray-600 text-sm">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+        
+        {/* Approach section - Kept for context */}
+        <section className="py-20 bg-white"> 
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
+              <div className="animate-on-scroll">
+                <div className="pulse-chip inline-flex mb-6">
+                    <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">03</span>
+                    <span>Our Approach</span>
+                </div>
                 <h2 className="text-3xl font-display font-bold mb-6">Our Approach to BIM Excellence</h2>
                 <p className="text-gray-700 mb-8">
                   At MorphVision, we believe that effective Building Information Modeling goes beyond just creating 3D models. Our comprehensive approach integrates people, processes, and technology to deliver exceptional results.
@@ -296,7 +317,7 @@ export default function ServicesPage() {
                 </div>
               </div>
               
-              <div className="relative">
+              <div className="relative animate-on-scroll" style={{ animationDelay: "0.1s" }}>
                 <div className="aspect-[4/3] rounded-xl overflow-hidden relative">
                   <Image 
                     src="/background-section2.png" 
@@ -325,122 +346,70 @@ export default function ServicesPage() {
           </div>
         </section>
         
-        {/* Industries section */}
-        <section className="py-20 bg-white">
+        {/* Industries section - Simplified */}
+        <section className="py-20 bg-gray-50"> 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="mb-16">
-              <h2 className="text-3xl font-display font-bold mb-4">Industries We Serve</h2>
+            <div className="mb-16 animate-on-scroll">
+               <div className="pulse-chip inline-flex mb-6">
+                    <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">04</span>
+                    <span>Industries Served</span>
+                </div>
+              <h2 className="text-3xl font-display font-bold mb-4">Industries We Empower</h2>
               <p className="text-gray-600 max-w-3xl">
-                Our BIM services cater to a wide range of sectors, each with their unique requirements and challenges.
+                Our versatile BIM services cater to a wide spectrum of sectors, adapting to the unique demands and challenges of each.
               </p>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 animate-on-scroll">
               {[
-                {
-                  name: 'Commercial',
-                  icon: '/images/services/default-icon.svg'
-                },
-                {
-                  name: 'Residential',
-                  icon: '/images/services/default-icon.svg'
-                },
-                {
-                  name: 'Healthcare',
-                  icon: '/images/services/default-icon.svg'
-                },
-                {
-                  name: 'Education',
-                  icon: '/images/services/default-icon.svg'
-                },
-                {
-                  name: 'Infrastructure',
-                  icon: '/images/services/default-icon.svg'
-                },
-                {
-                  name: 'Industrial',
-                  icon: '/images/services/default-icon.svg'
-                }
+                "Healthcare & Pharma",
+                "Hotel & Residency",
+                "Industrial",
+                "Commercial",
+                "Infrastructure", // Added based on general capabilities
+                "Scan to BIM Projects"
               ].map((industry, index) => (
-                <div key={index} className="bg-gray-50 rounded-xl p-6 hover:bg-pulse-50 transition-colors">
-                  <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center mx-auto mb-4">
-                    <Image 
-                      src={industry.icon} 
-                      alt={industry.name} 
-                      width={32} 
-                      height={32}
-                    />
-                  </div>
-                  <h3 className="font-medium text-center">{industry.name}</h3>
+                <div key={index} className="bg-white rounded-xl p-4 text-center border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                  <h3 className="font-medium text-gray-700">{industry}</h3>
                 </div>
               ))}
             </div>
           </div>
         </section>
         
-        {/* Testimonial section */}
-        <section className="py-20 bg-gray-50">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto text-center">
-              <div className="mb-8">
-                <svg className="w-12 h-12 text-pulse-500 mx-auto" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
-              </div>
-              
-              <blockquote className="text-2xl font-display mb-8">
-                "MorphVision's BIM services transformed our project delivery approach. Their team's expertise helped us reduce coordination issues by 70% and achieve substantial cost savings throughout construction."
-              </blockquote>
-              
-              <div className="flex items-center justify-center">
-                <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
-                  <Image 
-                    src="/images/testimonials/client-1.jpg" 
-                    alt="Client" 
-                    width={48} 
-                    height={48}
-                  />
-                </div>
-                <div className="text-left">
-                  <div className="font-semibold">Rajiv Sharma</div>
-                  <div className="text-gray-600 text-sm">Project Director, Megastructures Ltd</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Removed Testimonial Section - Assuming it exists elsewhere or can be added later */}
         
-        {/* FAQ section with updated styling */}
-        <section className="py-20 bg-gray-50">
+        {/* FAQ section - Simplified for main services page */}
+        <section className="py-20 bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-16">
+              <div className="text-center mb-16 animate-on-scroll">
+                 <div className="pulse-chip inline-flex mb-6">
+                    <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">05</span>
+                    <span>Common Questions</span>
+                </div>
                 <h2 className="text-3xl font-semibold mb-4">Frequently Asked Questions</h2>
                 <p className="text-gray-600">
-                  Get answers to common questions about our BIM services, process, and capabilities
+                  Answers to common inquiries about our general BIM services and processes.
                 </p>
               </div>
               
-              <div className="space-y-4">
+              <div className="space-y-4 animate-on-scroll">
                 {[
                   {
-                    question: "What types of projects does MorphVision specialize in?",
-                    answer: "MorphVision specializes in a wide range of projects including pharmaceutical cleanrooms, manufacturing units, industrial plants, utility systems, urban infrastructure redevelopment, pre-engineered buildings, hospitals, data centers, and commercial & residential projects. We have expertise in BIM modeling, detailed designing, scanning, redevelopment, and turnkey project solutions."
+                    question: "What makes MorphVision different in the BIM space?",
+                    answer: "Our key differentiators include our multidisciplinary team of 40+ experts, a proven track record of 190+ projects, commitment to global standards, a client-first approach, and continuous focus on innovation using tools like Revit, Navisworks, and Unreal Engine."
                   },
                   {
-                    question: "How does the project process work with MorphVision?",
-                    answer: "Our project process follows a systematic approach: Initial consultation and requirements gathering, followed by BIM execution plan development, model creation, coordination and clash detection, quality assurance, and final documentation delivery. We maintain clear communication throughout the project lifecycle."
+                    question: "How do you ensure quality in your BIM models and services?",
+                    answer: "We employ rigorous quality assurance processes, adhere to international standards like ISO 19650, use advanced clash detection techniques, and maintain clear communication protocols throughout the project lifecycle to ensure high-quality deliverables."
                   },
                   {
-                    question: "What software and technologies does MorphVision use?",
-                    answer: "We utilize industry-leading software including Autodesk Revit, Navisworks, BIM 360, Dynamo, Tekla Structures, and Solibri Model Checker. Our team stays updated with the latest BIM technologies to deliver optimal solutions."
-                  },
-                  {
-                    question: "How long does a typical project take?",
-                    answer: "Project duration varies based on scope, complexity, and requirements. A typical project can range from a few weeks to several months. We provide detailed timelines during the initial consultation phase."
+                    question: "Can you handle projects of different sizes and complexities?",
+                    answer: "Yes, our team has experience across a wide range of project scales, from specific component modeling (like Family Creation or Scan to BIM) to large-scale, complex projects involving architectural, structural, and MEPF coordination for sectors like healthcare, industrial, and commercial developments."
                   }
                 ].map((faq, index) => (
-                  <div key={index} className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                  <div key={index} className="bg-gray-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
                     <h3 className="text-lg font-semibold mb-2">{faq.question}</h3>
                     <p className="text-gray-600">{faq.answer}</p>
                   </div>
@@ -450,24 +419,8 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        {/* Project CTA with gradient background */}
-        <section className="py-20 bg-gradient-to-r from-[#20133d] to-[#512888] text-white">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl font-semibold mb-4">Ready to Transform Your Projects?</h2>
-              <p className="text-xl text-white/90 mb-8">
-                Get in touch with our team to explore how our BIM solutions can elevate your construction projects.
-              </p>
-              <Link
-                href="/contact"
-                className="inline-flex items-center px-8 py-3 bg-white text-[#20133d] font-medium rounded-full hover:bg-gray-100 transition-colors"
-              >
-                Contact Us Today
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Link>
-            </div>
-          </div>
-        </section>
+        {/* Project CTA */}
+        <ProjectCTA />
 
       </main>
     </div>

@@ -188,12 +188,12 @@ export default function ContactPage() {
                   <div className="bg-pulse-50 rounded-xl p-6">
                     <h3 className="text-xl font-semibold mb-3">Our Services</h3>
                     <ul className="list-disc list-inside space-y-2 text-gray-700">
-                      <li>BIM Modeling & Detailed Designing</li>
-                      <li>3D & 4D Modeling</li>
-                      <li>Scanning & Redevelopment</li>
-                      <li>Project Coordination & Management</li>
-                      <li>Turnkey Project Solutions</li>
-                      <li>Virtual Reality & AR Solutions</li>
+                      <li>Architectural & Structural Engineering</li>
+                      <li>MEP Engineering</li>
+                      <li>Industrial & Pharma Design</li>
+                      <li>Scan to BIM</li>
+                      <li>AR/VR Solutions</li>
+                      <li>Family Creation</li>
                     </ul>
                   </div>
                 </div>

@@ -43,10 +43,10 @@ export default function AboutPage() {
                 <span>About Us</span>
               </div>
               
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6">Redefining Industries through Innovation</h1>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6">About Morph Vision LLP</h1>
               
               <p className="text-xl text-gray-600 mb-12">
-                Morph is an Indian-based Company Renowned for its Expertise in BIM, Detailed Designing, Scanning, Redevelopment, and Turnkey Project Solutions. Since our Inception, we have been Reshaping Industries by Combining Innovation, Technology, and a Client-Centric approach.
+                Morph Vision LLP is a group of committed professionals passionate about delivering cutting-edge engineering solutions. We specialize in providing comprehensive BIM (Building Information Modeling) services to assist our clients in achieving optimized project outcomes through strategic design, modeling, and coordination.
               </p>
               
               <div className="relative rounded-2xl overflow-hidden aspect-video mb-12">
@@ -81,14 +81,14 @@ export default function AboutPage() {
                   <span>Company History</span>
                 </div>
                 
-                <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6">From Vision to Industry Leader</h2>
+                <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6">Our Story</h2>
                 
                 <p className="text-lg text-gray-600 mb-6">
-                  Founded in 2020 by a Team of Three Passionate Individuals, Morph Officially Registered in 2023. Starting as a small Venture, the Company has Grown into a Multidisciplinary Powerhouse with 40+ Skilled Professionals.
+                  Founded by committed professionals passionate about engineering solutions, Morph Vision LLP has grown into a multidisciplinary team specializing in BIM services.
                 </p>
                 
                 <p className="text-lg text-gray-600 mb-6">
-                  Our team specializes in Architecture, Structural, MEPF, Civil, Electrical, and Mechanical Engineering. With Expertise in Detailed Design, BIM modeling, AR/VR Rendering, and Innovative Industry Platforms, MorphVision has Successfully Delivered 190+ Projects across Various Domains.
+                  Our team includes experts in Architecture, Structural, MEPF, Civil, Electrical, and Mechanical Engineering. We leverage expertise in detailed design, BIM modeling, AR/VR rendering, and custom platforms to deliver successful projects across diverse domains.
                 </p>
                 
                 <p className="text-lg text-gray-600">
@@ -159,34 +159,44 @@ export default function AboutPage() {
                 <span>Our Expertise</span>
               </div>
               
-              <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6">Building Innovation, Modeling the Future</h2>
+              <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6">Our Expertise</h2>
               
               <p className="text-lg text-gray-600">
-                With a Strong Commitment to Innovation and Precision, MorphVision LLP Specializes in:
+                We offer a variety of specialized services across different sectors:
               </p>
             </div>
             
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
                 {
-                  title: "Building Information Modeling (BIM)",
-                  description: "Using Advanced tools like Revit, Navisworks, and Unreal Engine to Deliver Seamless Project Designs and Walkthroughs.",
+                  title: "Architectural & Structural Engineering",
+                  description: "Comprehensive architectural and structural design and modeling.",
                   icon: "🏗️"
                 },
                 {
-                  title: "Redevelopment & Scanning Projects",
-                  description: "Revamping Outdated Facilities Into Modern, Sustainable Infrastructures.",
+                  title: "MEP Engineering",
+                  description: "Design and modeling of Mechanical, Electrical & Plumbing systems. MEP coordination and clash detection.",
+                  icon: "🔧"
+                },
+                {
+                  title: "Industrial & Pharma Design",
+                  description: "Expertise in designing industrial plants and pharmaceutical machinery setups.",
+                  icon: "🏭"
+                },
+                {
+                  title: "Scan to BIM",
+                  description: "Converting laser scans into detailed 3D BIM models for accurate renovations and retrofits.",
                   icon: "🔍"
                 },
                 {
-                  title: "AR/VR-Driven Engineering",
-                  description: "Interactive Walkthroughs and Immersive Project Visualizations for Better Decision-Making.",
+                  title: "AR/VR Solutions",
+                  description: "Immersive Augmented Reality & Virtual Reality solutions to enhance design visualizations.",
                   icon: "🥽"
                 },
                 {
-                  title: "Turnkey Project Solutions",
-                  description: "Managing all Phases of a Project — from Conceptual Design to Execution — with Unparalleled Efficiency.",
-                  icon: "🔑"
+                  title: "Family Creation",
+                  description: "Developing custom BIM families (parametric and non-parametric) for project needs.",
+                  icon: "🧩"
                 }
               ].map((expertise, index) => (
                 <div key={index} className="bg-white rounded-2xl p-6 shadow-elegant hover:shadow-elegant-hover transition-all duration-300 animate-on-scroll" style={{ animationDelay: `${index * 0.1}s` }}>
@@ -208,21 +218,21 @@ export default function AboutPage() {
                 <span>Diverse Portfolio</span>
               </div>
               
-              <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6">Our 190+ Projects</h2>
+              <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6">Index of Projects</h2>
               
               <p className="text-lg text-gray-600">
-                Our projects reflect our commitment to innovation and excellence across industries like:
+                Our diverse portfolio encompasses a wide range of industries, including:
               </p>
             </div>
             
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
               {[
-                "Pharmaceutical Cleanrooms and Manufacturing Units",
-                "Industrial Plants and Utility Systems",
-                "Redevelopment of Urban Infrastructure",
-                "Pre-engineered Buildings and Civil Construction",
-                "Hospitals, SemiCon, Data-Center",
-                "Commercial & Residential Projects"
+                "Healthcare & Pharma",
+                "Hotel & Residency",
+                "Industrial",
+                "Commercial",
+                "Scan to BIM",
+                "Family Creation"
               ].map((project, index) => (
                 <div 
                   key={index} 
@@ -235,6 +245,37 @@ export default function AboutPage() {
                   <p className="text-lg font-medium">{project}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+        
+        {/* Global Footprint Section */}
+        <section className="w-full bg-gray-50 py-16 md:py-24">
+          <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
+            <div className="max-w-3xl mx-auto text-center mb-16 animate-on-scroll">
+              <div className="pulse-chip inline-flex mb-6">
+                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">*</span> 
+                <span>Global Footprint</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6">Our International Presence</h2>
+              <p className="text-lg text-gray-600">
+                Morph Vision LLP has a broad international presence, working with clients across the globe:
+              </p>
+            </div>
+            <div className="max-w-4xl mx-auto text-center animate-on-scroll" style={{ animationDelay: "0.1s" }}>
+              <ul className="flex flex-wrap justify-center gap-x-8 gap-y-4 text-lg text-gray-700">
+                <li>CANADA</li>
+                <li>USA</li>
+                <li>QATAR</li>
+                <li>SAUDI ARABIA</li>
+                <li>UAE</li>
+                <li>BAHRAIN</li>
+                <li>BENIN</li>
+                <li>SRI LANKA</li>
+                <li>SINGAPORE</li>
+                <li>UZBEKISTAN</li>
+                <li>INDIA</li>
+              </ul>
             </div>
           </div>
         </section>
