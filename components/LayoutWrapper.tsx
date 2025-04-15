@@ -8,6 +8,15 @@ interface LayoutWrapperProps {
   id?: string
 }
 
+// --- Section Header Component Props ---
+// Moved interface here for better organization
+interface SectionHeaderProps {
+  num?: number | string;
+  title: string;
+  icon?: React.ElementType; // Keep React.ElementType for flexibility
+  className?: string; // Add className prop
+}
+
 export function LayoutWrapper({ children, className, centered = false, id }: LayoutWrapperProps) {
   return (
     <div className={cn(
@@ -20,10 +29,11 @@ export function LayoutWrapper({ children, className, centered = false, id }: Lay
   )
 }
 
-export function SectionWrapper({ children, className, centered = false, id }: LayoutWrapperProps) {
+export function SectionWrapper({ children, className, id }: LayoutWrapperProps) {
   return (
     <section className={cn(
       'w-full',
+      'py-8 sm:py-12',
       'text-left',
       className
     )} id={id}>
@@ -70,4 +80,20 @@ export function ListWrapper({ children, className, id }: LayoutWrapperProps) {
       {children}
     </ul>
   )
-} 
+}
+
+// --- Section Header Component ---
+// Add the component definition here
+export const SectionHeader: React.FC<SectionHeaderProps> = ({ num, title, icon: Icon, className }) => (
+  <div className={cn("flex items-center gap-4 md:gap-6 mb-8 md:mb-12", className)}>
+    <div className="flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full bg-pulse-100 border border-pulse-200">
+      {num ? (
+        <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white text-xs font-bold">{num}</span>
+      ) : Icon ? (
+        <Icon className="w-5 h-5 text-pulse-500" />
+      ) : null}
+      <span className="font-medium text-pulse-700 text-sm tracking-wide uppercase">{title}</span>
+    </div>
+    <div className="flex-1 h-px bg-gradient-to-r from-pulse-200 to-transparent"></div>
+  </div>
+); 
