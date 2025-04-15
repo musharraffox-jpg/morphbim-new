@@ -3,20 +3,27 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { 
   ArrowRight, Check, Home, ChevronRight, Sparkles, Layers, Wrench, Briefcase, MessageSquare, 
-  CheckCircle, Star, Phone, Target // Added Target
+  CheckCircle, Star, Phone, Target, PencilRuler, Building2, Layers3, Leaf, Users2, ShieldCheck, Ruler, Clock, X
 } from 'lucide-react' // Keeping essential icons
 import { notFound } from 'next/navigation'
 import { LayoutWrapper, SectionWrapper, SectionHeader } from '@/components/LayoutWrapper'
-import { services, Service } from '@/app/data/services' // Assuming Service type is exported
+import { services, Service } from '@/app/data/services'
+import { projects } from '@/app/data/projects'
 import { Button } from '@/components/ui/button'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 
 // --- Helper Functions & Data ---
+
+const LucideIcons = { 
+  ArrowRight, Check, Home, ChevronRight, Sparkles, Layers, Wrench, Briefcase, MessageSquare, 
+  CheckCircle, Star, Phone, Target, PencilRuler, Building2, Layers3, Leaf, Users2, ShieldCheck, Ruler, Clock, X
+}
 
 const FALLBACK_IMAGE = '/placeholder.png'; // Use placeholder
 
@@ -32,325 +39,230 @@ const getServiceImagery = (service?: Service): { hero: string; content: string }
 
 // Animation Variants (Subtle) - Copied from project page for consistency
 const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.4, ease: "easeOut" }
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' } }
 };
 
-const staggerContainer = {
-  animate: {
-    transition: {
-      staggerChildren: 0.08 // Slightly faster stagger
-    }
-  }
+const stagger = {
+  visible: { transition: { staggerChildren: 0.15 } }
 };
 
 // --- Service Page Component ---
 
+type ProjectGalleryItem = {
+  image: string
+  title: string
+  location: string
+  scope: string
+  highlights: string[]
+}
+
 export default function ServicePage({ params }: { params: Promise<{ serviceId: string }> }) {
   const unwrappedParams = React.use(params)
-  const service = services.find(s => s.id === unwrappedParams.serviceId) as Service | undefined
-  
-  if (!service) {
-    notFound()
-  }
+  const service = services.find(s => s.id === unwrappedParams.serviceId)
+  const [modal, setModal] = React.useState<ProjectGalleryItem | null>(null)
+  if (!service) return null
 
-  const { hero: heroImage, content: contentImage } = getServiceImagery(service);
+  // Project gallery: filter projects by service.id
+  const relatedProjects = projects.filter(p => (p.services || []).some(svc => svc.toLowerCase().replace(/[^a-z0-9]/g, '').includes(service.id.replace(/[^a-z0-9]/g, '')))).slice(0, 3)
 
-  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    event.currentTarget.src = FALLBACK_IMAGE;
-  };
+  // Helper for icons
+  const Icon = (name: string) => (LucideIcons as any)[name] || (LucideIcons as any)['Circle']
+
+  const heroImage = service.image || '/placeholder.png'
+
+  // Parallax for hero image
+  const { scrollY } = useScroll()
+  const y = useTransform(scrollY, [0, 400], [0, 80])
 
   return (
-    <div className="min-h-screen bg-gray-50"> {/* Changed base bg to gray-50 */}
-      
-      {/* --- Hero Section --- */}
-      <div className="relative h-[45vh] md:h-[50vh] w-full flex items-end text-white">
-        <Image
-          src={heroImage}
-          alt={`${service.title} Hero Banner`}
-          fill
-          priority
-          className="object-cover z-0"
-          onError={handleImageError}
-        />
-        {/* Overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent z-10"></div>
-        <LayoutWrapper className="relative z-20 pb-8 md:pb-12">
-          <motion.div variants={fadeInUp} initial="initial" animate="animate">
-            {/* Breadcrumbs */}
-            <nav className="flex items-center space-x-1.5 text-sm text-white/80 mb-3">
-              <Link href="/" className="hover:text-white transition-colors flex items-center">
-                <Home size={14} className="mr-1" /> Home
-              </Link>
-              <ChevronRight size={14} />
-              <Link href="/services" className="hover:text-white transition-colors">Services</Link>
-              <ChevronRight size={14} />
-              <span className="text-white font-medium truncate max-w-[200px] sm:max-w-none">{service.title}</span>
-            </nav>
-            {/* Title and Short Description */}
-            <h1 className="text-4xl sm:text-5xl md:text-5xl font-bold font-display tracking-tight mb-2 text-shadow">
-              {service.title}
-            </h1>
-            <p className="text-base md:text-lg text-white/90 max-w-3xl">
-              {service.description} {/* Keeping it concise for the hero */}
-            </p>
+    <div className="bg-white text-gray-900 min-h-screen">
+      {/* Hero Section */}
+      <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }} variants={fadeInUp} className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+        <Image src={heroImage} alt={service.heroHeadline || service.title} fill priority className="object-cover object-center w-full h-full" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-transparent z-10" />
+        <div className="relative z-20 flex flex-col items-center justify-center text-center w-full px-4 py-32">
+          <motion.h1 variants={fadeInUp} className="font-display text-5xl md:text-7xl font-extrabold text-white mb-6 drop-shadow-xl tracking-tight">
+            {service.heroHeadline}
+          </motion.h1>
+          <motion.p variants={fadeInUp} transition={{ delay: 0.2 }} className="text-white/90 text-2xl md:text-3xl mb-10 max-w-2xl mx-auto">
+            {service.heroSubheadline}
+          </motion.p>
+          <motion.div variants={fadeInUp} transition={{ delay: 0.4 }}>
+            <Button size="lg" className="bg-pulse-500 text-white font-semibold px-10 py-4 rounded-full shadow-xl text-lg" whileHover={{ scale: 1.05 }}>
+              Start Your Project
+            </Button>
           </motion.div>
-        </LayoutWrapper>
-      </div>
+        </div>
+      </motion.section>
 
-      {/* --- Intro Info Card (Similar to Project Page) --- */}
-      <LayoutWrapper className="mt-[-40px] md:mt-[-60px] relative z-30 pb-12 md:pb-16">
-        <motion.div 
-          variants={fadeInUp} 
-          initial="initial" 
-          animate="animate" 
-          transition={{ delay: 0.1 }}
-          className="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-200"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-center">
-            <div className="md:col-span-2">
-              <Badge variant="outline" className="mb-3 border-pulse-200 text-pulse-600 bg-pulse-50">
-                Service Overview
-              </Badge>
-              <h2 className="text-2xl md:text-3xl font-semibold font-display text-gray-900 mb-3">
-                 {service.title} {/* Use h2 for semantic structure */} 
-              </h2>
-              <p className="text-gray-600 text-base leading-relaxed">
-                {service.overview || service.description} {/* Use full overview here */} 
+      {/* Who We Are Section */}
+      {service.whoWeAre && (
+        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeInUp} className="py-24 bg-white">
+          <div className="container mx-auto px-4 sm:px-8 grid md:grid-cols-2 gap-16 items-center">
+            <motion.div variants={fadeInUp} className="relative h-[400px] rounded-2xl overflow-hidden shadow-elegant">
+              <Image src={service.whoWeAre.image || '/placeholder.png'} alt={service.whoWeAre.title} fill className="object-cover w-full h-full" />
+            </motion.div>
+            <motion.div variants={fadeInUp} className="flex flex-col justify-center">
+              <div className="pulse-chip mb-6">
+                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">01</span>
+                <span>Who We Are</span>
+              </div>
+              <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">{service.whoWeAre.title}</h2>
+              <p className="text-gray-600 text-lg md:text-xl leading-relaxed max-w-xl">
+                {service.whoWeAre.paragraph}
               </p>
-            </div>
-             {/* Service Icon */}
-            <div className="hidden md:flex justify-center items-center">
-              <Layers className="w-16 h-16 text-pulse-300 opacity-80" /> 
-            </div>
-          </div>
-        </motion.div>
-      </LayoutWrapper>
-
-      <main className="pt-0 pb-16 md:pb-24"> {/* Removed top padding, added bottom padding */} 
-        {/* --- Main Content Area --- */}
-        <LayoutWrapper className="grid grid-cols-1 lg:grid-cols-3 gap-x-12 lg:gap-x-16 gap-y-12 md:gap-y-16 items-start">
-          
-          {/* --- Left Column (Main Content) --- */} 
-          <div className="lg:col-span-2 space-y-12 md:space-y-16">
-            
-             {/* Visual Context Section */}
-            {contentImage && contentImage !== FALLBACK_IMAGE && ( // Only show if not fallback
-              <SectionWrapper id="visual-overview" className="pt-0">
-                 <SectionHeader num={1} title="Visual Context" icon={Sparkles} />
-                 <div className="relative aspect-video rounded-lg overflow-hidden shadow-md border border-gray-200 mt-6">
-                   <Image 
-                     src={contentImage}
-                     alt={`${service.title} Content Image`}
-                     fill sizes="(max-width: 1024px) 100vw, 66vw"
-                     className="object-cover"
-                     onError={handleImageError}
-                   />
-                 </div>
-              </SectionWrapper>
-            )}
-
-            {/* Features Section */}
-            {service.features && service.features.length > 0 && (
-              <SectionWrapper id="features">
-                 <SectionHeader num={service.process ? 2 : 1} title="Key Features" icon={CheckCircle} /> 
-                 <motion.ul 
-                   className="space-y-3 grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6"
-                   variants={staggerContainer} initial="initial" whileInView="animate" viewport={{ once: true, amount: 0.2 }}
-                 >
-                  {service.features.map((feature, index) => (
-                    <motion.li key={index} variants={fadeInUp} className="flex items-start p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-                      <CheckCircle size={18} className="text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700">{feature}</span>
-                    </motion.li>
-                  ))}
-                </motion.ul>
-              </SectionWrapper>
-            )}
-            
-            {/* Process Section - Conditionally Rendered */}
-            {service.process?.steps && service.process.steps.length > 0 && (
-              <SectionWrapper id="process">
-                 <SectionHeader num={3} title={service.process.title || 'Our Process'} icon={Layers} />
-                 {service.process.description && <p className="text-base text-gray-600 mt-4 mb-6 max-w-3xl leading-relaxed">{service.process.description}</p>}
-                 <motion.ol 
-                    className="space-y-4" 
-                    variants={staggerContainer} initial="initial" whileInView="animate" viewport={{ once: true, amount: 0.2 }}>
-                  {service.process.steps.map((step, index) => (
-                    <motion.li 
-                      key={index} 
-                       // Applying style similar to Project's Solution list
-                      className="flex items-start p-4 bg-white border border-gray-200 rounded-lg shadow-sm"
-                      variants={fadeInUp} 
-                    >
-                       {/* Use CheckCircle or a numbered circle */}
-                       <div className="flex-shrink-0 w-8 h-8 bg-pulse-100 rounded-full text-pulse-700 flex items-center justify-center text-sm font-semibold mr-4">{index + 1}</div>
-                       <p className="text-gray-700 text-base leading-relaxed mt-1">{step}</p> 
-                    </motion.li>
-                  ))}
-                </motion.ol>
-              </SectionWrapper>
-            )}
-
-            {/* Tools & Technologies Section - Conditionally Rendered */} 
-            {service.tools?.list && service.tools.list.length > 0 && (
-              <SectionWrapper id="tools">
-                 <SectionHeader num={4} title={service.tools.title || 'Technology Stack'} icon={Wrench} /> 
-                 {service.tools.description && <p className="text-base text-gray-600 mt-4 mb-6 max-w-3xl leading-relaxed">{service.tools.description}</p>} 
-                <motion.div 
-                  className="flex flex-wrap gap-3"
-                  variants={staggerContainer} initial="initial" whileInView="animate" viewport={{ once: true, amount: 0.2 }}
-                >
-                  {service.tools.list.map((tool, index) => {
-                    return (
-                      <motion.div key={index} variants={fadeInUp}>
-                        <Badge variant="secondary" className="flex items-center px-3 py-1.5 bg-gray-100 border-gray-200 text-gray-700 text-sm font-medium rounded-md">
-                           <Wrench size={14} className="mr-1.5 text-gray-500" /> 
-                          {tool}
-                        </Badge>
-                      </motion.div>
-                    );
-                  })}
-                </motion.div>
-              </SectionWrapper>
-            )}
-
-            {/* Case Studies Section - Conditionally Rendered */} 
-            {service.caseStudies?.projects && service.caseStudies.projects.length > 0 && (
-              <SectionWrapper id="case-studies">
-                 <SectionHeader num={5} title={service.caseStudies.title || 'Related Projects'} icon={Briefcase} /> 
-                 {service.caseStudies.description && <p className="text-base text-gray-600 mt-4 mb-6 max-w-3xl leading-relaxed">{service.caseStudies.description}</p>} 
-                <motion.div 
-                  className="grid gap-6 grid-cols-1 sm:grid-cols-2"
-                  variants={staggerContainer} initial="initial" whileInView="animate" viewport={{ once: true, amount: 0.2 }}
-                >
-                   {service.caseStudies.projects.map((project, index) => (
-                      <motion.div key={index} variants={fadeInUp}>
-                         {/* Standard Card for Case Study - Consistent styling */}
-                        <Card className="overflow-hidden group rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-200 bg-white h-full flex flex-col">
-                          <div className="relative h-48 w-full">
-                            <Image 
-                               src={project.image || FALLBACK_IMAGE} 
-                               alt={project.title} 
-                               fill 
-                               sizes="(max-width: 768px) 100vw, 50vw" 
-                               className="object-cover"
-                               onError={handleImageError} 
-                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                          </div>
-                          <CardContent className="p-5 flex flex-col flex-grow">
-                            <h3 className="text-lg font-semibold text-gray-800 mb-2">{project.title}</h3>
-                            <p className="text-sm text-gray-600 mb-4 line-clamp-3 flex-grow">{project.description}</p>
-                            <Button asChild variant="link" size="sm" className="text-pulse-600 hover:text-pulse-700 mt-auto px-0 self-start group/link font-medium">
-                               <Link href={`/projects/${project.id}`}>
-                                  View Project <ArrowRight className="ml-1 h-4 w-4 group-hover/link:translate-x-0.5 transition-transform" />
-                               </Link>
-                            </Button>
-                          </CardContent>
-                        </Card>
-                      </motion.div>
-                   ))}
-                </motion.div>
-              </SectionWrapper>
-            )}
-
-            {/* FAQ Section - Conditionally Rendered */} 
-            {service.faq?.questions && service.faq.questions.length > 0 && (
-              <SectionWrapper id="faq">
-                 <SectionHeader num={6} title={service.faq.title || 'Frequently Asked Questions'} icon={MessageSquare} /> 
-                 {service.faq.description && <p className="text-base text-gray-600 mt-4 mb-6 max-w-3xl leading-relaxed">{service.faq.description}</p>} 
-                 <Accordion type="single" collapsible className="w-full space-y-3 mt-6">
-                  {service.faq.questions.map((faq, index) => (
-                    <AccordionItem 
-                      key={index} 
-                      value={`item-${index}`} 
-                       // Consistent styling with rounded corners and border 
-                      className="bg-white border border-gray-200 rounded-lg shadow-sm data-[state=open]:border-pulse-300 data-[state=open]:shadow-md transition-all duration-200"
-                    >
-                      <AccordionTrigger className="px-5 py-4 text-base font-medium text-gray-800 hover:no-underline text-left data-[state=open]:text-pulse-700 data-[state=open]:font-semibold">
-                        {faq.question}
-                      </AccordionTrigger>
-                      <AccordionContent className="px-5 pb-5 pt-1 text-gray-600 leading-relaxed">
-                        {faq.answer}
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </SectionWrapper>
-            )}
-          </div> 
-          {/* --- End Left Column --- */}
-
-          {/* --- Right Column (Sidebar) --- */}
-          <aside className="lg:col-span-1 space-y-8 lg:sticky lg:top-24"> {/* Adjusted sticky top */} 
-
-            {/* Features Card (Sidebar) - Consistent Styling */} 
-            {service.features && service.features.length > 0 && (
-              <Card className="shadow-sm border border-gray-200 bg-white rounded-xl"> {/* Rounded-xl */} 
-                 <CardHeader><CardTitle className="text-xl flex items-center text-gray-800"><CheckCircle className="w-5 h-5 text-pulse-500 mr-2" /> Key Features</CardTitle></CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    {service.features.map((feature, index) => (
-                      <li key={index} className="flex items-start text-sm">
-                        <Check className="w-4 h-4 text-green-600 mr-2 mt-0.5 flex-shrink-0" /> {/* Updated check color */} 
-                        <span className="text-gray-700 leading-snug">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            )}
-            
-            {/* Removed Benefits Card as it's not in data source */}
-
-             {/* Sidebar CTA - Consistent Styling */}
-            <Card className="shadow-lg border-0 bg-gradient-to-br from-pulse-500 to-pulse-700 text-white rounded-xl"> {/* Rounded-xl */} 
-              <CardContent className="p-6 text-center">
-                <Star className="w-8 h-8 text-yellow-300 mx-auto mb-3" /> {/* Added an icon */} 
-                <h3 className="text-xl font-semibold mb-2">Need Expert Help?</h3>
-                <p className="text-sm text-pulse-100 mb-5">Let's discuss how our {service.title} service can elevate your project.</p>
-                <Button asChild size="lg" variant="secondary" className="w-full bg-white text-pulse-600 hover:bg-gray-100 font-semibold group">
-                  <Link href="/contact">
-                    Get In Touch 
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
-
-          </aside>
-          {/* --- End Right Column --- */}
-        </LayoutWrapper>
-
-         {/* --- Final CTA Section - Consistent Styling --- */} 
-        <SectionWrapper className="pt-16 pb-16 md:pt-20 md:pb-20 mt-12 md:mt-16 bg-white border-t border-gray-200"> {/* Changed bg to white */} 
-          <div className="text-center max-w-3xl mx-auto">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-            >
-               <Badge variant="outline" className="mb-4 border-pulse-200 text-pulse-600 bg-pulse-50">Let's Collaborate</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 text-gray-900">Ready to Transform Your Project?</h2>
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Partner with MorphVision for expert {service.title} solutions. We bring precision, efficiency, and innovation to every project. Let's build something exceptional together.
-              </p>
-              <Button asChild size="lg" className="bg-pulse-600 hover:bg-pulse-700 text-white font-semibold group px-8 py-3 rounded-full">
-                <Link href="/contact">
-                  <span>
-                    Discuss Your Project
-                    <Phone className="ml-2 w-5 h-5 inline-block" />
-                  </span>
-                </Link>
-              </Button>
             </motion.div>
           </div>
-        </SectionWrapper>
+        </motion.section>
+      )}
 
-      </main>
+      {/* Core Services Section */}
+      {service.coreServices && (
+        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp} className="py-24 bg-gray-50">
+          <div className="container mx-auto px-4 sm:px-8">
+            <div className="pulse-chip mb-6">
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">02</span>
+              <span>Our Core Services</span>
+            </div>
+            <h2 className="font-display text-4xl md:text-5xl font-bold mb-12">What We Offer</h2>
+            <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {service.coreServices.map((card, i) => {
+                const CardIcon = Icon(card.icon)
+                return (
+                  <motion.div key={i} variants={fadeInUp} whileHover={{ scale: 1.04, boxShadow: '0 8px 32px rgba(0,0,0,0.10)' }} className="bg-white rounded-2xl p-8 flex flex-col items-center text-center shadow-elegant hover:shadow-elegant-hover transition-all">
+                    <motion.div whileHover={{ scale: 1.15 }} transition={{ type: 'spring', stiffness: 300 }}>
+                      <CardIcon className="w-12 h-12 text-pulse-500 mb-4" />
+                    </motion.div>
+                    <h3 className="font-semibold text-xl mb-2">{card.title}</h3>
+                    <p className="text-gray-600 text-base mb-2">{card.description}</p>
+                    {card.link && <Link href={card.link} className="text-pulse-500 font-medium hover:underline text-sm">Learn More</Link>}
+                  </motion.div>
+                )
+              })}
+            </motion.div>
+          </div>
+        </motion.section>
+      )}
+
+      {/* Project Gallery Section */}
+      <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp} className="py-24 bg-white">
+        <div className="container mx-auto px-4 sm:px-8">
+          <div className="pulse-chip mb-6">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">03</span>
+            <span>Project Gallery</span>
+          </div>
+          <h2 className="font-display text-4xl md:text-5xl font-bold mb-12">Selected Work</h2>
+          {relatedProjects.length > 0 ? (
+            <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {relatedProjects.map((proj, i) => (
+                <motion.div key={i} variants={fadeInUp} whileHover={{ scale: 1.03, boxShadow: '0 8px 32px rgba(0,0,0,0.10)' }} className="group bg-white rounded-xl shadow-elegant overflow-hidden hover:shadow-elegant-hover transition-all duration-300 cursor-pointer" onClick={() => setModal({
+                  image: proj.image || '/placeholder.png',
+                  title: proj.title,
+                  location: proj.location,
+                  scope: proj.category,
+                  highlights: proj.features || []
+                })}>
+                  <div className="relative h-60">
+                    <Image src={proj.image || '/placeholder.png'} alt={proj.title} fill className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <span className="absolute top-4 right-4 bg-pulse-500 text-white text-xs font-medium px-3 py-1 rounded-full">
+                      {proj.location}
+                    </span>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold mb-2 group-hover:text-pulse-500 transition-colors">
+                      {proj.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm line-clamp-2">
+                      {proj.category}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            <div className="text-center text-gray-500 py-16 text-xl">No projects found for this service yet.</div>
+          )}
+        </div>
+        {/* Modal for project details */}
+        <Dialog open={!!modal} onOpenChange={() => setModal(null)}>
+          <DialogContent className="p-0 bg-white rounded-2xl overflow-hidden shadow-xl max-w-xl w-full">
+            {modal && (
+              <>
+                <DialogTitle className="sr-only">{modal.title}</DialogTitle>
+                <div className="relative w-full h-56 md:h-72">
+                  <Image src={modal.image || '/placeholder.png'} alt={modal.title} fill className="object-cover w-full h-full" />
+                  <button
+                    onClick={() => setModal(null)}
+                    className="absolute top-4 right-4 bg-white/80 hover:bg-white rounded-full p-2 shadow transition"
+                    aria-label="Close"
+                  >
+                    <X className="w-5 h-5 text-gray-700" />
+                  </button>
+                </div>
+                <div className="p-8 flex flex-col items-center text-center space-y-2">
+                  <h3 className="text-2xl font-bold text-gray-900">{modal.title}</h3>
+                  <div className="text-gray-500 text-sm">{modal.location} &mdash; <span className="font-medium">{modal.scope}</span></div>
+                  <ul className="flex flex-wrap justify-center gap-2 mt-4">
+                    {modal.highlights.length > 0
+                      ? modal.highlights.map((h, i) => (
+                          <li key={i} className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">{h}</li>
+                        ))
+                      : <li className="text-gray-400">No highlights available.</li>
+                    }
+                  </ul>
+                </div>
+              </>
+            )}
+          </DialogContent>
+        </Dialog>
+      </motion.section>
+
+      {/* Why Choose Us Section */}
+      {service.whyChooseUs && (
+        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp} className="py-24 bg-gray-50">
+          <div className="container mx-auto px-4 sm:px-8">
+            <div className="pulse-chip mb-6">
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">04</span>
+              <span>Why Industry Leaders Work With Us</span>
+            </div>
+            <h2 className="font-display text-4xl md:text-5xl font-bold mb-12">Why Choose Us</h2>
+            <motion.div variants={stagger} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
+              {service.whyChooseUs.map((item, i) => {
+                const ItemIcon = Icon(item.icon)
+                return (
+                  <motion.div key={i} variants={fadeInUp} whileHover={{ scale: 1.08 }} className="flex flex-col items-center text-center">
+                    <motion.div whileHover={{ scale: 1.2, y: -6 }} transition={{ type: 'spring', stiffness: 300 }}>
+                      <ItemIcon className="w-10 h-10 text-pulse-500 mb-3" />
+                    </motion.div>
+                    <span className="font-semibold text-lg mb-1">{item.text}</span>
+                  </motion.div>
+                )
+              })}
+            </motion.div>
+          </div>
+        </motion.section>
+      )}
+
+      {/* Final CTA Section */}
+      {service.finalCta && (
+        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp} className="relative min-h-[40vh] flex items-center justify-center bg-pulse-500">
+          <Image src={service.finalCta.image || '/placeholder.png'} alt={service.finalCta.title} fill className="object-cover object-center z-0 opacity-30" />
+          <div className="absolute inset-0 bg-pulse-500/80 z-10" />
+          <div className="relative z-20 flex flex-col items-center justify-center text-center w-full px-4 py-20">
+            <h2 className="text-white font-display text-4xl md:text-5xl font-bold mb-4 tracking-tight drop-shadow-xl">{service.finalCta.title}</h2>
+            <p className="text-white/90 text-lg md:text-xl mb-8 max-w-2xl mx-auto">{service.finalCta.subtext}</p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {service.finalCta.buttons.map((btn, i) => (
+                <Button asChild key={i} size="lg" variant={btn.variant as any || 'default'} className={btn.variant === 'secondary' ? 'bg-white/80 text-pulse-500' : 'bg-white text-pulse-500 font-bold'} whileHover={{ scale: 1.05 }}>
+                  <Link href={btn.link}>{btn.label}</Link>
+                </Button>
+              ))}
+            </div>
+          </div>
+        </motion.section>
+      )}
     </div>
   );
 }

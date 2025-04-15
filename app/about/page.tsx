@@ -1,9 +1,20 @@
 'use client'
 
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import { Hospital, Building2, Factory, Landmark, Scan, Users, Globe2 } from "lucide-react";
+import { motion } from "framer-motion";
+
+// PulseChip component for consistent number+label chips
+const PulseChip = ({ number, label }: { number: string; label: string }) => (
+  <div className="pulse-chip inline-flex mb-6 flex items-center">
+    <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">{number}</span>
+    <span>{label}</span>
+  </div>
+);
+
 
 export default function AboutPage() {
   // Initialize intersection observer for animations
@@ -30,26 +41,63 @@ export default function AboutPage() {
     };
   }, []);
 
+  // Memoize reasons data to avoid re-creation on every render
+  const reasons = useMemo(() => [
+    {
+      title: "Skilled and Diverse Team",
+      description: "Our 40+ Professionals Specialize in Architecture, Structural, Civil, MEPF, Electrical, and Mechanical Engineering, Ensuring a Seamless, Multidisciplinary approach to Every Project."
+    },
+    {
+      title: "Technology at the Core",
+      description: "We use Industry-leading tools like Revit, Navisworks, and Unreal Engine to Deliver accurate Designs, Immersive AR/VR Experiences, and Efficient Project Coordination."
+    },
+    {
+      title: "Proven Experience",
+      description: "With over 190+ Projects Successfully Completed, We've built a Reputation for Delivering Quality Solutions across Sectors such as Pharmaceuticals, Infrastructure, Industrial and Commercial Developments."
+    },
+    {
+      title: "Focus on Innovation",
+      description: "From Cutting-edge BIM Solutions to Developing Interactive Platforms for Industries, Innovation Drives Everything We do."
+    },
+    {
+      title: "Client-First Approach",
+      description: "We Work Closely with Clients, Ensuring Clear Communication, on-time Delivery, and Solutions Tailored to their Needs."
+    },
+    {
+      title: "Global Standards",
+      description: "Meeting Stringent International Regulations to Deliver World-class Quality in every project."
+    }
+  ], []);
+
   return (
     <div className="min-h-screen">
-      <Navbar />
       <main className="pt-20">
-        {/* Hero Section */}
+        {/* Hero/About Section – Flipped Layout */}
         <section className="w-full bg-white py-16 md:py-24">
-          <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
-            <div className="max-w-4xl">
-              <div className="pulse-chip mb-6">
-                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">01</span>
-                <span>About Us</span>
-              </div>
-              
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6">About Morph Vision LLP</h1>
-              
-              <p className="text-xl text-gray-600 mb-12">
-                Morph Vision LLP is a group of committed professionals passionate about delivering cutting-edge engineering solutions. We specialize in providing comprehensive BIM (Building Information Modeling) services to assist our clients in achieving optimized project outcomes through strategic design, modeling, and coordination.
-              </p>
-              
-              <div className="relative rounded-2xl overflow-hidden aspect-video mb-12">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+              {/* Text Left */}
+              <motion.div
+                className="order-2 md:order-1"
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+              >
+                <PulseChip number="01" label="About Us" />
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6">About Morph Vision LLP</h1>
+                <p className="text-xl text-gray-600 mb-8">
+                  Morph Vision LLP is a group of committed professionals passionate about delivering cutting-edge engineering solutions. We specialize in providing comprehensive BIM (Building Information Modeling) services to assist our clients in achieving optimized project outcomes through strategic design, modeling, and coordination.
+                </p>
+              </motion.div>
+              {/* Image Right */}
+              <motion.div
+                className="relative rounded-2xl overflow-hidden aspect-video order-1 md:order-2"
+                initial={{ opacity: 0, x: 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+              >
                 <Image 
                   src="/og.jpg" 
                   alt="MorphVision Team" 
@@ -57,14 +105,13 @@ export default function AboutPage() {
                   className="object-cover"
                   priority
                 />
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
-        
         {/* Our Story Section */}
         <section className="w-full bg-gray-50 py-16 md:py-24">
-          <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="rounded-2xl overflow-hidden aspect-square relative animate-on-scroll">
                 <Image 
@@ -74,23 +121,15 @@ export default function AboutPage() {
                   className="object-cover"
                 />
               </div>
-              
               <div className="animate-on-scroll">
-                <div className="pulse-chip mb-6">
-                  <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">02</span>
-                  <span>Company History</span>
-                </div>
-                
+                <PulseChip number="02" label="Company History" />
                 <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6">Our Story</h2>
-                
                 <p className="text-lg text-gray-600 mb-6">
                   Founded by committed professionals passionate about engineering solutions, Morph Vision LLP has grown into a multidisciplinary team specializing in BIM services.
                 </p>
-                
                 <p className="text-lg text-gray-600 mb-6">
                   Our team includes experts in Architecture, Structural, MEPF, Civil, Electrical, and Mechanical Engineering. We leverage expertise in detailed design, BIM modeling, AR/VR rendering, and custom platforms to deliver successful projects across diverse domains.
                 </p>
-                
                 <p className="text-lg text-gray-600">
                   Today, Morph stands as a Trusted name in the AEC industry, Committed to Innovation and Excellence.
                 </p>
@@ -98,17 +137,13 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
-        
         {/* Mission & Vision Section */}
         <section className="w-full bg-white py-16 md:py-24">
-          <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-12">
               {/* Mission */}
               <div className="animate-on-scroll">
-                <div className="pulse-chip mb-6">
-                  <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">03</span>
-                  <span>Our Mission</span>
-                </div>
+                <PulseChip number="03" label="Our Mission" />
                 
                 <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6">Empowering Industries with Excellence</h2>
                 
@@ -125,10 +160,7 @@ export default function AboutPage() {
               
               {/* Vision */}
               <div className="animate-on-scroll" style={{ animationDelay: "0.2s" }}>
-                <div className="pulse-chip mb-6">
-                  <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">04</span>
-                  <span>Our Vision</span>
-                </div>
+                <PulseChip number="04" label="Our Vision" />
                 
                 <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6">Building the Future</h2>
                 
@@ -152,12 +184,9 @@ export default function AboutPage() {
         
         {/* Our Expertise Section */}
         <section className="w-full bg-gray-50 py-16 md:py-24">
-          <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mb-16 animate-on-scroll">
-              <div className="pulse-chip inline-flex mb-6">
-                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">05</span>
-                <span>Our Expertise</span>
-              </div>
+              <PulseChip number="05" label="Our Expertise" />
               
               <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6">Our Expertise</h2>
               
@@ -209,85 +238,153 @@ export default function AboutPage() {
           </div>
         </section>
         
-        {/* Portfolio Section */}
+        {/* Diverse Portfolio Section */}
         <section className="w-full bg-white py-16 md:py-24">
-          <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mb-16 animate-on-scroll">
-              <div className="pulse-chip inline-flex mb-6">
-                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">06</span>
-                <span>Diverse Portfolio</span>
-              </div>
-              
+              <PulseChip number="06" label="Diverse Portfolio" />
               <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6">Index of Projects</h2>
-              
               <p className="text-lg text-gray-600">
                 Our diverse portfolio encompasses a wide range of industries, including:
               </p>
             </div>
-            
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* Portfolio Items with icons and animation */}
               {[
-                "Healthcare & Pharma",
-                "Hotel & Residency",
-                "Industrial",
-                "Commercial",
-                "Scan to BIM",
-                "Family Creation"
-              ].map((project, index) => (
-                <div 
-                  key={index} 
-                  className="bg-gray-50 rounded-xl p-5 border border-gray-100 hover:border-pulse-500 transition-colors duration-300 animate-on-scroll"
-                  style={{ animationDelay: `${index * 0.1}s` }}
+                {
+                  icon: <Hospital className="w-8 h-8 text-pulse-500" />, label: "Healthcare & Pharma"
+                },
+                {
+                  icon: <Landmark className="w-8 h-8 text-pulse-500" />, label: "Hotel & Residency"
+                },
+                {
+                  icon: <Factory className="w-8 h-8 text-pulse-500" />, label: "Industrial"
+                },
+                {
+                  icon: <Building2 className="w-8 h-8 text-pulse-500" />, label: "Commercial"
+                },
+                {
+                  icon: <Scan className="w-8 h-8 text-pulse-500" />, label: "Scan to BIM"
+                },
+                {
+                  icon: <Users className="w-8 h-8 text-pulse-500" />, label: "Family Creation"
+                }
+              ].map((item, idx) => (
+                <motion.div
+                  key={item.label}
+                  className="bg-gray-50 rounded-xl border-t-4 border-pulse-500 p-6 flex flex-col items-center shadow-md hover:shadow-xl transition-all duration-300 relative"
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.1, ease: "easeOut" }}
                 >
-                  <div className="w-8 h-8 bg-pulse-50 rounded-full flex items-center justify-center mb-4 text-pulse-500 font-semibold">
-                    {index + 1}
+                  <div className="flex items-center justify-center mb-3">
+                    <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white border-2 border-pulse-500">
+                      {item.icon}
+                    </span>
                   </div>
-                  <p className="text-lg font-medium">{project}</p>
-                </div>
+                  <span className="text-2xl font-bold text-pulse-500 mb-1">{idx + 1}</span>
+                  <span className="text-lg font-medium text-gray-700 text-center">{item.label}</span>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
         
-        {/* Global Footprint Section */}
-        <section className="w-full bg-gray-50 py-16 md:py-24">
-          <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
-            <div className="max-w-3xl mx-auto text-center mb-16 animate-on-scroll">
-              <div className="pulse-chip inline-flex mb-6">
-                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">*</span> 
-                <span>Global Footprint</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6">Our International Presence</h2>
-              <p className="text-lg text-gray-600">
-                Morph Vision LLP has a broad international presence, working with clients across the globe:
+        {/* Global Footprint Section (Enhanced Visualization) */}
+        <section className="w-full bg-gradient-to-b from-gray-50 to-white py-16 md:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              viewport={{ once: true }}
+              className="max-w-4xl mx-auto text-center mb-16"
+            >
+              <PulseChip number="07" label="Global Footprint" />
+              <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6 text-gray-900">
+                Engineering Without Boundaries
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                From North America to Asia, our innovative BIM solutions bridge geographical gaps. 
+                We transform complex engineering challenges into seamless, precision-driven projects across continents.
               </p>
-            </div>
-            <div className="max-w-4xl mx-auto text-center animate-on-scroll" style={{ animationDelay: "0.1s" }}>
-              <ul className="flex flex-wrap justify-center gap-x-8 gap-y-4 text-lg text-gray-700">
-                <li>CANADA</li>
-                <li>USA</li>
-                <li>QATAR</li>
-                <li>SAUDI ARABIA</li>
-                <li>UAE</li>
-                <li>BAHRAIN</li>
-                <li>BENIN</li>
-                <li>SRI LANKA</li>
-                <li>SINGAPORE</li>
-                <li>UZBEKISTAN</li>
-                <li>INDIA</li>
-              </ul>
-            </div>
+            </motion.div>
+            
+            <motion.div 
+              className="relative max-w-5xl mx-auto group"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+            >
+              {/* World Map with Enhanced Styling */}
+              <div className="relative">
+                <Image
+                  src="/world.svg" 
+                  alt="Global Presence Map of MorphVision"
+                  width={1200} 
+                  height={600}
+                  className="w-full h-auto opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                />
+                
+                {/* Animated Country Markers */}
+                {[
+                  { name: 'CANADA', left: '19%', top: '17%', description: 'North American Operations' },
+                  { name: 'USA', left: '22%', top: '37%', description: 'Strategic Midwest Hub' },
+                  { name: 'BENIN', left: '48%', top: '68%', description: 'African Market Expansion' },
+                  { name: 'BAHRAIN', left: '55%', top: '30%', description: 'Middle Eastern Engineering Center' },
+                  { name: 'QATAR', left: '57%', top: '38%', description: 'Gulf Region Innovations' },
+                  { name: 'SAUDI ARABIA', left: '56%', top: '52%', description: 'Infrastructure Development' },
+                  { name: 'UAE', left: '61%', top: '57%', description: 'Regional Technology Hub' },
+                  { name: 'UZBEKISTAN', left: '69%', top: '27%', description: 'Central Asian Partnerships' },
+                  { name: 'INDIA', left: '68%', top: '48%', description: 'Technology & Engineering Powerhouse' },
+                  { name: 'SRI LANKA', left: '76%', top: '68%', description: 'South Asian Collaboration' },
+                  { name: 'SINGAPORE', left: '86%', top: '54%', description: 'Southeast Asian Innovation Center' },
+                ].map((country, index) => (
+                  <motion.div
+                    key={country.name}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ 
+                      delay: index * 0.1, 
+                      duration: 0.5, 
+                      type: "spring", 
+                      stiffness: 200 
+                    }}
+                    className="absolute z-10 group"
+                    style={{ left: country.left, top: country.top }}
+                  >
+                    <div className="relative flex flex-col items-center">
+                      {/* Pulsing Pin */}
+                      <span className="absolute h-5 w-5 rounded-full bg-pulse-500 opacity-50 animate-ping"></span>
+                      <span className="relative h-3.5 w-3.5 rounded-full bg-pulse-500 ring-2 ring-white shadow-md"></span>
+                      
+                      {/* Tooltip */}
+                      <div className="
+                        absolute bottom-full mb-2 
+                        hidden group-hover:block 
+                        bg-white rounded-lg shadow-lg p-3 
+                        text-center w-48 
+                        border border-gray-200
+                        transition-all duration-300
+                      ">
+                        <p className="text-sm font-semibold text-gray-800">{country.name}</p>
+                        <p className="text-xs text-gray-500 mt-1">{country.description}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
           </div>
         </section>
         
         {/* Leadership Team Section */}
-        <section className="w-full bg-gray-50 py-16 md:py-24">
-          <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
+        <section className="w-full bg-white py-16 md:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mb-16 animate-on-scroll">
-              <div className="pulse-chip inline-flex mb-6">
-                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">07</span>
-                <span>Leadership</span>
-              </div>
+              <PulseChip number="08" label="Leadership" />
               
               <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6">Founders & Directors</h2>
               
@@ -302,19 +399,19 @@ export default function AboutPage() {
                   name: "Mohammad Musharraf",
                   role: "Director of Sales & Marketing",
                   description: "Spearheading Business Development and Fostering Partnerships Worldwide.",
-                  image: "/background-section1.png"
+                  image: "/images/person/musharraf.jpeg"
                 },
                 {
                   name: "Shaibaz Shaikh",
                   role: "Director of Operations",
                   description: "An industry Innovator Overseeing Technical Development and Execution across all Projects.",
-                  image: "/background-section2.png"
+                  image: "/images/person/shaibaz.jpeg"
                 },
                 {
                   name: "Shaoib Shaikh",
                   role: "CEO",
                   description: "Driving Operational Excellence with a Focus on Efficiency, Team Management, and Client Satisfaction.",
-                  image: "/background-section3.png"
+                  image: "/images/person/shoaib.webp"
                 }
               ].map((member, index) => (
                 <div key={index} className="animate-on-scroll" style={{ animationDelay: `${index * 0.1}s` }}>
@@ -341,12 +438,9 @@ export default function AboutPage() {
         
         {/* Why Choose Us Section */}
         <section className="w-full bg-white py-16 md:py-24">
-          <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
-              <div className="pulse-chip inline-flex mb-6">
-                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">08</span>
-                <span>Why Choose Us</span>
-              </div>
+              <PulseChip number="09" label="Why Choose Us" />
               
               <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6">The Morph Promise</h2>
               
@@ -356,32 +450,7 @@ export default function AboutPage() {
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                {
-                  title: "Skilled and Diverse Team",
-                  description: "Our 40+ Professionals Specialize in Architecture, Structural, Civil, MEPF, Electrical, and Mechanical Engineering, Ensuring a Seamless, Multidisciplinary approach to Every Project."
-                },
-                {
-                  title: "Technology at the Core",
-                  description: "We use Industry-leading tools like Revit, Navisworks, and Unreal Engine to Deliver accurate Designs, Immersive AR/VR Experiences, and Efficient Project Coordination."
-                },
-                {
-                  title: "Proven Experience",
-                  description: "With over 190+ Projects Successfully Completed, We've built a Reputation for Delivering Quality Solutions across Sectors such as Pharmaceuticals, Infrastructure, Industrial and Commercial Developments."
-                },
-                {
-                  title: "Focus on Innovation",
-                  description: "From Cutting-edge BIM Solutions to Developing Interactive Platforms for Industries, Innovation Drives Everything We do."
-                },
-                {
-                  title: "Client-First Approach",
-                  description: "We Work Closely with Clients, Ensuring Clear Communication, on-time Delivery, and Solutions Tailored to their Needs."
-                },
-                {
-                  title: "Global Standards",
-                  description: "Meeting Stringent International Regulations to Deliver World-class Quality in every project."
-                }
-              ].map((reason, index) => (
+              {reasons.map((reason, index) => (
                 <div 
                   key={index} 
                   className="bg-gray-50 rounded-xl p-6 border-t-4 border-pulse-500 hover:shadow-elegant transition-all duration-300 animate-on-scroll"
@@ -392,7 +461,6 @@ export default function AboutPage() {
                 </div>
               ))}
             </div>
-
             <div className="text-center mt-16">
               <p className="text-xl font-medium text-gray-800 italic animate-on-scroll">
                 "Delivering precision, innovation, and excellence in every project, every time."
@@ -403,7 +471,7 @@ export default function AboutPage() {
         
         {/* CTA Section */}
         <section className="w-full bg-gray-50 py-16 md:py-24">
-          <div className="container px-4 sm:px-6 lg:px-8 mx-auto">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-pulse-500 rounded-2xl p-8 md:p-12 text-white text-center max-w-4xl mx-auto animate-on-scroll">
               <h2 className="text-3xl sm:text-4xl font-display font-bold mb-6">Ready to Transform Your Projects?</h2>
               <p className="text-xl mb-8 opacity-90">Get in touch with our team to explore how our BIM solutions can elevate your construction projects.</p>
@@ -417,8 +485,7 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
-        
       </main>
     </div>
   );
-} 
+}
