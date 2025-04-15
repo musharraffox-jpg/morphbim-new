@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
+import {
   Accordion,
   AccordionContent,
   AccordionItem,
@@ -38,12 +38,12 @@ const staggerContainer = {
 
 const cardVariant = {
   hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.5 }
   },
-  hover: { 
+  hover: {
     y: -8,
     boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
     transition: { duration: 0.2, ease: 'easeOut' }
@@ -80,15 +80,15 @@ export default function ServicesPage() {
   // Filter services based on search, category, and tags
   useEffect(() => {
     let result = services;
-    
+
     // Filter by search term
     if (searchTerm) {
-      result = result.filter(service => 
+      result = result.filter(service =>
         service.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         service.description.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    
+
     // Filter by category
     if (activeCategory !== "All") {
       result = result.filter(service => {
@@ -100,24 +100,24 @@ export default function ServicesPage() {
           "Visualization": ["architectural-visualization", "vr-ar-experiences"],
           "Facilities": ["family-creation", "facilities-management"]
         };
-        
+
         // Check if service id is in the selected category
         return serviceCategories[activeCategory]?.includes(service.id);
       });
     }
-    
+
     // Filter by tags
     if (activeTags.length > 0) {
       result = result.filter(service => {
         // Check if any of the service features match active tags
-        return service.features?.some(feature => 
-          activeTags.some(tag => 
+        return service.features?.some(feature =>
+          activeTags.some(tag =>
             feature.toLowerCase().includes(tag.toLowerCase())
           )
         );
       });
     }
-    
+
     setFilteredServices(result);
   }, [searchTerm, activeCategory, activeTags]);
 
@@ -133,54 +133,68 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
-        <Image 
-          src="/images/services/services-hero.jpg" 
-          alt="MorphVision Services" 
-          fill 
-          className="object-cover object-center" 
-          priority
-        />
-        <div className="absolute inset-0 bg-black/50 mix-blend-multiply" />
-        
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto"
-        >
-          <Badge className="mb-6 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm">
-            Professional Services
-          </Badge>
-          <h1 className="font-display text-4xl md:text-6xl font-bold mb-6 text-white">
-            <span className="block">Transforming the Built Environment</span>
-            <span className="bg-gradient-to-r from-blue-400 to-purple-600 text-transparent bg-clip-text">
-              Through Digital Innovation
-            </span>
-          </h1>
-          <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
-            Comprehensive digital design solutions that elevate architecture, engineering, and construction projects.
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Button asChild size="lg" className="bg-white text-gray-900 hover:bg-gray-100">
-              <Link href="#service-grid">
-                Explore Services <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-              <Link href="/contact">
-                Request a Consultation
-              </Link>
-            </Button>
+      <section  className="w-full bg-white py-0" >
+        <div className="section-container  pb-2">
+          <div className="w-full rounded-2xl sm:rounded-3xl overflow-hidden relative mt-4 sm:mt-8">
+            <div
+              className="bg-no-repeat bg-cover bg-center p-6 sm:p-8 md:p-12 min-h-[300px] sm:min-h-[350px] flex flex-col"
+              style={{
+                backgroundImage: "url('/background-section2.png')",
+                backgroundPosition: "center",
+                backgroundSize: "cover"
+              }}
+            >
+              {/* Content Section */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="relative z-10  px-4 sm:px-6 lg:px-8 max-w-4xl"
+              >
+                <Badge className="mb-6 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm">
+                  Professional Services
+                </Badge>
+                <h1 className="font-display text-4xl md:text-6xl font-bold mb-6 text-white">
+                  <span className="block">Transforming the Built Environment</span>
+                  <span className="bg-gradient-to-r from-blue-400 to-purple-600 text-transparent bg-clip-text">
+                    Through Digital Innovation
+                  </span>
+                </h1>
+                <p className="text-xl text-white/90 mb-8 max-w-3xl">
+                  Comprehensive digital design solutions that elevate architecture, engineering, and construction projects.
+                </p>
+
+                {/* Action Buttons */}
+                <div className="flex flex-wrap gap-4">
+                  <Link
+                    href="#service-grid"
+                    className="flex items-center justify-center group px-6 py-3 bg-white text-[#20133d] font-medium rounded-full hover:bg-opacity-90 transition-all"
+                  >
+                    Explore Services
+                    <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="flex items-center justify-center group px-6 py-3 border border-white text-white rounded-full hover:bg-white/10 transition-all"
+                  >
+                    Request a Consultation
+                  </Link>
+                </div>
+              </motion.div>
+
+              {/* White box at the bottom with overflow - Hidden on mobile */}
+              <div className="hidden sm:block w-[120%] bg-white h-10 rounded-t-lg absolute left-[-10%] bottom-0"></div>
+            </div>
           </div>
-        </motion.div>
+        </div>
       </section>
+
 
       {/* Service Filter & Directory */}
       <section id="service-grid" className="py-24 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-7xl">
           {/* Section Header */}
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
@@ -199,7 +213,7 @@ export default function ServicesPage() {
           </motion.div>
 
           {/* Filter Controls */}
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
@@ -217,15 +231,15 @@ export default function ServicesPage() {
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-              
+
               <div className="flex flex-wrap gap-2 justify-center">
                 <Badge className="flex items-center gap-1 bg-gray-100 text-gray-700 hover:bg-gray-200">
                   <Filter className="h-3.5 w-3.5" />
                   Filters: {activeCategory !== "All" ? activeCategory : ""} {activeTags.length > 0 && `+${activeTags.length} tags`}
                 </Badge>
                 {activeTags.length > 0 && (
-                  <Button 
-                    variant="ghost" 
+                  <Button
+                    variant="ghost"
                     className="h-8 text-xs"
                     onClick={() => setActiveTags([])}
                   >
@@ -236,16 +250,16 @@ export default function ServicesPage() {
             </div>
 
             {/* Category Tabs */}
-            <Tabs 
-              defaultValue="All" 
+            <Tabs
+              defaultValue="All"
               value={activeCategory}
               onValueChange={setActiveCategory}
               className="mb-8"
             >
               <TabsList className="w-full justify-start overflow-x-auto flex-nowrap gap-2 bg-transparent">
                 {categories.map((category) => (
-                  <TabsTrigger 
-                    key={category} 
+                  <TabsTrigger
+                    key={category}
                     value={category}
                     className="data-[state=active]:bg-blue-100 data-[state=active]:text-blue-900 rounded-full"
                   >
@@ -259,14 +273,13 @@ export default function ServicesPage() {
             <ScrollArea className="whitespace-nowrap pb-4">
               <div className="flex gap-2">
                 {serviceTags.map((tag) => (
-                  <Badge 
+                  <Badge
                     key={tag}
                     variant={activeTags.includes(tag) ? "default" : "outline"}
-                    className={`cursor-pointer ${
-                      activeTags.includes(tag) 
-                        ? "bg-blue-100 text-blue-800 hover:bg-blue-200 border-blue-200" 
+                    className={`cursor-pointer ${activeTags.includes(tag)
+                        ? "bg-blue-100 text-blue-800 hover:bg-blue-200 border-blue-200"
                         : "bg-white hover:bg-gray-100"
-                    }`}
+                      }`}
                     onClick={() => toggleTag(tag)}
                   >
                     {tag}
@@ -277,7 +290,7 @@ export default function ServicesPage() {
           </motion.div>
 
           {/* Services Grid */}
-          <motion.div 
+          <motion.div
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
@@ -354,7 +367,7 @@ export default function ServicesPage() {
       {/* Service Process Section */}
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
@@ -366,7 +379,7 @@ export default function ServicesPage() {
             </h2>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
@@ -399,8 +412,8 @@ export default function ServicesPage() {
                 icon: "CheckCircle"
               }
             ].map((step, index) => (
-              <motion.div 
-                key={index} 
+              <motion.div
+                key={index}
                 variants={fadeInUp}
                 className="relative"
               >
@@ -409,11 +422,11 @@ export default function ServicesPage() {
                   <div className="absolute -top-4 -left-4 w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-md">
                     {step.number}
                   </div>
-                  
+
                   <h3 className="text-xl font-bold mt-4 mb-4">{step.title}</h3>
                   <p className="text-gray-600">{step.description}</p>
                 </div>
-                
+
                 {/* Connector line between steps (hidden on mobile) */}
                 {index < 3 && (
                   <div className="hidden md:block absolute top-1/2 -right-4 w-8 border-t-2 border-dashed border-gray-300" />
@@ -427,7 +440,7 @@ export default function ServicesPage() {
       {/* Testimonial Section */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
@@ -440,7 +453,7 @@ export default function ServicesPage() {
             </h2>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
@@ -450,9 +463,9 @@ export default function ServicesPage() {
             <div className="flex flex-col md:flex-row gap-8 items-center">
               <div className="md:w-1/3">
                 <div className="relative w-24 h-24 md:w-32 md:h-32 mx-auto">
-                  <Image 
-                    src="/images/testimonials/client1.jpg" 
-                    alt="Client" 
+                  <Image
+                    src="/images/testimonials/client1.jpg"
+                    alt="Client"
                     fill
                     className="rounded-full object-cover border-4 border-white shadow-md"
                   />
@@ -478,7 +491,7 @@ export default function ServicesPage() {
       {/* Industries Section */}
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
@@ -494,7 +507,7 @@ export default function ServicesPage() {
             </p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
@@ -509,8 +522,8 @@ export default function ServicesPage() {
               "Infrastructure",
               "Education & Institutional"
             ].map((industry, index) => (
-              <motion.div 
-                key={index} 
+              <motion.div
+                key={index}
                 variants={cardVariant}
                 whileHover="hover"
                 className="bg-white rounded-xl p-6 text-center border border-gray-200 shadow-sm flex flex-col items-center justify-center aspect-square"
@@ -525,7 +538,7 @@ export default function ServicesPage() {
       {/* FAQ Section */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
@@ -541,7 +554,7 @@ export default function ServicesPage() {
             </p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
@@ -584,17 +597,17 @@ export default function ServicesPage() {
       <section className="py-24 relative overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0 z-0">
-          <Image 
-            src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2400&q=80" 
-            alt="Architecture background" 
-            fill 
-            className="object-cover object-center" 
+          <Image
+            src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2400&q=80"
+            alt="Architecture background"
+            fill
+            className="object-cover object-center"
           />
           <div className="absolute inset-0 bg-blue-900/80 mix-blend-multiply" />
         </div>
-        
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl relative z-10">
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
@@ -608,12 +621,12 @@ export default function ServicesPage() {
             <p className="text-xl text-white/80 mb-10 max-w-3xl mx-auto">
               Let's discuss how our services can elevate your next project and deliver exceptional results.
             </p>
-            
+
             {/* Creative floating elements */}
             <div className="absolute left-10 top-1/4 w-20 h-20 rounded-full border-4 border-white/20 animate-pulse-slow opacity-40" />
             <div className="absolute right-10 bottom-1/4 w-32 h-32 rounded-full border-4 border-white/20 animate-pulse-slow opacity-30 [animation-delay:1s]" />
             <div className="absolute right-1/4 top-10 w-16 h-16 rounded-full border-2 border-white/30 animate-pulse-slow opacity-50 [animation-delay:2s]" />
-            
+
             <div className="flex flex-wrap gap-4 justify-center">
               <Button asChild size="lg" className="bg-white text-blue-900 hover:bg-gray-100">
                 <Link href="/contact">
