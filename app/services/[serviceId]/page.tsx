@@ -126,78 +126,84 @@ export default function ServicePage({ params }: { params: Promise<{ serviceId: s
   const y = useTransform(scrollY, [0, 400], [0, 80]);
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white min-h-screen pt-8">
       {/* Hero Section */}
-      <section className="w-full bg-white py-0" >
-        <div className="section-container  pb-2">
-          <div className="w-full rounded-2xl sm:rounded-3xl overflow-hidden relative mt-4 sm:mt-8">
+
+      <section className='section-container pb-2'>
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={fadeInUp}
+          className="w-full rounded-2xl sm:rounded-3xl overflow-hidden relative min-h-[300px] sm:min-h-[350px] flex flex-col"
+        >
+          <div
+            className="bg-no-repeat bg-cover bg-center p-6 sm:p-8 md:p-12 flex flex-col relative flex-grow"
+            style={{
+              backgroundImage: `url("${heroImage}")`,
+              backgroundPosition: "center",
+              backgroundSize: "cover"
+            }}
+          >
+            {/* Dark overlay with backdrop filter */}
             <div
-              className="bg-no-repeat bg-cover bg-center p-6 sm:p-8 md:p-12 min-h-[300px] sm:min-h-[350px] flex flex-col"
-              style={{
-                backgroundImage: `url("${heroImage}")`,
-                backgroundPosition: "center",
-                backgroundSize: "cover"
-              }}
-            >
-              {/* Content Section */}
-              <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <motion.div
-                  initial="hidden"
-                  animate="visible"
-                  variants={stagger}
-                  className="max-w-5xl mx-auto text-center"
-                >
-                  <motion.div variants={fadeInUp}>
-                    <Badge
-                      className="mb-6 px-4 py-1.5 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm"
-                    >
-                      {service.id.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-                    </Badge>
-                  </motion.div>
+              className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40 mix-blend-multiply"
+              style={{ backdropFilter: 'blur(0px) brightness(0.8)' }}
+            />
 
-                  <motion.h1
-                    variants={fadeInUp}
-                    className="font-display text-5xl md:text-7xl font-extrabold text-white mb-6 drop-shadow-lg tracking-tight"
+            {/* Content Section */}
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={stagger}
+                className="max-w-4xl "
+              >
+                <motion.div variants={fadeInUp}>
+                  <Badge
+                    className="mb-4 px-4 py-1.5 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm"
                   >
-                    {service.heroHeadline || service.title}
-                  </motion.h1>
-
-                  <motion.p
-                    variants={fadeInUp}
-                    className="text-xl md:text-2xl text-white/80 mb-8 max-w-3xl mx-auto"
-                  >
-                    {service.heroSubheadline || service.description}
-                  </motion.p>
-
-                  <motion.div
-                    variants={fadeInUp}
-                    className="flex flex-wrap gap-4 justify-center"
-                  >
-                    <Button
-                      size="lg"
-                      className="bg-white text-gray-900 hover:bg-gray-100 font-medium"
-                    >
-                      Request a Consultation
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      className="border-white text-white hover:bg-white/10"
-                    >
-                      View Projects
-                    </Button>
-                  </motion.div>
+                    {service.id.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                  </Badge>
                 </motion.div>
-              </div>
 
-              {/* White box at the bottom with overflow - Hidden on mobile */}
-              <div className="hidden sm:block w-[120%] bg-white h-10 rounded-t-lg absolute left-[-10%] bottom-0"></div>
+                <motion.h1
+                  variants={fadeInUp}
+                  className="font-display text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg tracking-tight"
+                >
+                  {service.heroHeadline || service.title}
+                </motion.h1>
+
+                <motion.p
+                  variants={fadeInUp}
+                  className="text-xl text-white/90 mb-8 max-w-3xl drop-shadow-md"
+                >
+                  {service.heroSubheadline || service.description}
+                </motion.p>
+                {/* Action Buttons */}
+                <div className="flex flex-wrap gap-4 mb-8">
+                  <Link
+                    href="#service-grid"
+                    className="flex items-center justify-center group px-6 py-3 bg-white text-[#20133d] font-medium rounded-full hover:bg-opacity-90 transition-all"
+                  >
+                    Explore Services
+                    <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="flex items-center justify-center group px-6 py-3 border border-white text-white rounded-full hover:bg-white/10 transition-all"
+                  >
+                    Request a Consultation
+                  </Link>
+                </div>
+              </motion.div>
             </div>
-          </div>
-        </div>
-      </section>
-     
 
+            {/* White box at the bottom with overflow - Hidden on mobile */}
+            <div className="hidden sm:block w-[120%] bg-white h-10 rounded-t-lg absolute left-[-10%] bottom-0"></div>
+          </div>
+        </motion.section>
+      </section>
       {/* Who We Are Section */}
       {service.whoWeAre && (
         <motion.section
@@ -499,22 +505,19 @@ export default function ServicePage({ params }: { params: Promise<{ serviceId: s
                 variants={fadeInUp}
                 className="flex flex-wrap gap-4 justify-center"
               >
-                {service.finalCta.buttons.map((btn, i) => (
-                  <Button
-                    key={i}
-                    asChild
-                    size="lg"
-                    variant={btn.variant as any || 'default'}
-                    className={btn.variant === 'secondary'
-                      ? 'bg-white/20 backdrop-blur-sm text-white hover:bg-white/30'
-                      : 'bg-white text-blue-900 hover:bg-gray-100'
-                    }
-                  >
-                    <Link href={btn.link}>
-                      {btn.label}
-                    </Link>
-                  </Button>
-                ))}
+                <Button
+                  size="lg"
+                  className="bg-white/90 backdrop-blur-sm text-gray-900 hover:bg-white font-medium shadow-lg"
+                >
+                  Get Started
+                </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="border-white/80 text-white hover:bg-white/20 backdrop-blur-sm shadow-lg"
+                >
+                  Learn More
+                </Button>
               </motion.div>
             </motion.div>
           </div>
