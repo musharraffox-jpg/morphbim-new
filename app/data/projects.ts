@@ -16,6 +16,15 @@ export interface Project {
   challenges?: string[]
   solutions?: string[]
   images?: string[]
+  tags?: string[] 
+  disciplines?: {
+    name: string
+    description: string
+    technologies?: string[]
+    challenges?: string[]
+    solutions?: string[]
+    services?: string[]
+  }[]
 }
 
 export const projects: Project[] = [
@@ -30,7 +39,8 @@ export const projects: Project[] = [
     technologies: ['Revit', 'AutoCAD', 'Navisworks', 'Bluebeam'],
     challenges: ['Integration of complex MEP systems (HVAC, electrical, plumbing, fire protection, medical gases) with architectural and structural elements in a healthcare setting.'],
     solutions: ['Used Autodesk Revit for detailed MEP models integrated into the overall BIM model. Utilized Navisworks for clash detection and 3D coordination to resolve conflicts early.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['architectural-structural', 'bim-modeling-coordination']
   },
   {
     id: 'sidra-hospital',
@@ -43,7 +53,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'AutoCAD', 'Navisworks', 'Bluebeam', 'BIM360'],
     challenges: ['Fitting highly detailed systems within constrained spaces typical of hospital environments due to medical equipment.'],
     solutions: ['Utilized Navisworks for clash detection across all MEP systems, structural elements, and architectural components, addressing issues pre-construction.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['bim-modeling-coordination', 'family-creation']
   },
   {
     id: 'ashirwad-hospital',
@@ -56,7 +67,8 @@ export const projects: Project[] = [
     technologies: ['Revit', 'AutoCAD', 'Navisworks', 'Bluebeam', 'BIM360'],
     challenges: ['Optimizing MEP system routing (HVAC ducts, electrical conduits, plumbing pipes) within limited space in dense hospital layouts.'],
     solutions: ['Regular coordination meetings between architectural and MEP teams, using BIM tools for spatial analysis to optimize system layouts and identify conflicts early.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['bim-modeling-coordination', '4d-5d-simulation']
   },
   {
     id: 'clean-room-facility-europe',
@@ -66,10 +78,11 @@ export const projects: Project[] = [
     category: 'Pharmaceutical',
     location: 'Europe',
     services: ['LOD 400 MEP Modeling and Coordination'],
-    technologies: ['Autodesk Revit', 'AutoCAD', 'Navisworks', 'Bluebeam', 'BIM360'],
+    technologies: ['Autodesk Revit', 'AutoCAD', 'Navisworks', 'Bluebeam', 'BIM 360'],
     challenges: ['Meeting extremely stringent requirements for air quality, filtration, and temperature control, requiring precise HVAC design without compromising energy efficiency.'],
     solutions: ['Created highly detailed LOD 400 MEP models in Autodesk Revit for accurate system representation, providing precise information for fabrication and installation.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['bim-modeling-coordination', '4d-5d-simulation']
   },
   {
     id: 'vida-hotel-residency',
@@ -82,7 +95,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', '3D laser scanning', 'Navisworks', 'BIM 360'],
     challenges: ['Ensuring the as-built model matched real-world conditions due to frequent on-site changes.'],
     solutions: ['Used 3D laser scanning to capture real-time data and updated the Revit model accordingly.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['architectural-structural', 'bim-modeling-coordination']
   },
   {
     id: 'les-vagues',
@@ -95,7 +109,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'Navisworks', 'BIM 360'],
     challenges: ['Managing frequent design changes necessitated real-time updates in Revit.'],
     solutions: ['Navisworks ensured no clashes between MEP systems and interior design changes. BIM 360 facilitated efficient version control and collaboration.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['bim-modeling-coordination', 'family-creation']
   },
   {
     id: 'red-sea-pod-resort',
@@ -108,7 +123,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'Navisworks', 'Dynamo', 'BIM 360'],
     challenges: ['The desert environment required advanced energy modeling.'],
     solutions: ['Dynamo was used to automate performance checks and streamline energy calculations. Navisworks ensured no clashes between systems during construction.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['bim-modeling-coordination', '4d-5d-simulation']
   },
   {
     id: 'beach-mansion',
@@ -120,8 +136,9 @@ export const projects: Project[] = [
     services: ['LOD 350 interior design modeling', 'Sheet extraction', 'Coordination'],
     technologies: ['Autodesk Revit', 'Bluebeam', 'BIM 360'],
     challenges: ['Maintaining design accuracy while coordinating with multiple stakeholders.'],
-    solutions: ['BIM 360 enabled real-time collaboration. Revit ensured accurate interior detailing. Bluebeam simplified sheet extraction.'],
-    image: '/placeholder.png'
+    solutions: ['BIM 360 enabled real-time collaboration. Revit ensured accurate interior detailing. Bluebeam simplified sheet extraction/review.'],
+    image: '/placeholder.png',
+    tags: ['architectural-structural', 'bim-modeling-coordination']
   },
   {
     id: 'la-quinta-inn',
@@ -134,7 +151,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'AutoCAD', 'Bluebeam', 'BIM 360'],
     challenges: ['Complexity of integrating MEP systems with architectural designs within a tight deadline.'],
     solutions: ['Revit and AutoCAD used for precise modeling. Bluebeam leveraged for sheet extraction/review. BIM 360 streamlined team communication across time zones.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['bim-modeling-coordination', 'family-creation']
   },
   {
     id: 'triple-bay-marina-village',
@@ -147,7 +165,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'AutoCAD', 'Bluebeam', 'BIM 360'],
     challenges: ['Complexity of integrating MEP systems with architectural designs within a tight deadline.'],
     solutions: ['Revit and AutoCAD used for precise modeling. Bluebeam leveraged for sheet extraction/review. BIM 360 streamlined team communication across time zones.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['bim-modeling-coordination', 'family-creation']
   },
   {
     id: 'substation-industrial-port',
@@ -160,7 +179,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'AutoCAD', 'Navisworks', 'Bluebeam', 'BIM 360'],
     challenges: ['Ensuring electrical design met international safety, power distribution, and reliability standards (IEC, NEC) and specific port/industrial regulations.'],
     solutions: ['Design carried out in strict adherence to international electrical/safety standards (IEC, NEC) and local Moroccan regulations for compliance, safety, efficiency, and scalability.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['bim-modeling-coordination', '4d-5d-simulation']
   },
   {
     id: 'ion-exchange-pid',
@@ -173,7 +193,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'AutoCAD', 'Navisworks', 'Bluebeam', 'BIM 360'],
     challenges: ['Coordinating complex systems within dense layouts and limited space without clashes between piping, electrical, and structural components.'],
     solutions: ['Navisworks utilized for clash detection to identify conflicts early. Resolved issues before construction, reducing delays and rework.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['bim-modeling-coordination', 'family-creation']
   },
   {
     id: 'granulation-factory',
@@ -186,7 +207,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'Bluebeam', 'Staad Pro', 'Lumion', 'SolidWorks', 'Photoshop', 'BIM 360'],
     challenges: ['Ensuring structural stability of complex machinery and support systems while visually presenting the factory\'s layout.'],
     solutions: ['Staad Pro used for precise structural analysis. Lumion and SolidWorks employed for realistic renderings.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['architectural-structural', 'bim-modeling-coordination']
   },
   {
     id: 'grain-mill-assam',
@@ -199,7 +221,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'Bluebeam', 'Staad Pro', 'Lumion', 'SolidWorks', 'Photoshop', 'BIM 360'],
     challenges: ['Modeling intricate steel structures within the mill and ensuring accuracy in sheet extraction.'],
     solutions: ['Staad Pro and Revit used for precise structural/steel modeling. Lumion and Photoshop utilized for high-quality visualizations.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['architectural-structural', 'bim-modeling-coordination']
   },
   {
     id: 'admin-canteen-portugal',
@@ -212,7 +235,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'Bluebeam', 'BIM 360'],
     challenges: ['Coordination between architectural design and structural elements.'],
     solutions: ['Autodesk Revit used for detailed models. Bluebeam simplified sheet extraction/review. BIM 360 allowed seamless collaboration.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['architectural-structural', 'bim-modeling-coordination']
   },
   {
     id: 'bosch-bangalore',
@@ -224,7 +248,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'AutoCAD', 'Navisworks', 'Bluebeam'],
     challenges: ['Coordination of MEPF systems in a multi-story building with tight spatial constraints.'],
     solutions: ['Autodesk Revit and Navisworks used for detailed modeling and clash detection. Bluebeam used for GFC sheet extraction to streamline communication.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['bim-modeling-coordination', 'family-creation']
   },
   {
     id: 'jewel-gurugram',
@@ -236,7 +261,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'AutoCAD', 'Navisworks', 'Bluebeam'],
     challenges: ['Integrating large-scale HVAC systems into the architectural layout while maintaining adequate retail space.'],
     solutions: ['Navisworks used for clash detection between HVAC and other MEPF systems. Revit allowed detailed modeling. Bluebeam helped streamline GFC extraction.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['bim-modeling-coordination', 'family-creation']
   },
   {
     id: 'patna-airport',
@@ -248,7 +274,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'AutoCAD', 'Navisworks', 'Bluebeam'],
     challenges: ['Complexity of airport systems required precise modeling and coordination across multiple disciplines.'],
     solutions: ['Revit used for detailed MEPF modeling. Navisworks ensured early clash detection. Bluebeam facilitated smooth GFC extraction.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['bim-modeling-coordination', '4d-5d-simulation']
   },
   {
     id: 'data-center-mumbai',
@@ -260,7 +287,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'AutoCAD', 'Navisworks', 'Bluebeam'],
     challenges: ['Proper allocation of equipment space while maintaining effective routing for MEPF systems.'],
     solutions: ['Revit used to create detailed equipment models. Navisworks ensured coordination. Bluebeam used for accurate GFC extraction.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['bim-modeling-coordination', 'family-creation']
   },
   {
     id: 'gpra-colony-delhi',
@@ -272,7 +300,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'AutoCAD', 'Bluebeam', 'BIM 360'],
     challenges: ['Coordinating large-scale residential ASMEPF systems while maintaining architectural integrity.'],
     solutions: ['BIM 360 for effective collaboration. Revit for precise ASMEPF modeling. Navisworks employed to address potential clashes.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['architectural-structural', 'bim-modeling-coordination']
   },
   {
     id: 'hotel-conversion-usa',
@@ -284,7 +313,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'Bluebeam', 'BIM 360'],
     challenges: ['Retrofitting old infrastructure to accommodate modern MEPF systems.'],
     solutions: ['BIM 360 enabled cross-team collaboration across time zones. Revit used for precise MEPF modeling. Bluebeam helped extract GFCs for construction.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['bim-modeling-coordination', 'family-creation']
   },
   {
     id: 'peninsula-plot-b',
@@ -296,7 +326,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'Bluebeam'],
     challenges: ['High precision needed for MEPF coordination due to the luxury nature of the project.'],
     solutions: ['Revit used to create detailed MEPF models. Navisworks ensured no clashes. GFC extraction facilitated via Bluebeam.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['bim-modeling-coordination', 'family-creation']
   },
   {
     id: 'seven-city-dubai',
@@ -308,7 +339,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'AutoCAD', 'Navisworks', 'Bluebeam'],
     challenges: ['Large-scale residential development with complex MEPF systems and tight deadlines.'],
     solutions: ['BIM 360 enabled cross-team collaboration across time zones. Revit used for precise MEPF modeling. Bluebeam helped extract GFCs for construction.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['bim-modeling-coordination', '4d-5d-simulation']
   },
   {
     id: 'signature-tower-gujarat',
@@ -320,7 +352,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'Navisworks', 'Bluebeam'],
     challenges: ['Integrating ASMEPF systems within the tower\'s unique structural layout without clashes.'],
     solutions: ['Navisworks used for clash detection and coordination. Revit helped in precise ASMEPF modeling. Bluebeam facilitated GFC sheet extraction.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['architectural-structural', 'bim-modeling-coordination']
   },
   {
     id: 'elora-villa-uae',
@@ -338,7 +371,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'Navisworks', 'Bluebeam', 'BIM 360'],
     challenges: ['Maintaining consistent upgrades while resolving clashes between architecture, ID, and MEPF models.'],
     solutions: ['Effective model updates using detailed coordination processes to deliver accurate, high-quality models at LOD 400.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['architectural-structural', 'bim-modeling-coordination']
   },
   {
     id: 'shura-island',
@@ -351,7 +385,8 @@ export const projects: Project[] = [
     technologies: ['Revit', 'AutoCAD', 'Navisworks', 'Bluebeam', 'BIM 360', '3D Laser Scanning'],
     challenges: ['Maintaining model accuracy while upgrading to LOD 500 despite evolving site conditions.'],
     solutions: ['Employed 3D laser scanning to capture real-time data and seamlessly integrated it into Revit to ensure the model matched real-world installations.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['architectural-structural', 'bim-modeling-coordination']
   },
   {
     id: 'dune-villa-saudi',
@@ -364,7 +399,8 @@ export const projects: Project[] = [
     technologies: ['Tekla Structures', 'Autodesk Navisworks', 'Bluebeam', 'BIM 360'],
     challenges: ['Managing the complexity of custom roof designs and ensuring precise fabrication outputs.'],
     solutions: ['Tekla modeling enabled accurate detailing and reduced on-site errors, improving overall project efficiency.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['architectural-structural', 'bim-modeling-coordination']
   },
   {
     id: 'house-of-masaba',
@@ -377,7 +413,8 @@ export const projects: Project[] = [
     technologies: ['Revit', 'AutoCAD', 'Bluebeam', 'BIM 360'],
     challenges: ['Maintaining design accuracy and coordination for high-detail LOD 400 modeling while optimizing workflow efficiency.'],
     solutions: ['Revit and AutoCAD utilized for detailed modeling. Bluebeam streamlined sheet creation/review. BIM 360 facilitated seamless collaboration.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['architectural-structural', 'bim-modeling-coordination']
   },
   {
     id: 'navi-mumbai-airport',
@@ -390,7 +427,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'AutoCAD', 'Bluebeam', 'BIM 360'],
     challenges: ['Coordinating complex steel structures with ceiling elements while maintaining accuracy in parametric family creation.'],
     solutions: ['Revit and AutoCAD utilized for detailed modeling. Bluebeam streamlined sheet detailing/review. BIM 360 enabled efficient collaboration.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['architectural-structural', 'bim-modeling-coordination']
   },
   {
     id: 'patna-metro',
@@ -400,7 +438,8 @@ export const projects: Project[] = [
     location: 'Patna, Bihar, India',
     services: ['LOD 400 Electrical Modeling', 'Sheet Creation'],
     technologies: ['Revit', 'AutoCAD', 'Bluebeam', 'BIM 360'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['bim-modeling-coordination', 'family-creation']
   },
   {
     id: 'grain-mill-scan-gujarat',
@@ -413,7 +452,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'Recap'],
     challenges: ['Inaccurate existing conditions due to outdated plans.', 'Coordination issues between trades.', 'High volume of equipment with varying specifications.', 'Time constraints.'],
     solutions: ['Utilized laser scanning for precise measurements.', 'Implemented collaborative BIM process with coordination meetings and clash detection.', 'Developed standardized equipment families in Revit.', 'Created a phased modeling approach.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['architectural-structural', 'bim-modeling-coordination']
   },
   {
     id: 'san-francisco-resident-scan',
@@ -426,7 +466,8 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'Recap', 'Navisworks', 'Bluebeam'],
     challenges: ['Irregularities in point cloud data (noise, inaccuracies).', 'Complexity of Structural Components.', 'Software integration issues (Recap, Revit, Bluebeam).'],
     solutions: ['Thorough data cleaning/segmentation in Recap, validation with onsite references.', 'Navisworks used for clash detection/coordination.', 'Workflow optimization using standardized data formats and team coordination.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['architectural-structural', 'bim-modeling-coordination']
   },
   {
     id: 'scitech-plant-room-scan',
@@ -439,45 +480,51 @@ export const projects: Project[] = [
     technologies: ['Autodesk Revit', 'Autodesk Recap', 'Bluebeam', 'Navisworks', 'STAAD Pro'],
     challenges: ['High Density of MEP Components in small areas.', 'Structural Analysis needed for Heavy Machinery.', 'Limited Access to Certain Areas for Scanning.'],
     solutions: ['High-resolution scanning, Navisworks for clash detection, team coordination.', 'STAAD Pro integration for structural analysis.', 'Manual measurements and as-built document references to fill data gaps.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['architectural-structural', 'bim-modeling-coordination']
   },
   {
-    id: 'raffles-city-mall-arch-scan',
-    title: 'RAFFLES CITY MALL (ARCH) (Scan to BIM)',
-    description: 'Detailed Scan to BIM modeling for Raffles City Mall\'s architectural elements.',
-    overview: 'Detailed Scan to BIM modeling for the mall\'s architectural elements.',
+    id: 'raffles-city-mall',
+    title: 'RAFFLES CITY MALL',
+    description: 'Comprehensive Scan to BIM project for a major shopping mall in Singapore.',
+    overview: 'A multi-disciplinary Scan to BIM project covering architectural, structural, and MEP elements of this major shopping complex in Singapore. The project involved converting detailed laser scan data into an intelligent BIM model, ensuring accuracy and coordination across all building systems.',
     category: 'Scan to BIM',
     location: 'Singapore',
-    services: ['Scan to BIM (Architectural As-Built Modeling)', 'Sheet Extraction'],
+    services: [
+      'Scan to BIM (Architectural As-Built Modeling)',
+      'Scan to BIM (Structural Modeling)',
+      'Scan to BIM (MEP Modeling)',
+      'Integration & Coordination',
+      'Sheet Extraction'
+    ],
     technologies: ['Autodesk Revit', '3D Laser Scanning', 'Navisworks', 'Bluebeam'],
-    challenges: ['Frequent design alterations.'],
-    solutions: ['Captured alterations using laser scanning data.', 'Ensured seamless integration with structural and MEP models.'],
-    image: '/placeholder.png'
-  },
-  {
-    id: 'raffles-city-mall-str-scan',
-    title: 'RAFFLES CITY MALL (STR) (Scan to BIM)',
-    description: 'Scan to BIM modeling for the structural framework of Raffles City Mall.',
-    overview: 'Scan to BIM modeling for the structural framework of the mall.',
-    category: 'Scan to BIM',
-    location: 'Singapore',
-    services: ['Scan to BIM (Structural Modeling)', 'Integration & Coordination', 'Sheet Extraction'],
-    technologies: ['Autodesk Revit', '3D Laser Scanning', 'Navisworks', 'Bluebeam'],
-    challenges: ['Model inconsistencies.'],
-    solutions: ['Addressed inconsistencies using precise scan data.', 'Real-time model updates to maintain data accuracy.'],
-    image: '/placeholder.png'
-  },
-  {
-    id: 'raffles-city-mall-mep-scan',
-    title: 'RAFFLES CITY MALL (MEP) (Scan to BIM)',
-    description: 'Detailed Scan to BIM modeling for MEP systems of Raffles City Mall.',
-    overview: 'Detailed Scan to BIM modeling for mechanical, electrical, and plumbing systems.',
-    category: 'Scan to BIM',
-    location: 'Singapore',
-    services: ['Scan to BIM (Mechanical Modeling - HVAC, etc.)', 'Scan to BIM (Electrical Modeling - Trays, Lighting, etc.)', 'Scan to BIM (Plumbing Modeling - Pipes, Fixtures, etc.)', 'Clash Detection & Resolution', 'Sheet Extraction'],
-    technologies: ['Autodesk Revit', '3D Laser Scanning', 'Navisworks', 'Bluebeam'],
-    challenges: ['Accurate alignment of MEP systems with existing site conditions.'],
-    solutions: ['Used scan data for accurate alignment.', 'Effective model coordination to prevent clashes and discrepancies.'],
-    image: '/placeholder.png'
+    image: '/placeholder.png',
+    tags: ['architectural-structural', 'bim-modeling-coordination', 'vr-ar-experiences'],
+    disciplines: [
+      {
+        name: 'Architectural',
+        description: 'Detailed Scan to BIM modeling for the mall\'s architectural elements.',
+        technologies: ['Autodesk Revit', '3D Laser Scanning', 'Navisworks', 'Bluebeam'],
+        challenges: ['Frequent design alterations.', 'Complex interior spatial relationships.'],
+        solutions: ['Captured alterations using laser scanning data.', 'Ensured seamless integration with structural and MEP models.'],
+        services: ['Architectural As-Built Modeling', 'Sheet Extraction']
+      },
+      {
+        name: 'Structural',
+        description: 'Scan to BIM modeling for the structural framework of the mall.',
+        technologies: ['Autodesk Revit', '3D Laser Scanning', 'Navisworks', 'Bluebeam'],
+        challenges: ['Model inconsistencies.', 'Complex connection details.'],
+        solutions: ['Addressed inconsistencies using precise scan data.', 'Real-time model updates to maintain data accuracy.'],
+        services: ['Structural Modeling', 'Integration & Coordination', 'Sheet Extraction']
+      },
+      {
+        name: 'MEP',
+        description: 'Detailed Scan to BIM modeling for mechanical, electrical, and plumbing systems.',
+        technologies: ['Autodesk Revit', '3D Laser Scanning', 'Navisworks', 'Bluebeam'],
+        challenges: ['Accurate alignment of MEP systems with existing site conditions.', 'Complex routing in limited spaces.'],
+        solutions: ['Used scan data for accurate alignment.', 'Effective model coordination to prevent clashes and discrepancies.'],
+        services: ['Mechanical Modeling (HVAC, etc.)', 'Electrical Modeling (Trays, Lighting, etc.)', 'Plumbing Modeling (Pipes, Fixtures, etc.)', 'Clash Detection & Resolution']
+      }
+    ]
   }
-] 
+]

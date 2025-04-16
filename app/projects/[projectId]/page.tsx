@@ -19,6 +19,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { 
   Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, 
 } from "@/components/ui/carousel"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 
 // --- Type Definition ---
 interface Metric {
@@ -28,6 +29,13 @@ interface Metric {
 }
 interface Project extends ProjectData {
   metrics?: Metric[];
+  disciplines?: {
+    name: string;
+    description: string;
+    services?: string[];
+    challenges?: string[];
+    solutions?: string[];
+  }[];
 }
 
 // --- Helper Functions & Data ---
@@ -165,15 +173,94 @@ export default function ProjectPage({ params }: { params: Promise<{ projectId: s
           {/* --- Left Column (Main Content) --- */}
           <div className="lg:col-span-2 space-y-16 md:space-y-20">
 
-            {/* Overview Section */} 
-            <SectionWrapper id="overview" className="pt-0">
-              <SectionHeader title="Project Overview" icon={Compass} />
-              <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-4">
-                <p>{project.overview || "Detailed overview of the project's scope, objectives, and significance."}</p>
-                {/* Add more paragraphs if needed */}
-              </div>
+            {/* Project Overview */}
+            <SectionWrapper id="overview">
+              <SectionHeader num={1} title="Project Overview" icon={Eye} />
+              <motion.div
+                variants={fadeInUp} initial="initial" whileInView="animate" viewport={{ once: true }}
+                className="prose max-w-none"
+              >
+                <p className="text-gray-600 leading-relaxed mb-4">
+                  {project.overview || project.description}
+                </p>
+              </motion.div>
             </SectionWrapper>
-            
+
+            {/* Disciplines Tabs (if project has multiple disciplines) */}
+            {project.disciplines && project.disciplines.length > 0 && (
+              <SectionWrapper id="disciplines">
+                <SectionHeader num={2} title="Project Disciplines" icon={Layers} />
+                <Tabs defaultValue={project.disciplines[0].name.toLowerCase()} className="w-full">
+                  <TabsList className="grid grid-cols-3 max-w-md mx-auto">
+                    {project.disciplines.map((discipline) => (
+                      <TabsTrigger
+                        key={discipline.name}
+                        value={discipline.name.toLowerCase()}
+                        className="text-sm md:text-base"
+                      >
+                        {discipline.name}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                  
+                  {project.disciplines.map((discipline) => (
+                    <TabsContent
+                      key={discipline.name}
+                      value={discipline.name.toLowerCase()}
+                      className="mt-6 space-y-6"
+                    >
+                      <Card className="bg-white border border-gray-100 shadow-sm">
+                        <CardContent className="pt-6">
+                          <p className="text-gray-600 mb-6">{discipline.description}</p>
+                          
+                          {discipline.services && discipline.services.length > 0 && (
+                            <div className="mb-6">
+                              <h4 className="text-lg font-semibold mb-3 text-blue-700">Services Provided</h4>
+                              <div className="flex flex-wrap gap-2 mb-6">
+                                {discipline.services.map((service, idx) => (
+                                  <Badge key={idx} className="bg-blue-50 text-blue-700 hover:bg-blue-100">
+                                    {service}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          
+                          {discipline.challenges && discipline.challenges.length > 0 && (
+                            <div className="mb-6">
+                              <h4 className="text-lg font-semibold mb-3">Challenges</h4>
+                              <ul className="space-y-2">
+                                {discipline.challenges.map((challenge, idx) => (
+                                  <li key={idx} className="flex gap-2">
+                                    <CheckCircle className="h-5 w-5 text-blue-500 flex-shrink-0 mt-0.5" />
+                                    <span>{challenge}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                          
+                          {discipline.solutions && discipline.solutions.length > 0 && (
+                            <div>
+                              <h4 className="text-lg font-semibold mb-3">Solutions</h4>
+                              <ul className="space-y-2">
+                                {discipline.solutions.map((solution, idx) => (
+                                  <li key={idx} className="flex gap-2">
+                                    <Zap className="h-5 w-5 text-blue-500 flex-shrink-0 mt-0.5" />
+                                    <span>{solution}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                  ))}
+                </Tabs>
+              </SectionWrapper>
+            )}
+
             {/* Swipable Project Gallery (Moved Earlier) */} 
             {project.images && project.images.length > 0 && (
               <SectionWrapper id="gallery">
@@ -234,46 +321,60 @@ export default function ProjectPage({ params }: { params: Promise<{ projectId: s
               </SectionWrapper>
             )}
 
-            {/* Challenges & Solutions */} 
-            {(project.challenges && project.challenges.length > 0) || (project.solutions && project.solutions.length > 0) ? (
-                <SectionWrapper id="challenges-solutions">
-                    {project.challenges && project.challenges.length > 0 && (
-                      <div className="mb-12 md:mb-16">
-                         <SectionHeader num={3} title="Challenges" icon={Lightbulb} />
-                         <ul className="space-y-4">
-                             {project.challenges.map((challenge, index) => (
-                                 <motion.li
-                                     key={index}
-                                     className="flex items-start p-4 bg-gray-50 border border-gray-100 rounded-lg"
-                                     variants={fadeInUp} initial="initial" whileInView="animate" viewport={{ once: true, amount: 0.3 }}
-                                 >
-                                     <Target className="w-5 h-5 text-red-600 mr-3 mt-0.5 flex-shrink-0" />
-                                     <span className="text-gray-700 text-base leading-relaxed">{challenge}</span>
-                                 </motion.li>
-                             ))}
-                         </ul>
-                      </div>
-                     )} 
-                    
-                     {project.solutions && project.solutions.length > 0 && (
-                         <div>
-                             <SectionHeader num={4} title="Solutions" icon={Zap} />
-                             <ul className="space-y-4">
-                                 {project.solutions.map((solution, index) => (
-                                     <motion.li
-                                         key={index}
-                                         className="flex items-start p-4 bg-gray-50 border border-gray-100 rounded-lg"
-                                         variants={fadeInUp} initial="initial" whileInView="animate" viewport={{ once: true, amount: 0.3 }}
-                                     >
-                                         <Zap className="w-5 h-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
-                                         <span className="text-gray-700 text-base leading-relaxed">{solution}</span>
-                                     </motion.li>
-                                 ))}
-                             </ul>
-                         </div>
-                     )}
-                </SectionWrapper>
-            ) : null}
+            {/* Challenges & Solutions - Only show for projects without disciplines */}
+            {(!project.disciplines || project.disciplines.length === 0) && project.challenges && project.challenges.length > 0 && (
+              <SectionWrapper id="challenges">
+                <SectionHeader num={3} title="Challenges & Solutions" icon={Lightbulb} />
+                
+                <div className="grid md:grid-cols-2 gap-12">
+                  {/* Challenges */}
+                  <div>
+                    <Card className="h-full shadow-sm hover:shadow-md transition-shadow duration-300">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="text-xl flex items-center">
+                          <Target className="h-5 w-5 text-pulse-500 mr-2" />
+                          Challenges
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <ul className="space-y-3">
+                          {project.challenges.map((challenge, idx) => (
+                            <li key={idx} className="flex gap-2">
+                              <CheckCircle className="h-5 w-5 text-pulse-500 flex-shrink-0 mt-0.5" />
+                              <span>{challenge}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  </div>
+                  
+                  {/* Solutions */}
+                  {project.solutions && project.solutions.length > 0 && (
+                    <div>
+                      <Card className="h-full shadow-sm hover:shadow-md transition-shadow duration-300">
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-xl flex items-center">
+                            <Zap className="h-5 w-5 text-pulse-500 mr-2" />
+                            Solutions
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <ul className="space-y-3">
+                            {project.solutions.map((solution, idx) => (
+                              <li key={idx} className="flex gap-2">
+                                <CheckCircle className="h-5 w-5 text-pulse-500 flex-shrink-0 mt-0.5" />
+                                <span>{solution}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  )}
+                </div>
+              </SectionWrapper>
+            )}
 
             {/* Results & Impact Section */} 
             <SectionWrapper id="results">
@@ -377,12 +478,13 @@ export default function ProjectPage({ params }: { params: Promise<{ projectId: s
                 <Star className="w-6 h-6 text-yellow-300 mx-auto mb-3" />
                 <h3 className="text-xl font-semibold mb-3">Have a Similar Project?</h3>
                 <p className="text-sm text-pulse-100 mb-5">Let MorphVision bring your vision to life with expert BIM solutions.</p>
-                <Button asChild size="lg" variant="secondary" className="w-full bg-white text-pulse-600 hover:bg-gray-100 font-semibold group rounded-lg">
-                  <Link href="/contact">
-                    Contact Our Experts 
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-                  </Link>
-                </Button>
+                <Link 
+                  href="/contact" 
+                  className="inline-flex items-center justify-center w-full group px-6 py-3 bg-white text-pulse-600 font-medium rounded-full hover:bg-gray-100 transition-all"
+                >
+                  Contact Our Experts 
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
               </CardContent>
             </Card>
           </aside>
@@ -390,24 +492,59 @@ export default function ProjectPage({ params }: { params: Promise<{ projectId: s
         </LayoutWrapper>
 
         {/* --- Final CTA Section --- */}
-        <SectionWrapper className="pt-16 pb-16 md:pt-20 md:pb-20 mt-16 md:mt-20 bg-gray-50/50 border-t border-gray-100">
-           <div className="text-center max-w-2xl mx-auto">
-             <motion.div 
-               variants={fadeInUp} initial="initial" whileInView="animate" viewport={{ once: true }}
-             >
-               <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 text-gray-900">Start Your Next Success Story</h2>
-               <p className="text-lg text-gray-600 mb-8">
-                 Partner with us to achieve exceptional results for your construction project.
-               </p>
-               <Button asChild size="lg" className="bg-pulse-600 hover:bg-pulse-700 text-white font-semibold group px-8 py-3 rounded-lg">
-                 <Link href="/contact">
-                   Get a Consultation
-                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                 </Link>
-               </Button>
-             </motion.div>
-           </div>
-         </SectionWrapper>
+        <motion.section
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={fadeInUp}
+          className="py-20 relative overflow-hidden mt-16"
+        >
+          {/* Gradient background with blurred shapes */}
+          <div className="absolute inset-0 z-0 bg-gradient-to-br from-blue-900 via-purple-800 to-blue-700 opacity-90" />
+          <div className="absolute left-1/4 top-1/3 w-96 h-96 bg-purple-400 opacity-30 rounded-full blur-3xl z-0" />
+          <div className="absolute right-1/4 bottom-1/4 w-80 h-80 bg-blue-300 opacity-20 rounded-full blur-2xl z-0" />
+
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl relative z-10">
+            <motion.div
+              variants={staggerContainer}
+              className="text-center"
+            >
+              <Badge className="mb-4 bg-white/20 text-white hover:bg-white/30">Start Your Project</Badge>
+              <motion.h2
+                variants={fadeInUp}
+                className="text-4xl md:text-5xl font-display font-bold mb-6 text-white"
+              >
+                Ready to Transform Your Next Project?
+              </motion.h2>
+
+              <motion.p
+                variants={fadeInUp}
+                className="text-xl text-white/80 mb-10 max-w-3xl mx-auto"
+              >
+                Partner with us to achieve exceptional results for your construction project.
+              </motion.p>
+
+              <motion.div
+                variants={fadeInUp}
+                className="flex flex-wrap gap-4 justify-center"
+              >
+                <Link
+                  href="/contact"
+                  className="flex items-center justify-center group px-6 py-3 bg-white text-[#20133d] font-medium rounded-full hover:bg-opacity-90 transition-all"
+                >
+                  Get a Consultation
+                  <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+                <Link
+                  href="/services"
+                  className="flex items-center justify-center group px-6 py-3 border border-white text-white rounded-full hover:bg-white/10 transition-all"
+                >
+                  Explore Our Services
+                </Link>
+              </motion.div>
+            </motion.div>
+          </div>
+        </motion.section>
 
       </main>
     </div>

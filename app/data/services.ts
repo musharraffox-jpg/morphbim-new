@@ -76,7 +76,7 @@ export const services: Service[] = [
     heroHeadline: 'Architectural Precision. Structural Integrity.',
     heroSubheadline: 'We design spaces that inspire and structures that endure.',
     whoWeAre: {
-      image: '/assets/about-arch.jpg',
+      image: '/images/services/who/architectural-structural.jpeg',
       title: 'Shaping the Built Environment',
       paragraph: 'At MorphVision, our architectural and structural teams work in synergy to deliver iconic, practical, and future-ready buildings. From sleek commercial towers to smart urban layouts — we merge creativity with calculation.'
     },
@@ -118,7 +118,7 @@ export const services: Service[] = [
     heroHeadline: 'Integrated Building Systems. Future-Ready Performance.',
     heroSubheadline: 'Engineering excellence that powers, connects, and sustains the built environment.',
     whoWeAre: {
-      image: '/assets/about-mep.jpg',
+      image: '/images/services/who/mep-engineering.jpeg',
       title: 'Engineering Building Lifelines',
       paragraph: 'Our MEP team delivers integrated systems that breathe life into buildings. We balance performance with sustainability, ensuring every mechanical, electrical, and plumbing component works in harmony with architectural vision and structural requirements.'
     },
@@ -160,7 +160,7 @@ export const services: Service[] = [
     heroHeadline: 'Precision Engineering. Compliance-Driven Design.',
     heroSubheadline: 'Specialized solutions for industrial facilities and pharmaceutical environments.',
     whoWeAre: {
-      image: '/assets/about-industrial.jpg',
+      image: '/images/services/who/industrial-pharma.jpeg',
       title: 'Industrial Excellence By Design',
       paragraph: 'Our specialized industrial and pharmaceutical design team combines technical precision with regulatory expertise. We create optimized production environments that maximize efficiency while meeting the strictest compliance standards for critical facilities.'
     },
@@ -202,7 +202,7 @@ export const services: Service[] = [
     heroHeadline: 'Reality Captured. Intelligence Delivered.',
     heroSubheadline: 'Transforming physical space into precise digital twins with laser scanning technology.',
     whoWeAre: {
-      image: '/assets/about-scan.jpg',
+      image: '/images/services/who/scan-to-bim.jpeg',
       title: 'Digital Reality Experts',
       paragraph: 'Our Scan to BIM specialists bridge physical and digital worlds. We capture exact as-built conditions and transform them into intelligent BIM models that serve as the foundation for renovations, retrofits, and facility management solutions.'
     },
@@ -244,7 +244,7 @@ export const services: Service[] = [
     heroHeadline: 'Experience Before Existence. Immerse Before Construction.',
     heroSubheadline: 'Bringing designs to life through immersive augmented and virtual reality experiences.',
     whoWeAre: {
-      image: '/assets/about-arvr.jpg',
+      image: '/images/services/who/ar-vr.jpeg',
       title: 'Immersive Experience Creators',
       paragraph: 'Our AR/VR team transforms traditional design presentations into interactive experiences. We create virtual environments that allow stakeholders to walk through, interact with, and truly understand spaces before they\'re built, enhancing decision-making and design outcomes.'
     },
@@ -286,7 +286,7 @@ export const services: Service[] = [
     heroHeadline: 'Custom Components. Unlimited Possibilities.',
     heroSubheadline: 'Building the digital building blocks that power efficient and accurate BIM projects.',
     whoWeAre: {
-      image: '/assets/about-family.jpg',
+      image: '/images/services/who/family-creation.jpeg',
       title: 'Component Engineering Specialists',
       paragraph: 'Our Family Creation team specializes in developing intelligent, parametric components that become the building blocks of efficient BIM workflows. We create custom families that perfectly balance visual representation, data richness, and performance optimization.'
     },
