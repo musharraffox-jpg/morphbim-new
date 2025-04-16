@@ -3,11 +3,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"; 
 import { useRouter } from "next/navigation";
 import { ArrowRight, Filter, Search, Building2, Hospital, Factory, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge"; 
 import { projects } from "@/app/data/projects";
 
 // Animation variants
@@ -94,12 +94,10 @@ const Projects = () => {
             <div
               className="bg-no-repeat bg-cover bg-center p-6 sm:p-8 md:p-12 min-h-[300px] sm:min-h-[400px] flex flex-col"
               style={{
-                backgroundImage: "url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2400&q=80')",
-                backgroundPosition: "center",
-                backgroundSize: "cover"
+                backgroundImage: "url('/background-section2.png')",
               }}
             >
-              <div className="absolute inset-0 bg-blue-900/80 mix-blend-multiply"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-800/80 to-purple-900/80"></div>
 
               <div className="relative z-10 max-w-3xl text-white mt-8 sm:mt-12">
                 <motion.div
@@ -111,39 +109,11 @@ const Projects = () => {
                     Our Portfolio
                   </Badge>
                   <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold mb-6">
-                    <span className="block">World-Class</span>
-                    <span className="bg-gradient-to-r from-blue-400 to-purple-600 text-transparent bg-clip-text">
-                      BIM Projects
-                    </span>
+                    World-Class BIM Projects
                   </h1>
                   <p className="text-xl text-white/90 mb-8 max-w-3xl">
                     Explore our comprehensive portfolio of successful BIM projects across various sectors.
                   </p>
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3, duration: 0.5 }}
-                  >
-                    <div className="flex flex-wrap gap-4">
-                      <Link
-                        href="#projects-grid"
-                        className="flex items-center justify-center group px-6 py-3 bg-white text-blue-900 font-medium rounded-full hover:bg-opacity-90 transition-all"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          document.getElementById('projects-grid')?.scrollIntoView({ behavior: 'smooth' });
-                        }}
-                      >
-                        Explore Projects
-                        <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-                      </Link>
-                      <Link
-                        href="/contact"
-                        className="flex items-center justify-center group px-6 py-3 border border-white text-white rounded-full hover:bg-white/10 transition-all"
-                      >
-                        Request a Consultation
-                      </Link>
-                    </div>
-                  </motion.div>
                 </motion.div>
               </div>
             </div>
@@ -153,7 +123,7 @@ const Projects = () => {
           </div>
 
           {/* Featured Projects Highlight */}
-          <div className="mb-16 mt-20">
+          <div className="mb-16 mt-12">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
               <div>
                 <Badge className="mb-3 bg-blue-100 text-blue-700 hover:bg-blue-200">
@@ -183,13 +153,13 @@ const Projects = () => {
                 >
                   <div className="relative h-80">
                     <Image
-                      src={project.image || 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1920&q=80'}
+                      src={project.image || '/background-section2.png'}
                       alt={project.title}
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-70"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
                     <div className="absolute bottom-6 left-6 right-6 z-10">
                       <div className="flex gap-2 mb-3">
                         <Badge className="bg-white/90 text-gray-800 hover:bg-white">
@@ -217,12 +187,6 @@ const Projects = () => {
               ))}
             </div>
           </div>
-        </div>
-      </section>
-      
-      {/* Projects Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
             {/* Category Filters */}
             <div className="flex flex-wrap gap-3">
@@ -255,14 +219,19 @@ const Projects = () => {
               />
             </div>
           </div>
-          
+        </div>
+      </section>
+      
+      {/* Projects Section */}
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* Projects Grid */}
           <motion.div
             id="projects-grid"
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12"
           >
             {projectsToDisplay.map((project) => (
               <motion.div
@@ -274,7 +243,7 @@ const Projects = () => {
               >
                 <div className="relative h-64">
                   <Image
-                    src={project.image || 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1920&q=80'}
+                    src={project.image || '/background-section2.png'}
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -321,16 +290,23 @@ const Projects = () => {
               transition={{ delay: 0.5 }}
               className="mt-16 text-center"
             >
-              <Button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={handleShowMore}
-                className="px-8 py-3 bg-blue-600 text-white hover:bg-blue-700 rounded-full transition-all duration-300 flex items-center"
+                className="group relative overflow-hidden inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-full transition-all duration-300 shadow-md hover:shadow-lg"
               >
-                {isExpanded ? (
-                  <>Show Less <ArrowRight className="ml-2 h-5 w-5 rotate-180" /></>
-                ) : (
-                  <>View All Projects <ArrowRight className="ml-2 h-5 w-5" /></>
-                )}
-              </Button>
+                {/* Background animation on hover */}
+                <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <span className="relative flex items-center">
+                  {isExpanded ? (
+                    <>Show Less <motion.div initial={{ rotate: 180 }} animate={{ rotate: 0 }} className="ml-2"><ArrowRight className="h-5 w-5" /></motion.div></>
+                  ) : (
+                    <>View All Projects <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" /></>
+                  )}
+                </span>
+              </motion.button>
             </motion.div>
           )}
           
@@ -346,47 +322,30 @@ const Projects = () => {
       
       {/* Final CTA Section */}
       <section className="py-20 relative overflow-hidden">
-        {/* Background image */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-800 to-indigo-900" />
-          <div className="absolute left-1/4 top-1/3 w-96 h-96 bg-purple-400 opacity-30 rounded-full blur-3xl animate-blob" />
-          <div className="absolute right-1/4 bottom-1/4 w-80 h-80 bg-blue-300 opacity-20 rounded-full blur-2xl animate-blob animation-delay-2000" />
-          <div className="absolute top-1/4 right-1/3 w-64 h-64 bg-pink-300 opacity-20 rounded-full blur-2xl animate-blob animation-delay-4000" />
-          <div className="absolute inset-0 bg-[url('/background-section1.png')] bg-cover bg-center opacity-10 mix-blend-overlay" />
-        </div>
+        {/* Gradient background with blurred shapes */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-blue-900 via-purple-800 to-blue-700 opacity-90" />
+        <div className="absolute left-1/4 top-1/3 w-96 h-96 bg-purple-400 opacity-30 rounded-full blur-3xl z-0" />
+        <div className="absolute right-1/4 bottom-1/4 w-80 h-80 bg-blue-300 opacity-20 rounded-full blur-2xl z-0" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl relative z-10">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeInUp}
-            className="text-center"
-          >
-            <Badge className="mb-4 bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm">Ready to Collaborate?</Badge>
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-white animate-text bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text">
+          <div className="text-center">
+            <Badge className="mb-4 bg-white/20 text-white hover:bg-white/30">Ready to Collaborate?</Badge>
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-white">
               Let's Transform Your Vision Into Reality
             </h2>
-            <p className="text-xl text-white/80 mb-10 max-w-3xl mx-auto">
+            <p className="text-xl text-white/80 mb-10 max-w-3xl">
               Whether you need comprehensive BIM services or specialized expertise, our team is ready to deliver excellence.
             </p>
-            <div className="flex flex-wrap gap-6 justify-center">
-              <Link 
-                href="/contact" 
-                className="flex items-center justify-center group px-8 py-4 bg-white text-blue-900 font-medium rounded-full hover:bg-opacity-90 transition-all shadow-lg hover:shadow-xl"
-              >
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Link href="/contact" className="flex items-center justify-center group px-6 py-3 bg-white text-[#20133d] font-medium rounded-full hover:bg-opacity-90 transition-all">
                 Request a Consultation
                 <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
-              <Link 
-                href="/services" 
-                className="flex items-center justify-center group px-8 py-4 border-2 border-white text-white rounded-full hover:bg-white/10 transition-all shadow-lg hover:shadow-xl"
-              >
+              <Link href="/services" className="flex items-center justify-center group px-6 py-3 border border-white text-white rounded-full hover:bg-white/10 transition-all">
                 Explore Our Services
-                <ArrowRight className="ml-2 w-4 h-4 opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-1" />
               </Link>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>
