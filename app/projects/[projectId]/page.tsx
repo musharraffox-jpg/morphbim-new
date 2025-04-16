@@ -270,52 +270,49 @@ export default function ProjectPage({ params }: { params: Promise<{ projectId: s
               {/* Challenges & Solutions */}
               {(project.challenges || project.solutions) && (
                 <motion.div variants={fadeInUp} className="bg-white rounded-lg p-8 border border-gray-100">
-                  <Tabs defaultValue="challenges" className="w-full">
-                    <TabsList className="grid w-full grid-cols-2 mb-6">
-                      <TabsTrigger value="challenges">Challenges</TabsTrigger>
-                      <TabsTrigger value="solutions">Solutions</TabsTrigger>
-                    </TabsList>
-                    
-                    <TabsContent value="challenges" className="space-y-4">
-                      <h3 className="text-xl font-display font-bold mb-4 text-gray-900">
-                        Project Challenges
-                      </h3>
-                      {project.challenges ? (
+                  <h2 className="text-2xl font-display font-bold mb-6 text-gray-900">
+                    Challenges & Solutions
+                  </h2>
+                  
+                  <div className="space-y-8">
+                    {/* Challenges Section */}
+                    {project.challenges && project.challenges.length > 0 && (
+                      <div>
+                        <h3 className="text-xl font-display font-bold mb-4 text-gray-900">
+                          Project Challenges
+                        </h3>
                         <ul className="space-y-4">
                           {project.challenges.map((challenge, index) => (
-                            <li key={index} className="flex items-start">
-                              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center mt-0.5">
-                                <Lightbulb className="h-3 w-3 text-white" />
+                            <li key={index} className="flex items-start bg-gray-50 p-4 rounded-lg border border-gray-200">
+                              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center mt-0.5 mr-4">
+                                <Lightbulb className="h-4 w-4 text-white" />
                               </div>
-                              <span className="ml-3 text-gray-700">{challenge}</span>
+                              <span className="text-gray-700">{challenge}</span>
                             </li>
                           ))}
                         </ul>
-                      ) : (
-                        <p className="text-gray-500 italic">No specific challenges documented for this project.</p>
-                      )}
-                    </TabsContent>
+                      </div>
+                    )}
                     
-                    <TabsContent value="solutions" className="space-y-4">
-                      <h3 className="text-xl font-display font-bold mb-4 text-gray-900">
-                        Our Solutions
-                      </h3>
-                      {project.solutions ? (
+                    {/* Solutions Section */}
+                    {project.solutions && project.solutions.length > 0 && (
+                      <div>
+                        <h3 className="text-xl font-display font-bold mb-4 text-gray-900">
+                          Our Solutions
+                        </h3>
                         <ul className="space-y-4">
                           {project.solutions.map((solution, index) => (
-                            <li key={index} className="flex items-start">
-                              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center mt-0.5">
-                                <CheckCircle2 className="h-3 w-3 text-white" />
+                            <li key={index} className="flex items-start bg-blue-50 p-4 rounded-lg border border-blue-200">
+                              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center mt-0.5 mr-4">
+                                <CheckCircle2 className="h-4 w-4 text-white" />
                               </div>
-                              <span className="ml-3 text-gray-700">{solution}</span>
+                              <span className="text-gray-700">{solution}</span>
                             </li>
                           ))}
                         </ul>
-                      ) : (
-                        <p className="text-gray-500 italic">No specific solutions documented for this project.</p>
-                      )}
-                    </TabsContent>
-                  </Tabs>
+                      </div>
+                    )}
+                  </div>
                 </motion.div>
               )}
 
@@ -325,29 +322,35 @@ export default function ProjectPage({ params }: { params: Promise<{ projectId: s
                   <h2 className="text-2xl font-display font-bold mb-6 text-gray-900">
                     Project Gallery
                   </h2>
-                  <Carousel className="w-full">
-                    <CarouselContent>
-                      {project.images.map((image, index) => (
-                        <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                          <div className="p-1">
-                            <div className="overflow-hidden rounded-lg aspect-square relative">
-                              <Image
-                                src={image || FALLBACK_IMAGE}
-                                alt={`Project image ${index + 1}`}
-                                fill
-                                className="object-cover hover:scale-105 transition-transform duration-500"
-                                onError={handleImageError}
-                              />
+                  
+                  <div className="relative">
+                    <Carousel className="w-full">
+                      <CarouselContent>
+                        {project.images.map((image, index) => (
+                          <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/2">
+                            <div className="p-1">
+                              <div className="overflow-hidden rounded-lg aspect-video relative group">
+                                <Image
+                                  src={image || FALLBACK_IMAGE}
+                                  alt={`Project image ${index + 1}`}
+                                  fill
+                                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                  onError={handleImageError}
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-start p-4">
+                                  <span className="text-white font-medium">Image {index + 1}</span>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </CarouselItem>
-                      ))}
-                    </CarouselContent>
-                    <div className="flex justify-center mt-4 gap-2">
-                      <CarouselPrevious />
-                      <CarouselNext />
-                    </div>
-                  </Carousel>
+                          </CarouselItem>
+                        ))}
+                      </CarouselContent>
+                      <div className="absolute -bottom-12 left-0 right-0 flex justify-center mt-4 gap-2">
+                        <CarouselPrevious className="relative static" />
+                        <CarouselNext className="relative static" />
+                      </div>
+                    </Carousel>
+                  </div>
                 </motion.div>
               )}
 
