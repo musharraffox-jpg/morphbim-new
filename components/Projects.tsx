@@ -348,13 +348,11 @@ const Projects = () => {
       <section className="py-20 relative overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1461914152595-a86cd63ad790?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2400&q=80"
-            alt="Architecture background"
-            fill
-            className="object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-blue-900/80 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-800 to-indigo-900" />
+          <div className="absolute left-1/4 top-1/3 w-96 h-96 bg-purple-400 opacity-30 rounded-full blur-3xl animate-blob" />
+          <div className="absolute right-1/4 bottom-1/4 w-80 h-80 bg-blue-300 opacity-20 rounded-full blur-2xl animate-blob animation-delay-2000" />
+          <div className="absolute top-1/4 right-1/3 w-64 h-64 bg-pink-300 opacity-20 rounded-full blur-2xl animate-blob animation-delay-4000" />
+          <div className="absolute inset-0 bg-[url('/background-section1.png')] bg-cover bg-center opacity-10 mix-blend-overlay" />
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl relative z-10">
@@ -365,20 +363,27 @@ const Projects = () => {
             variants={fadeInUp}
             className="text-center"
           >
-            <Badge className="mb-4 bg-white/20 text-white hover:bg-white/30">Ready to Collaborate?</Badge>
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-white">
+            <Badge className="mb-4 bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm">Ready to Collaborate?</Badge>
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 text-white animate-text bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text">
               Let's Transform Your Vision Into Reality
             </h2>
             <p className="text-xl text-white/80 mb-10 max-w-3xl mx-auto">
               Whether you need comprehensive BIM services or specialized expertise, our team is ready to deliver excellence.
             </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Link href="/contact" className="flex items-center justify-center group px-6 py-3 bg-white text-blue-900 font-medium rounded-full hover:bg-opacity-90 transition-all">
+            <div className="flex flex-wrap gap-6 justify-center">
+              <Link 
+                href="/contact" 
+                className="flex items-center justify-center group px-8 py-4 bg-white text-blue-900 font-medium rounded-full hover:bg-opacity-90 transition-all shadow-lg hover:shadow-xl"
+              >
                 Request a Consultation
                 <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
-              <Link href="/services" className="flex items-center justify-center group px-6 py-3 border border-white text-white rounded-full hover:bg-white/10 transition-all">
+              <Link 
+                href="/services" 
+                className="flex items-center justify-center group px-8 py-4 border-2 border-white text-white rounded-full hover:bg-white/10 transition-all shadow-lg hover:shadow-xl"
+              >
                 Explore Our Services
+                <ArrowRight className="ml-2 w-4 h-4 opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-1" />
               </Link>
             </div>
           </motion.div>
