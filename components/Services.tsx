@@ -214,7 +214,7 @@ const Services = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
-                  size="xl"
+                  size="lg"
                   className="bg-white text-gray-900 hover:bg-gray-100 group font-semibold gap-2"
                 >
                   Schedule Demo
@@ -222,7 +222,7 @@ const Services = () => {
                 </Button>
                 <Button
                   variant="ghost"
-                  size="xl"
+                  size="lg"
                   className="text-white border border-white/20 hover:border-primary-300 hover:text-primary-300 gap-2"
                 >
                   Explore Case Studies
