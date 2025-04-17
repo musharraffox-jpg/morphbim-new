@@ -14,6 +14,7 @@ import Testimonials from '@/components/Testimonials'
 import Newsletter from '@/components/Newsletter'
 import ProjectCTA from '@/components/ProjectCTA'
 import FaqSection from '@/components/FaqSection'
+import { projects as allProjects } from '@/app/data/projects'
 
 export default function Home() {
   const featuredProjectsRef = useRef<HTMLDivElement>(null)
@@ -94,29 +95,8 @@ export default function Home() {
     }
   ]
 
-  const projects = [
-    {
-      id: 'hospital-complex',
-      title: 'Hospital Complex',
-      category: 'Healthcare',
-      description: 'Comprehensive modeling and coordination for a multi-specialty hospital with advanced medical facilities and patient-centered design.',
-      image: '/background-section2.png'
-    },
-    {
-      id: 'pharma-cleanroom',
-      title: 'Pharmaceutical Clean Room',
-      category: 'Pharmaceutical',
-      description: 'Detailed BIM and engineering solutions for a state-of-the-art pharmaceutical manufacturing facility with clean room environments.',
-      image: '/background-section1.png'
-    },
-    {
-      id: 'manufacturing-plant',
-      title: 'Industrial Manufacturing Plant',
-      category: 'Industrial',
-      description: 'Complete BIM implementation for a large-scale manufacturing facility, including production lines, utilities, and warehouse spaces.',
-      image: '/background-section3.png'
-    }
-  ]
+  // Only show projects explicitly marked as featured
+  const featuredProjects = allProjects.filter(p => p.featured)
 
   return (
     <div className='min-h-screen'>
@@ -254,7 +234,7 @@ export default function Home() {
             <p className="text-lg text-gray-600 mb-12 max-w-3xl">From complex healthcare facilities to large-scale industrial plants, our portfolio highlights our capability to deliver excellence across diverse sectors.</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-              {projects.slice(0, 3).map((project, index) => (
+              {featuredProjects.slice(0, 3).map((project, index) => (
                 <Link
                   key={project.id}
                   href={`/projects/${project.id}`}

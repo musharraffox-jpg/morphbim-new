@@ -25,6 +25,7 @@ export interface Project {
     solutions?: string[]
     services?: string[]
   }[]
+  featured?: boolean
 }
 
 export const projects: Project[] = [
@@ -40,7 +41,8 @@ export const projects: Project[] = [
     challenges: ['Integration of complex MEP systems (HVAC, electrical, plumbing, fire protection, medical gases) with architectural and structural elements in a healthcare setting.'],
     solutions: ['Used Autodesk Revit for detailed MEP models integrated into the overall BIM model. Utilized Navisworks for clash detection and 3D coordination to resolve conflicts early.'],
     image: '/placeholder.png',
-    tags: ['architectural-structural', 'bim-modeling-coordination']
+    tags: ['architectural-structural', 'bim-modeling-coordination'],
+    featured: true
   },
   {
     id: 'sidra-hospital',
@@ -82,7 +84,8 @@ export const projects: Project[] = [
     challenges: ['Meeting extremely stringent requirements for air quality, filtration, and temperature control, requiring precise HVAC design without compromising energy efficiency.'],
     solutions: ['Created highly detailed LOD 400 MEP models in Autodesk Revit for accurate system representation, providing precise information for fabrication and installation.'],
     image: '/placeholder.png',
-    tags: ['bim-modeling-coordination', '4d-5d-simulation']
+    tags: ['bim-modeling-coordination', '4d-5d-simulation'],
+    featured: true
   },
   {
     id: 'vida-hotel-residency',
@@ -481,7 +484,8 @@ export const projects: Project[] = [
     challenges: ['High Density of MEP Components in small areas.', 'Structural Analysis needed for Heavy Machinery.', 'Limited Access to Certain Areas for Scanning.'],
     solutions: ['High-resolution scanning, Navisworks for clash detection, team coordination.', 'STAAD Pro integration for structural analysis.', 'Manual measurements and as-built document references to fill data gaps.'],
     image: '/placeholder.png',
-    tags: ['architectural-structural', 'bim-modeling-coordination']
+    tags: ['architectural-structural', 'bim-modeling-coordination'],
+    featured: true
   },
   {
     id: 'raffles-city-mall',
