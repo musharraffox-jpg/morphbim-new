@@ -1,10 +1,11 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from "react";
-import { ArrowRight, ArrowDown } from "lucide-react";
+import { ArrowRight, ArrowDown, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 
 // Dynamically import the LottieAnimation component
 const LottieAnimation = dynamic(() => import("./LottieAnimation"), { 
@@ -16,6 +17,15 @@ const LottieAnimation = dynamic(() => import("./LottieAnimation"), {
   )
 });
 
+const heroImages = [
+  { src: '/images/hero/hero-0.png', alt: 'Hero Image 1' },
+  { src: '/images/hero/hero-1.png', alt: 'Hero Image 2' },
+  { src: '/images/hero/hero-2.png', alt: 'Hero Image 3' },
+  { src: '/images/hero/hero-3.png', alt: 'Hero Image 4' },
+  { src: '/images/hero/hero-4.png', alt: 'Hero Image 5' },
+  { src: '/images/hero/hero-5.png', alt: 'Hero Image 6' }
+]
+
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -24,6 +34,13 @@ const Hero = () => {
   const [lottieError, setLottieError] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  // Parallax effect
+  const bgRef = useRef(null)
+  const { scrollY } = useScroll()
+  const y = useTransform(scrollY, [0, 400], [0, 80])
+  const [current, setCurrent] = useState(0)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const numImages = heroImages.length
 
   useEffect(() => {
     // Check if mobile on mount and when window resizes
@@ -176,7 +193,7 @@ const Hero = () => {
             />
             <div className="absolute inset-0">
               <Image
-                src="/city.png"
+                src="/city-night.png"
                 alt="MorphVision BIM Overlay"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -189,111 +206,125 @@ const Hero = () => {
       </>
     );
   };
-  
+
+  // Auto-advance carousel
+  useEffect(() => {
+    if (numImages <= 1) return
+    timeoutRef.current = setTimeout(() => {
+      setCurrent((prev) => (prev + 1) % numImages)
+    }, 5000)
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    }
+  }, [current, numImages])
+
+  const goTo = (idx: number) => {
+    setCurrent(idx)
+    if (timeoutRef.current) clearTimeout(timeoutRef.current)
+  }
+  const prev = () => goTo((current - 1 + numImages) % numImages)
+  const next = () => goTo((current + 1) % numImages)
+
   return (
-    <section 
-      className="overflow-hidden relative bg-cover" 
-      id="hero" 
-      style={{
-        backgroundImage: 'url("/hero.svg")',
-        backgroundPosition: 'center 30%', 
-        padding: isMobile ? '100px 12px 40px' : '120px 20px 60px'
-      }}
-    >
-      <div className="absolute -top-[10%] -right-[5%] w-1/2 h-[70%] bg-pulse-gradient opacity-20 blur-3xl rounded-full"></div>
-      
-      <div className="container px-4 sm:px-6 lg:px-8" ref={containerRef}>
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 items-center">
-          <div className="w-full lg:w-1/2">
-            <div 
-              className="pulse-chip mb-3 sm:mb-6 opacity-0 animate-fade-in" 
-              style={{ animationDelay: "0.1s" }}
+    <section className='min-h-screen flex flex-col items-center justify-center bg-white' id='hero'>
+      <div className="container px-6 lg:px-8 mx-auto">
+        <div className="relative min-h-[70vh] flex flex-col justify-end overflow-hidden rounded-3xl shadow-2xl bg-black/90" style={{boxShadow: '0 8px 40px 0 rgba(0,0,0,0.10)'}}>
+
+        {/* Carousel Images */}
+        <div className='absolute inset-0 w-full h-full z-0 rounded-3xl overflow-hidden'>
+          <AnimatePresence initial={false}>
+            <motion.div
+              key={current}
+              className='absolute inset-0 w-full h-full'
+              initial={{ opacity: 0, scale: 1.04 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ duration: 1, ease: 'easeInOut' }}
             >
-              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulse-500 text-white mr-2">01</span>
-              <span>Your Vision, Our Innovation</span>
-            </div>
-            
-            <h1 
-              className="section-title text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-tight opacity-0 animate-fade-in" 
-              style={{ animationDelay: "0.3s" }}
-            >
-              Redefining Industries<br className="hidden sm:inline" />Through Cutting-Edge BIM Solutions
-            </h1>
-            
-            <p 
-              style={{ animationDelay: "0.5s" }} 
-              className="section-subtitle mt-3 sm:mt-6 mb-4 sm:mb-8 leading-relaxed opacity-0 animate-fade-in text-gray-950 font-normal text-base sm:text-lg text-left"
-            >
-              MorphVision specializes in BIM, Detailed Designing, Scanning, Redevelopment, and Turnkey Project Solutions. With 190+ successful projects and 40+ skilled professionals, we deliver excellence across pharmaceutical, industrial, and commercial sectors.
-            </p>
-            
-            <div 
-              className="flex flex-col sm:flex-row gap-4 opacity-0 animate-fade-in" 
-              style={{ animationDelay: "0.7s" }}
-            >
-              <Link 
-                href="/contact" 
-                className="flex items-center justify-center group w-full sm:w-auto text-center" 
-                style={{
-                  backgroundColor: '#0d74b4',
-                  borderRadius: '1440px',
-                  boxSizing: 'border-box',
-                  color: '#FFFFFF',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  lineHeight: '20px',
-                  padding: '16px 24px', // Slightly reduced padding for mobile
-                  border: '1px solid white',
-                }}
-              >
-                Discuss Your Project
-                <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-              
-              <button
-                onClick={scrollToFeatured}
-                className="flex items-center justify-center group w-full sm:w-auto text-center bg-transparent border border-pulse-500 text-pulse-500 hover:bg-pulse-50 transition-colors duration-300 rounded-full py-4 px-6"
-              >
-                Explore Our Services
-                <ArrowDown className="ml-2 w-4 h-4 transition-transform group-hover:translate-y-1" />
-              </button>
-            </div>
-          </div>
-          
-          <div className="w-full lg:w-1/2 relative mt-6 lg:mt-0">
-            {renderHeroImage()}
-          </div>
+              <Image
+                src={heroImages[current].src}
+                alt={heroImages[current].alt}
+                fill
+                priority
+                className='object-cover w-full h-full rounded-3xl'
+                style={{ filter: 'brightness(0.7) contrast(1.1)' }}
+              />
+              <div className='absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black/60 rounded-3xl' />
+            </motion.div>
+          </AnimatePresence>
         </div>
-        
-        {/* Featured Services Preview */}
-        <div ref={featuredSectionRef} className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-6 opacity-0 animate-fade-in" style={{ animationDelay: "1.1s" }}>
-          {[
-            {
-              icon: "🏗️",
-              title: "BIM Modeling",
-              description: "3D modeling and coordination for all construction disciplines"
-            },
-            {
-              icon: "🔍",
-              title: "Scanning & Redevelopment",
-              description: "Transform existing structures with precise digital scanning"
-            },
-            {
-              icon: "🔑",
-              title: "Turnkey Solutions",
-              description: "End-to-end project management from concept to completion"
-            }
-          ].map((service, index) => (
-            <div key={index} className="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-elegant">
-              <div className="text-3xl mb-3">{service.icon}</div>
-              <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-              <p className="text-gray-700">{service.description}</p>
-            </div>
+
+        {/* No prev/next controls as per new design */}
+
+        {/* Dots */}
+        <div className='absolute left-1/2 -translate-x-1/2 bottom-8 flex gap-1.5 z-20'>
+          {heroImages.map((img, idx) => (
+            <button
+              key={img.src}
+              className={`h-1 w-5 rounded-sm border border-white/60 ${idx === current ? 'bg-white' : 'bg-white/30'} transition-colors duration-200`}
+              onClick={() => goTo(idx)}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
           ))}
         </div>
+
+        {/* Hero Content with framer-motion animation */}
+        <motion.div
+          className='relative z-10 flex flex-col items-center justify-center text-center px-4 py-24 sm:py-32 lg:py-40 w-full min-h-[70vh]'
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: 'easeOut' }}
+        >
+          <motion.div
+            className='mb-4 sm:mb-6 flex items-center justify-center gap-2'
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.7 }}
+          >
+            <span className='inline-flex items-center justify-center w-6 h-6 rounded-full bg-pulse-500 text-white text-sm font-bold'>01</span>
+            <span className='text-white/90 text-base sm:text-lg tracking-wide font-medium'>Your Vision, Our Innovation</span>
+          </motion.div>
+          <motion.h1
+            className='text-white text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight drop-shadow-[0_2px_16px_rgba(0,0,0,0.9)] mb-4 sm:mb-6'
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+          >
+            Train Frontier Models.<br className='hidden sm:inline' />
+            Deploy Enterprise AI.
+          </motion.h1>
+          <motion.p
+            className='text-white/80 max-w-2xl mx-auto text-lg sm:text-xl mb-8 sm:mb-12 font-normal drop-shadow-[0_2px_16px_rgba(0,0,0,0.9)]'
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.8 }}
+          >
+            Turing delivers top-tier talent, data, and tools to help AI labs improve model performance—and enables enterprises to turn those models into powerful, production-ready systems.
+          </motion.p>
+          <motion.div
+            className='flex flex-col sm:flex-row gap-4 justify-center'
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.8 }}
+          >
+            <Link
+              href='/contact'
+              className='flex items-center justify-center group w-full sm:w-auto text-center bg-pulse-500 hover:bg-pulse-600 transition-colors duration-200 text-white font-semibold rounded-full px-8 py-4 text-base shadow-lg border border-white/10'
+            >
+              Get Started
+              <ArrowRight className='ml-2 w-4 h-4 transition-transform group-hover:translate-x-1' />
+            </Link>
+            <button
+              onClick={scrollToFeatured}
+              className='flex items-center justify-center group w-full sm:w-auto text-center bg-white/10 border border-pulse-500 text-pulse-500 hover:bg-pulse-50 transition-colors duration-200 rounded-full px-8 py-4 text-base font-semibold shadow-lg'
+            >
+              Explore Our Services
+              <ArrowDown className='ml-2 w-4 h-4 transition-transform group-hover:translate-y-1' />
+            </button>
+          </motion.div>
+        </motion.div>
+        </div>
       </div>
-      
-      <div className="hidden lg:block absolute bottom-0 left-1/4 w-64 h-64 bg-pulse-100/30 rounded-full blur-3xl -z-10 parallax" data-speed="0.05"></div>
     </section>
   );
 };
