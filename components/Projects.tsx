@@ -94,10 +94,10 @@ const Projects = () => {
             <div
               className="bg-no-repeat bg-cover bg-center p-6 sm:p-8 md:p-12 min-h-[300px] sm:min-h-[400px] flex flex-col"
               style={{
-                backgroundImage: "url('/background-section2.png')",
+                backgroundImage: "url('/pattern-2.jpg')",
               }}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-800/80 to-purple-900/80"></div>
+              
 
               <div className="relative z-10 max-w-3xl text-white mt-8 sm:mt-12">
                 <motion.div

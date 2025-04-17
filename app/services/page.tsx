@@ -53,6 +53,7 @@ const cardVariant = {
 export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+     
       {/* Hero Section */}
       <section className="w-full bg-white py-0">
         <div className="section-container pb-2">
@@ -60,7 +61,7 @@ export default function ServicesPage() {
             <div
               className="bg-no-repeat bg-cover bg-center p-6 sm:p-8 md:p-12 min-h-[300px] sm:min-h-[400px] flex flex-col"
               style={{
-                backgroundImage: "url('/background-section2.png')",
+                backgroundImage: "url('/pattern-2.jpg')",
                 backgroundPosition: "center",
                 backgroundSize: "cover"
               }}
@@ -214,94 +215,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Technology Section - Inspired by the Axion design */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="container mx-auto max-w-7xl">
-          <div className="flex flex-col md:flex-row gap-12">
-            <div className="md:w-1/2">
-              <Badge className="mb-4 bg-blue-100 text-blue-700 hover:bg-blue-200">
-                Our Technology
-              </Badge>
-              <h2 className="text-4xl md:text-5xl font-display font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 bg-clip-text text-transparent">
-                Innovation that Moves Your Project
-              </h2>
-              <p className="text-lg text-gray-600 mb-8">
-                We leverage the latest technology to improve the way we design, coordinate, and deliver your projects.
-              </p>
-              <div className="relative h-80 md:h-[500px] rounded-xl overflow-hidden">
-                <Image
-                  src="/images/services/technology.jpeg"
-                  alt="BIM Technology"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-            <div className="md:w-1/2">
-              <div className="grid grid-cols-1 gap-8">
-                {/* Feature 1 */}
-                <div className="border-t border-gray-200 pt-8">
-                  <h3 className="text-xl font-bold mb-4">Real-Time Collaboration</h3>
-                  <p className="text-gray-600 mb-4">
-                    Stay up-to-date with your project's progress through our cloud-based collaboration tools.
-                  </p>
-                  <Link 
-                    href="/technology"
-                    className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all group"
-                  >
-                    Learn More
-                    <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </div>
-                
-                {/* Feature 2 */}
-                <div className="border-t border-gray-200 pt-8">
-                  <h3 className="text-xl font-bold mb-4">Data Analytics</h3>
-                  <p className="text-gray-600 mb-4">
-                    Gain insights into your project's performance, identify bottlenecks, and make data-driven decisions.
-                  </p>
-                  <Link 
-                    href="/technology"
-                    className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all group"
-                  >
-                    Learn More
-                    <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </div>
-                
-                {/* Feature 3 */}
-                <div className="border-t border-gray-200 pt-8">
-                  <h3 className="text-xl font-bold mb-4">Automated Updates</h3>
-                  <p className="text-gray-600 mb-4">
-                    Receive timely notifications about your project, including model updates and coordination issues.
-                  </p>
-                  <Link 
-                    href="/technology"
-                    className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all group"
-                  >
-                    Learn More
-                    <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </div>
-                
-                {/* Feature 4 */}
-                <div className="border-t border-gray-200 pt-8">
-                  <h3 className="text-xl font-bold mb-4">Secure Portal</h3>
-                  <p className="text-gray-600 mb-4">
-                    Access your project information anytime with our secure online portal for reviewing, managing, and tracking progress.
-                  </p>
-                  <Link 
-                    href="/technology"
-                    className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all group"
-                  >
-                    Learn More
-                    <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+    
 
       {/* Industries Section - Inspired by the Axion design */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
@@ -437,7 +351,9 @@ export default function ServicesPage() {
             </div>
           </motion.div>
         </div>
+        
       </section>
+
     </div>
   );
 }
