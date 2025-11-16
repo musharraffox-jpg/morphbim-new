@@ -55,17 +55,19 @@ export default function ServicesPage() {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
      
       {/* Hero Section */}
-      <section className="w-full bg-white py-0">
-        <div className="section-container pb-2">
-          <div className="w-full rounded-2xl sm:rounded-3xl overflow-hidden relative mt-4 sm:mt-8">
+      <section className="w-full bg-white py-0 pt-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 md:py-12">
+          <div className="w-full rounded-2xl sm:rounded-3xl overflow-hidden relative">
             <div
-              className="bg-no-repeat bg-cover bg-center p-6 sm:p-8 md:p-12 min-h-[300px] sm:min-h-[400px] flex flex-col"
+              className="bg-no-repeat bg-cover bg-center p-6 sm:p-8 md:p-12 min-h-[400px] sm:min-h-[500px] flex flex-col"
               style={{
                 backgroundImage: "url('/pattern-2.jpg')",
                 backgroundPosition: "center",
                 backgroundSize: "cover"
               }}
             >
+              <div className="absolute inset-0 bg-gradient-to-b from-blue-900/80 via-blue-800/70 to-blue-900/85"></div>
+              
               {/* Content Section */}
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -78,7 +80,7 @@ export default function ServicesPage() {
                 </Badge>
                 <h1 className="font-display text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">
                   <span className="block">Complete BIM Solutions</span>
-                  <span className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">
+                  <span className="bg-gradient-to-r from-blue-300 to-blue-100 text-transparent bg-clip-text">
                     From Design to Construction
                   </span>
                 </h1>
@@ -114,14 +116,14 @@ export default function ServicesPage() {
       </section>
 
       {/* Image Accordion Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
-        <div className="container mx-auto max-w-7xl">
+      <section className="py-0  pt-4  bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
-            className="mb-12"
+            className="mb-12 md:mb-16"
           >
             <Badge className="mb-4 bg-blue-100 text-blue-700 hover:bg-blue-200">
               Our Capabilities
@@ -142,20 +144,20 @@ export default function ServicesPage() {
             className="grid grid-cols-1 lg:grid-cols-2 gap-6"
           >
             <Accordion type="single" collapsible className="w-full space-y-4">
-              <AccordionItem value="item-1" className="border rounded-xl overflow-hidden bg-white shadow-sm">
-                <AccordionTrigger className="px-6 py-4 hover:no-underline">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
-                      <Layers className="w-6 h-6 text-blue-600" />
+              <AccordionItem value="item-1" className="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-all duration-300">
+                <AccordionTrigger className="px-6 py-5 hover:no-underline">
+                  <div className="flex items-center gap-4 w-full">
+                    <div className="w-14 h-14 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0 border border-blue-200">
+                      <Layers className="w-7 h-7 text-blue-700" />
                     </div>
-                    <div className="text-left">
-                      <h3 className="text-xl font-bold">Architectural Modeling</h3>
-                      <p className="text-sm text-gray-600">High-precision 3D models and detailed documentation</p>
+                    <div className="text-left flex-1">
+                      <h3 className="text-xl font-bold text-gray-900">Architectural Modeling</h3>
+                      <p className="text-sm text-gray-600 mt-1">High-precision 3D models and detailed documentation</p>
                     </div>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-6">
-                  <div className="relative w-full h-64 rounded-lg overflow-hidden mt-4">
+                  <div className="relative w-full h-64 rounded-xl overflow-hidden mt-4 shadow-md">
                     <Image
                       src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
                       alt="Architectural Modeling"
@@ -163,27 +165,27 @@ export default function ServicesPage() {
                       className="object-cover"
                     />
                   </div>
-                  <p className="mt-4 text-gray-700">
+                  <p className="mt-4 text-gray-700 leading-relaxed">
                     Our architectural BIM services deliver comprehensive 3D models with detailed documentation, 
                     ensuring seamless coordination between design intent and construction reality.
                   </p>
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="item-2" className="border rounded-xl overflow-hidden bg-white shadow-sm">
-                <AccordionTrigger className="px-6 py-4 hover:no-underline">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-purple-100 flex items-center justify-center">
-                      <Building2 className="w-6 h-6 text-purple-600" />
+              <AccordionItem value="item-2" className="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-all duration-300">
+                <AccordionTrigger className="px-6 py-5 hover:no-underline">
+                  <div className="flex items-center gap-4 w-full">
+                    <div className="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0 border border-blue-100">
+                      <Building2 className="w-7 h-7 text-blue-600" />
                     </div>
-                    <div className="text-left">
-                      <h3 className="text-xl font-bold">MEP Coordination</h3>
-                      <p className="text-sm text-gray-600">Integrated systems design and clash detection</p>
+                    <div className="text-left flex-1">
+                      <h3 className="text-xl font-bold text-gray-900">MEP Coordination</h3>
+                      <p className="text-sm text-gray-600 mt-1">Integrated systems design and clash detection</p>
                     </div>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-6">
-                  <div className="relative w-full h-64 rounded-lg overflow-hidden mt-4">
+                  <div className="relative w-full h-64 rounded-xl overflow-hidden mt-4 shadow-md">
                     <Image
                       src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
                       alt="MEP Coordination"
@@ -191,27 +193,27 @@ export default function ServicesPage() {
                       className="object-cover"
                     />
                   </div>
-                  <p className="mt-4 text-gray-700">
+                  <p className="mt-4 text-gray-700 leading-relaxed">
                     Advanced MEP coordination services that integrate mechanical, electrical, and plumbing systems 
                     with precision, eliminating conflicts before construction begins.
                   </p>
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="item-3" className="border rounded-xl overflow-hidden bg-white shadow-sm">
-                <AccordionTrigger className="px-6 py-4 hover:no-underline">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center">
-                      <Sparkles className="w-6 h-6 text-green-600" />
+              <AccordionItem value="item-3" className="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-all duration-300">
+                <AccordionTrigger className="px-6 py-5 hover:no-underline">
+                  <div className="flex items-center gap-4 w-full">
+                    <div className="w-14 h-14 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0 border border-blue-200">
+                      <Sparkles className="w-7 h-7 text-blue-700" />
                     </div>
-                    <div className="text-left">
-                      <h3 className="text-xl font-bold">Scan to BIM</h3>
-                      <p className="text-sm text-gray-600">Point cloud to intelligent model conversion</p>
+                    <div className="text-left flex-1">
+                      <h3 className="text-xl font-bold text-gray-900">Scan to BIM</h3>
+                      <p className="text-sm text-gray-600 mt-1">Point cloud to intelligent model conversion</p>
                     </div>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-6">
-                  <div className="relative w-full h-64 rounded-lg overflow-hidden mt-4">
+                  <div className="relative w-full h-64 rounded-xl overflow-hidden mt-4 shadow-md">
                     <Image
                       src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
                       alt="Scan to BIM"
@@ -219,7 +221,7 @@ export default function ServicesPage() {
                       className="object-cover"
                     />
                   </div>
-                  <p className="mt-4 text-gray-700">
+                  <p className="mt-4 text-gray-700 leading-relaxed">
                     Transform existing structures into accurate BIM models using advanced laser scanning technology, 
                     enabling precise renovation and retrofit planning.
                   </p>
@@ -228,20 +230,20 @@ export default function ServicesPage() {
             </Accordion>
 
             <Accordion type="single" collapsible className="w-full space-y-4">
-              <AccordionItem value="item-4" className="border rounded-xl overflow-hidden bg-white shadow-sm">
-                <AccordionTrigger className="px-6 py-4 hover:no-underline">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-amber-100 flex items-center justify-center">
-                      <Clock className="w-6 h-6 text-amber-600" />
+              <AccordionItem value="item-4" className="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-all duration-300">
+                <AccordionTrigger className="px-6 py-5 hover:no-underline">
+                  <div className="flex items-center gap-4 w-full">
+                    <div className="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0 border border-blue-100">
+                      <Clock className="w-7 h-7 text-blue-600" />
                     </div>
-                    <div className="text-left">
-                      <h3 className="text-xl font-bold">4D/5D BIM</h3>
-                      <p className="text-sm text-gray-600">Construction sequencing and cost integration</p>
+                    <div className="text-left flex-1">
+                      <h3 className="text-xl font-bold text-gray-900">4D/5D BIM</h3>
+                      <p className="text-sm text-gray-600 mt-1">Construction sequencing and cost integration</p>
                     </div>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-6">
-                  <div className="relative w-full h-64 rounded-lg overflow-hidden mt-4">
+                  <div className="relative w-full h-64 rounded-xl overflow-hidden mt-4 shadow-md">
                     <Image
                       src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
                       alt="4D/5D BIM"
@@ -249,27 +251,27 @@ export default function ServicesPage() {
                       className="object-cover"
                     />
                   </div>
-                  <p className="mt-4 text-gray-700">
+                  <p className="mt-4 text-gray-700 leading-relaxed">
                     Advanced 4D scheduling and 5D cost integration services that visualize construction sequences 
                     and provide real-time budget tracking throughout project lifecycle.
                   </p>
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="item-5" className="border rounded-xl overflow-hidden bg-white shadow-sm">
-                <AccordionTrigger className="px-6 py-4 hover:no-underline">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-red-100 flex items-center justify-center">
-                      <Layers className="w-6 h-6 text-red-600" />
+              <AccordionItem value="item-5" className="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-all duration-300">
+                <AccordionTrigger className="px-6 py-5 hover:no-underline">
+                  <div className="flex items-center gap-4 w-full">
+                    <div className="w-14 h-14 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0 border border-blue-200">
+                      <Layers className="w-7 h-7 text-blue-700" />
                     </div>
-                    <div className="text-left">
-                      <h3 className="text-xl font-bold">Industrial Design</h3>
-                      <p className="text-sm text-gray-600">Specialized pharma and industrial facilities</p>
+                    <div className="text-left flex-1">
+                      <h3 className="text-xl font-bold text-gray-900">Industrial Design</h3>
+                      <p className="text-sm text-gray-600 mt-1">Specialized pharma and industrial facilities</p>
                     </div>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-6">
-                  <div className="relative w-full h-64 rounded-lg overflow-hidden mt-4">
+                  <div className="relative w-full h-64 rounded-xl overflow-hidden mt-4 shadow-md">
                     <Image
                       src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
                       alt="Industrial Design"
@@ -277,27 +279,27 @@ export default function ServicesPage() {
                       className="object-cover"
                     />
                   </div>
-                  <p className="mt-4 text-gray-700">
+                  <p className="mt-4 text-gray-700 leading-relaxed">
                     Specialized BIM solutions for pharmaceutical and industrial facilities, ensuring compliance 
                     with regulatory standards while optimizing operational efficiency.
                   </p>
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="item-6" className="border rounded-xl overflow-hidden bg-white shadow-sm">
-                <AccordionTrigger className="px-6 py-4 hover:no-underline">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-indigo-100 flex items-center justify-center">
-                      <ArrowRight className="w-6 h-6 text-indigo-600" />
+              <AccordionItem value="item-6" className="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-all duration-300">
+                <AccordionTrigger className="px-6 py-5 hover:no-underline">
+                  <div className="flex items-center gap-4 w-full">
+                    <div className="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0 border border-blue-100">
+                      <ArrowRight className="w-7 h-7 text-blue-600" />
                     </div>
-                    <div className="text-left">
-                      <h3 className="text-xl font-bold">Outsourcing Services</h3>
-                      <p className="text-sm text-gray-600">Scale your BIM operations with our global team</p>
+                    <div className="text-left flex-1">
+                      <h3 className="text-xl font-bold text-gray-900">Outsourcing Services</h3>
+                      <p className="text-sm text-gray-600 mt-1">Scale your BIM operations with our global team</p>
                     </div>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-6">
-                  <div className="relative w-full h-64 rounded-lg overflow-hidden mt-4">
+                  <div className="relative w-full h-64 rounded-xl overflow-hidden mt-4 shadow-md">
                     <Image
                       src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
                       alt="Outsourcing Services"
@@ -305,7 +307,7 @@ export default function ServicesPage() {
                       className="object-cover"
                     />
                   </div>
-                  <p className="mt-4 text-gray-700 mb-4">
+                  <p className="mt-4 text-gray-700 mb-4 leading-relaxed">
                     Extend your BIM capabilities with our comprehensive outsourcing services. We work as an 
                     extension of your team, delivering quality results on time and within budget.
                   </p>
@@ -324,7 +326,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Services Section - Inspired by the Axion design */}
-      <section id="service-grid" className="py-16 px-4 sm:px-6 lg:px-8">
+      <section id="service-grid" className="py-0 md:py-12 md:pb-4 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-7xl">
           <div className="flex justify-between items-end mb-12">
             <div>
@@ -332,10 +334,11 @@ export default function ServicesPage() {
                 Our Expertise
               </Badge>
               <h2 className="text-4xl md:text-5xl font-display font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 bg-clip-text text-transparent">
-                BIM Solutions for AEC
+                Building Intelligence Beyond Design
               </h2>
               <p className="text-lg text-gray-600 mt-4 max-w-2xl">
-                We offer comprehensive BIM and digital design services tailored to the diverse needs of architecture, engineering, and construction projects.
+                MorphBIM delivers comprehensive BIM and digital design services across 13 specialized service areas, 
+                from architectural and structural BIM to pharmaceutical industrial design and complete planning-to-design engineering.
               </p>
             </div>
             
@@ -343,8 +346,52 @@ export default function ServicesPage() {
 
           {/* Main Services Grid - 2x1 Layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            {/* First two services */}
-            {services.slice(0, 2).map((service) => (
+            {/* Pharmaceutical Service - Featured First */}
+            {(() => {
+              const pharmaService = services.find(s => s.id === 'pharmaceutical-industrial-design')
+              if (!pharmaService) return null
+              return (
+                <motion.div 
+                  key={pharmaService.id}
+                  className="relative overflow-hidden rounded-2xl group border-2 border-blue-500"
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  variants={cardVariant}
+                  whileHover="hover"
+                >
+                  <div className="absolute top-4 right-4 z-20">
+                    <Badge className="bg-blue-600 text-white">NEW</Badge>
+                  </div>
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all duration-300"></div>
+                  <Image
+                    src={pharmaService.image || "/placeholder.png"}
+                    alt={pharmaService.title}
+                    width={600}
+                    height={350}
+                    className="w-full h-[350px] object-cover"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 p-8">
+                    <h3 className="text-2xl font-display font-bold text-white mb-2">
+                      {pharmaService.title}
+                    </h3>
+                    <p className="text-white/90 mb-4 line-clamp-2">
+                      {pharmaService.description}
+                    </p>
+                    <Link 
+                      href={`/services/${pharmaService.id}`}
+                      className="inline-flex items-center text-white hover:text-blue-200 transition-all group"
+                    >
+                      Learn More
+                      <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </div>
+                </motion.div>
+              )
+            })()}
+            
+            {/* First regular service */}
+            {services.filter(s => s.id !== 'pharmaceutical-industrial-design').slice(0, 1).map((service) => (
               <motion.div 
                 key={service.id}
                 className="relative overflow-hidden rounded-2xl group"
@@ -389,8 +436,8 @@ export default function ServicesPage() {
             viewport={{ once: true, amount: 0.3 }}
             variants={staggerContainer}
           >
-            {/* Next three services */}
-            {services.slice(2, 5).map((service) => (
+            {/* Next services (excluding pharma which is already shown) */}
+            {services.filter(s => s.id !== 'pharmaceutical-industrial-design').slice(1, 4).map((service) => (
               <motion.div 
                 key={service.id}
                 className="relative overflow-hidden rounded-2xl group"
@@ -430,7 +477,7 @@ export default function ServicesPage() {
     
 
       {/* Industries Section - Inspired by the Axion design */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-4 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-7xl">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
             <div>
@@ -463,7 +510,7 @@ export default function ServicesPage() {
           >
             {/* Industry 1 */}
             <motion.div 
-              className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300"
+              className="bg-white rounded-xl md:p-6 shadow-sm hover:shadow-md transition-all duration-300"
               variants={cardVariant}
             >
               <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-4">
@@ -477,11 +524,11 @@ export default function ServicesPage() {
             
             {/* Industry 2 */}
             <motion.div 
-              className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300"
+              className="bg-white rounded-xl md:p-6 shadow-sm hover:shadow-md transition-all duration-300"
               variants={cardVariant}
             >
-              <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
-                <Building2 className="w-5 h-5 text-purple-600" />
+              <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-4 border border-blue-100">
+                <Building2 className="w-5 h-5 text-blue-600" />
               </div>
               <h3 className="text-xl font-bold mb-2">Commercial & Office</h3>
               <p className="text-gray-600 text-sm">
@@ -491,11 +538,11 @@ export default function ServicesPage() {
             
             {/* Industry 3 */}
             <motion.div 
-              className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300"
+              className="bg-white rounded-xl md:p-6 shadow-sm hover:shadow-md transition-all duration-300"
               variants={cardVariant}
             >
-              <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mb-4">
-                <Building2 className="w-5 h-5 text-green-600" />
+              <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-4 border border-blue-200">
+                <Building2 className="w-5 h-5 text-blue-700" />
               </div>
               <h3 className="text-xl font-bold mb-2">Residential & Mixed-Use</h3>
               <p className="text-gray-600 text-sm">
@@ -505,11 +552,11 @@ export default function ServicesPage() {
             
             {/* Industry 4 */}
             <motion.div 
-              className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300"
+              className="bg-white rounded-xl md:p-6 shadow-sm hover:shadow-md transition-all duration-300"
               variants={cardVariant}
             >
-              <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mb-4">
-                <Building2 className="w-5 h-5 text-amber-600" />
+              <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-4 border border-blue-100">
+                <Building2 className="w-5 h-5 text-blue-600" />
               </div>
               <h3 className="text-xl font-bold mb-2">Industrial & Manufacturing</h3>
               <p className="text-gray-600 text-sm">

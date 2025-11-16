@@ -109,10 +109,10 @@ export const services: Service[] = [
     }
   },
   {
-    id: 'mep-engineering',
-    title: 'MEP Engineering',
-    description: 'Design and modeling of Mechanical, Electrical & Plumbing systems. MEP coordination and clash detection.',
-    overview: 'Our MEP engineering services cover the complete design, modeling, and coordination of mechanical, electrical, and plumbing systems, ensuring seamless integration and optimal performance using advanced BIM techniques.',
+    id: 'mepf-bim',
+    title: 'MEPF BIM',
+    description: 'Comprehensive MEPF (Mechanical, Electrical, Plumbing & Firefighting) BIM modeling and coordination services.',
+    overview: 'Our MEPF BIM services cover the complete modeling and coordination of mechanical, electrical, plumbing, and firefighting systems, ensuring seamless integration and optimal performance using advanced BIM techniques.',
     features: ['Mechanical System Design', 'Electrical System Design', 'Plumbing System Design', 'MEP Modeling', 'Clash Detection', 'Coordination'],
     image: '/images/services/mep-engineering.jpeg',
     heroHeadline: 'Integrated Building Systems. Future-Ready Performance.',
@@ -151,44 +151,57 @@ export const services: Service[] = [
     }
   },
   {
-    id: 'industrial-pharma',
-    title: 'Industrial & Pharma Design',
-    description: 'Expertise in designing industrial plants and pharmaceutical machinery setups.',
-    overview: 'We possess specialized expertise in designing complex industrial facilities and pharmaceutical setups, including machinery layouts, process piping, cleanroom design, and compliance with industry-specific standards.',
-    features: ['Industrial Plant Layout', 'Pharmaceutical Facility Design', 'Machinery Setup Modeling', 'Process Piping Design', 'Cleanroom Design', 'Compliance Documentation'],
+    id: 'pharmaceutical-industrial-design',
+    title: 'Pharmaceutical Industrial Design & Consulting',
+    description: 'Dedicated premium service for pharma sector. Specialized design and consulting for regulated environments across GCC, Asia, UK, and United States.',
+    overview: 'MorphBIM delivers specialized Pharmaceutical Industrial Design & Consulting services for regulated environments across the GCC, Asia, UK, and the United States. We combine deep domain knowledge, process engineering, and BIM-driven design to create facilities that meet global regulatory standards.',
+    features: [
+      'Concept & Master Planning',
+      'Detailed Pharma Facility Design',
+      'Cleanroom & Controlled Environment Design',
+      'HVAC & Building Services Consulting',
+      'MEPF Engineering for Pharma Plants',
+      'Process Flow Engineering',
+      'BIM Integration for Pharma',
+      'Regulatory & Compliance Consulting'
+    ],
     image: '/images/services/industrial-pharma.jpeg',
-    heroHeadline: 'Precision Engineering. Compliance-Driven Design.',
-    heroSubheadline: 'Specialized solutions for industrial facilities and pharmaceutical environments.',
+    heroHeadline: 'Precision Engineering. Regulatory Excellence.',
+    heroSubheadline: 'Dedicated premium pharmaceutical design and consulting for global compliance.',
     whoWeAre: {
       image: '/images/services/who/industrial-pharma.jpeg',
-      title: 'Industrial Excellence By Design',
-      paragraph: 'Our specialized industrial and pharmaceutical design team combines technical precision with regulatory expertise. We create optimized production environments that maximize efficiency while meeting the strictest compliance standards for critical facilities.'
+      title: 'Pharmaceutical Design Excellence',
+      paragraph: 'Our specialized pharmaceutical design team combines deep domain knowledge, process engineering expertise, and BIM-driven design to create facilities that meet the strictest global regulatory standards. We deliver end-to-end solutions from concept to IFC, ensuring zero-error coordination and regulatory compliance across GCC, Asia, UK, and United States markets.'
     },
     coreServices: [
-      { icon: 'Building2', title: 'Industrial Plant Design', description: 'Optimized layouts for manufacturing processes and production efficiency.' },
-      { icon: 'ShieldCheck', title: 'Pharmaceutical Facilities', description: 'GMP-compliant cleanroom and laboratory design for pharmaceutical production.' },
-      { icon: 'Layers3', title: 'Process Systems', description: 'Piping, instrumentation, and control systems for industrial applications.' },
-      { icon: 'Target', title: 'Compliance Engineering', description: 'Design validation against FDA, EMA, and international regulatory standards.' }
+      { icon: 'Target', title: 'Concept & Master Planning', description: 'Site feasibility, facility master planning, material & personnel flow, blocking & stack analysis, cleanroom zoning strategies.' },
+      { icon: 'Building2', title: 'Detailed Pharma Facility Design', description: 'OSD facilities, injectable & sterile manufacturing, liquid & semi-solid production, API plants, R&D labs, QC laboratories, utility buildings.' },
+      { icon: 'ShieldCheck', title: 'Cleanroom & Controlled Environment', description: 'ISO class cleanroom layouts, filtration & pressure cascade planning, BMS integration, CFR & GMP compliant design.' },
+      { icon: 'Wrench', title: 'HVAC & Building Services Consulting', description: 'Cleanroom HVAC design, EHS-compliant extraction systems, pressurization & differential pressure mapping, temperature & RH control.' },
+      { icon: 'Layers3', title: 'MEPF Engineering for Pharma', description: 'Process piping (SS, CIP/SIP, Purified Water, WFI, Steam), electrical systems for regulated spaces, fire safety compatible with pharma environments.' },
+      { icon: 'Layers', title: 'Process Flow Engineering', description: 'Process equipment layout optimization for weighing, dispensing, blending, granulation, compression, coating, filling & packing lines.' },
+      { icon: 'CheckCircle', title: 'BIM Integration for Pharma', description: '3D BIM for all pharma components, clash-free modeling for cleanrooms & utilities, as-built digital twins, BIM-based regulatory documentation.' },
+      { icon: 'ShieldCheck', title: 'Regulatory & Compliance Consulting', description: 'EU-GMP, WHO-GMP, USFDA guidance, safety & EHS compliance, support during audits, site acceptance & validation.' }
     ],
     projectGallery: [
-      { image: '/assets/projects/pharma-plant.jpg', title: 'Sterile Manufacturing Facility', location: 'Basel, Switzerland', scope: 'Pharmaceutical', highlights: ['ISO Class 5-8 cleanrooms', 'GMP compliance', 'Process automation'] },
-      { image: '/assets/projects/factory.jpg', title: 'Automotive Assembly Plant', location: 'Detroit, USA', scope: 'Industrial', highlights: ['Robotic manufacturing cells', 'Optimized workflow', 'Sustainable design'] },
-      { image: '/assets/projects/food-facility.jpg', title: 'Food Processing Facility', location: 'Melbourne, Australia', scope: 'Food & Beverage', highlights: ['HACCP implementation', 'Cold chain design', 'High-throughput systems'] }
+      { image: '/assets/projects/pharma-plant.jpg', title: 'Sterile Manufacturing Facility', location: 'GCC Region', scope: 'Pharmaceutical', highlights: ['ISO Class 5-8 cleanrooms', 'EU-GMP & USFDA compliance', 'End-to-end design to IFC'] },
+      { image: '/assets/projects/pharma-api.jpg', title: 'API Manufacturing Plant', location: 'Asia', scope: 'Pharmaceutical', highlights: ['Process flow optimization', 'Regulatory compliance', 'BIM-driven coordination'] },
+      { image: '/assets/projects/pharma-lab.jpg', title: 'R&D & QC Laboratory Complex', location: 'United States', scope: 'Pharmaceutical', highlights: ['Cleanroom design', 'Zero-error coordination', 'Global regulatory standards'] }
     ],
     whyChooseUs: [
-      { icon: 'CheckCircle', text: 'Industry-Specific Expertise' },
-      { icon: 'ShieldCheck', text: 'Regulatory Compliance Assurance' },
-      { icon: 'Target', text: 'Process-Driven Design Approach' },
-      { icon: 'Layers', text: 'Advanced 3D Modeling & Simulation' },
-      { icon: 'Users2', text: 'Cross-Disciplinary Collaboration' }
+      { icon: 'ShieldCheck', text: 'End-to-End Design: Concept → Planning → Engineering → BIM → IFC' },
+      { icon: 'CheckCircle', text: 'Regulatory-Compliant Facilities Across Global Markets' },
+      { icon: 'Target', text: 'Zero-Error Coordination Between Cleanrooms, Utilities & MEP' },
+      { icon: 'Layers3', text: 'Clear Flow Plans Reducing Contamination Risk' },
+      { icon: 'Sparkles', text: 'High-Efficiency Layouts for Optimized Production Cycles' }
     ],
     finalCta: {
       image: '/assets/cta-pharma.jpg',
-      title: 'Ready to Optimize Your Facility?',
-      subtext: 'Let\'s design industrial and pharmaceutical spaces that elevate your operations.',
+      title: 'Build Regulatory-Compliant Pharma Facilities',
+      subtext: 'Partner with us to design pharmaceutical facilities that meet global standards and optimize production efficiency.',
       buttons: [
-        { label: 'Start a Consultation', link: '/contact', variant: 'default' },
-        { label: 'View Our Expertise', link: '/projects', variant: 'secondary' }
+        { label: 'Schedule Pharma Consultation', link: '/contact', variant: 'default' },
+        { label: 'View Pharma Projects', link: '/projects', variant: 'secondary' }
       ]
     }
   },
@@ -359,6 +372,46 @@ export const services: Service[] = [
       buttons: [
         { label: 'Request a Proposal', link: '/contact', variant: 'default' },
         { label: 'View Case Studies', link: '/projects', variant: 'secondary' }
+      ]
+    }
+  },
+  {
+    id: '4d-5d-bim',
+    title: '4D / 5D BIM',
+    description: 'Construction sequencing, scheduling, and cost integration services for comprehensive project management.',
+    overview: 'We provide advanced 4D scheduling and 5D cost integration services that visualize construction sequences and provide real-time budget tracking throughout project lifecycle.',
+    features: ['4D Scheduling', '5D Cost Integration', 'Construction Sequencing', 'Quantity Take-offs', 'Budget Tracking', 'Project Visualization'],
+    image: '/images/services/4d-5d-bim.jpeg',
+    heroHeadline: 'Time & Cost Intelligence. Visual Project Management.',
+    heroSubheadline: 'Advanced 4D scheduling and 5D cost integration for comprehensive project control.',
+    whoWeAre: {
+      image: '/images/services/who/4d-5d-bim.jpeg',
+      title: '4D/5D BIM Specialists',
+      paragraph: 'Our 4D/5D BIM team combines scheduling and cost data with 3D models to provide comprehensive project visualization and management, enabling better decision-making and project control.'
+    },
+    coreServices: [
+      { icon: 'Clock', title: '4D Scheduling', description: 'Construction sequencing and timeline visualization integrated with 3D models.' },
+      { icon: 'DollarSign', title: '5D Cost Integration', description: 'Real-time budget tracking and cost analysis throughout project lifecycle.' },
+      { icon: 'Target', title: 'Quantity Take-offs', description: 'Accurate quantity extraction and cost estimation from BIM models.' },
+      { icon: 'Layers3', title: 'Project Visualization', description: 'Interactive visualization of construction sequences and costs.' }
+    ],
+    projectGallery: [
+      { image: '/assets/projects/4d-5d.jpg', title: 'Complex Construction Project', location: 'Multiple Locations', scope: '4D/5D BIM', highlights: ['Sequencing optimization', 'Cost control', 'Visual management'] }
+    ],
+    whyChooseUs: [
+      { icon: 'CheckCircle', text: 'Advanced Scheduling' },
+      { icon: 'DollarSign', text: 'Accurate Cost Integration' },
+      { icon: 'Target', text: 'Real-Time Tracking' },
+      { icon: 'Layers3', text: 'Visual Management' },
+      { icon: 'Clock', text: 'Timely Delivery' }
+    ],
+    finalCta: {
+      image: '/assets/cta-4d-5d.jpg',
+      title: 'Enhance Project Control',
+      subtext: 'Implement 4D/5D BIM for comprehensive project management.',
+      buttons: [
+        { label: 'Request Service', link: '/contact', variant: 'default' },
+        { label: 'View Projects', link: '/projects', variant: 'secondary' }
       ]
     }
   }
