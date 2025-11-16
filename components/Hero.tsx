@@ -290,8 +290,8 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            Building Information Modeling.<br className='hidden sm:inline' />
-            <span className='bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text'>Digital Design Excellence.</span>
+            <span className='block'>We don't just design</span>
+            <span className='bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text block'>we build ease</span>
           </motion.h1>
           <motion.p
             className='text-white/80 max-w-2xl mx-auto text-lg sm:text-xl mb-8 sm:mb-12 font-normal drop-shadow-[0_2px_16px_rgba(0,0,0,0.9)]'
@@ -299,7 +299,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.8 }}
           >
-            MorphVision delivers comprehensive BIM and digital design solutions that elevate architecture, engineering, and construction projects. We transform complex design challenges into precise, coordinated, and constructible models.
+            MorphVision delivers end-to-end BIM solutions from design and modeling to construction execution. We don't just design—we build. Transforming architectural vision into precise, coordinated, and constructible projects that stand the test of time.
           </motion.p>
           <motion.div
             className='flex flex-col sm:flex-row gap-4 justify-center'

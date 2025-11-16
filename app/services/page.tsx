@@ -73,18 +73,19 @@ export default function ServicesPage() {
                 transition={{ duration: 0.8 }}
                 className="relative z-10 px-4 sm:px-6 lg:px-8 max-w-4xl"
               >
-                <Badge className="mb-6 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm">
-                  BIM & Digital Design Services
+                <Badge className="mb-6 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm border border-white/20">
+                  We don't just design we build ease
                 </Badge>
-                <h1 className="font-display text-4xl md:text-6xl font-bold mb-6 text-white">
-                  <span className="block">Precision BIM Solutions</span>
+                <h1 className="font-display text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">
+                  <span className="block">Complete BIM Solutions</span>
                   <span className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">
-                    for Architecture, Engineering & Construction
+                    From Design to Construction
                   </span>
                 </h1>
                 <p className="text-xl text-white/90 mb-8 max-w-3xl leading-relaxed">
-                  From architectural modeling to MEP coordination, from scan-to-BIM to 4D/5D planning—we deliver 
-                  comprehensive BIM services that transform how you design, build, and manage construction projects.
+                  From architectural modeling and MEP coordination to scan-to-BIM and 4D/5D planning, we deliver 
+                  end-to-end BIM services that transform how you design, construct, and manage projects from 
+                  concept to completion.
                 </p>
 
                 {/* Action Buttons */}
