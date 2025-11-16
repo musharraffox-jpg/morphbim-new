@@ -74,23 +74,24 @@ export default function ServicesPage() {
                 className="relative z-10 px-4 sm:px-6 lg:px-8 max-w-4xl"
               >
                 <Badge className="mb-6 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm">
-                  Professional Services
+                  BIM & Digital Design Services
                 </Badge>
                 <h1 className="font-display text-4xl md:text-6xl font-bold mb-6 text-white">
-                  <span className="block">Transforming the Built Environment</span>
-                  <span className="bg-gradient-to-r from-blue-400 to-purple-600 text-transparent bg-clip-text">
-                    Through Digital Innovation
+                  <span className="block">Precision BIM Solutions</span>
+                  <span className="bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">
+                    for Architecture, Engineering & Construction
                   </span>
                 </h1>
-                <p className="text-xl text-white/90 mb-8 max-w-3xl">
-                  Comprehensive digital design solutions that elevate architecture, engineering, and construction projects.
+                <p className="text-xl text-white/90 mb-8 max-w-3xl leading-relaxed">
+                  From architectural modeling to MEP coordination, from scan-to-BIM to 4D/5D planning—we deliver 
+                  comprehensive BIM services that transform how you design, build, and manage construction projects.
                 </p>
 
                 {/* Action Buttons */}
                 <div className="flex flex-wrap gap-4">
                   <Link
                     href="#service-grid"
-                    className="flex items-center justify-center group px-6 py-3 bg-white text-[#20133d] font-medium rounded-full hover:bg-opacity-90 transition-all"
+                    className="flex items-center justify-center group px-6 py-3 bg-white text-blue-600 font-medium rounded-full hover:bg-blue-50 transition-all shadow-lg"
                   >
                     Explore Services
                     <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -548,12 +549,12 @@ export default function ServicesPage() {
             </p>
 
             <div className="flex flex-wrap gap-4 justify-center">
-              <Button asChild size="lg" className="bg-white text-blue-900 hover:bg-gray-100">
+              <Button asChild size="lg" className="bg-white text-blue-900 hover:bg-gray-100 px-8 py-6 text-lg">
                 <Link href="/contact">
                   Schedule a Consultation
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+              <Button asChild size="lg" variant="outline" className="border border-white text-white hover:bg-white/10 px-8 py-6 text-lg">
                 <Link href="/projects">
                   View Our Projects
                 </Link>

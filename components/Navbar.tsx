@@ -54,7 +54,9 @@ const Navbar = () => {
     { href: '/projects', label: 'Projects' },
     { href: '/careers', label: 'Careers' },
     { href: '/contact', label: 'Contact' }
-  ];
+  ]
+
+  const navLinkClass = "relative text-gray-800 hover:text-[#20133d] py-2 transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-[#20133d] after:transition-all hover:after:w-full"
 
   return (
     <header
@@ -93,7 +95,7 @@ const Navbar = () => {
             <Link 
               key={item.href}
               href={item.href} 
-              className="nav-link"
+              className={navLinkClass}
               onClick={(e) => {
                 if (item.href === '/' && window.location.pathname === '/') {
                   e.preventDefault();

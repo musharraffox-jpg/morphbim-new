@@ -281,7 +281,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.7 }}
           >
-            <span className='inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#20133d] text-white text-sm font-bold'>01</span>
+            <span className='inline-flex items-center justify-center w-6 h-6 rounded-full bg-pulse-500 text-white text-sm font-bold'>01</span>
             <span className='text-white/90 text-base sm:text-lg tracking-wide font-medium'>Transforming the Built Environment</span>
           </motion.div>
           <motion.h1
@@ -316,7 +316,7 @@ const Hero = () => {
             </Link>
             <button
               onClick={scrollToFeatured}
-              className='flex items-center justify-center group w-full sm:w-auto text-center bg-white/10 border border-pulse-500 text-pulse-500 hover:bg-pulse-50 transition-colors duration-200 rounded-full px-8 py-4 text-base font-semibold shadow-lg'
+              className='flex items-center justify-center group w-full sm:w-auto text-center bg-white/10 border border-white/30 text-white hover:bg-white/20 transition-colors duration-200 rounded-full px-8 py-4 text-base font-semibold shadow-lg'
             >
               Explore Our Services
               <ArrowDown className='ml-2 w-4 h-4 transition-transform group-hover:translate-y-1' />

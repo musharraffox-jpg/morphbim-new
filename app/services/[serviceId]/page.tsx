@@ -182,14 +182,14 @@ export default function ServicePage({ params }: { params: Promise<{ serviceId: s
                 <div className="flex flex-wrap gap-4">
                   <Link
                     href="#core-services"
-                    className="flex items-center justify-center group px-6 py-3 bg-white text-[#20133d] font-medium rounded-full hover:bg-opacity-90 transition-all"
+                    className="flex items-center justify-center group px-6 py-3 bg-white text-blue-600 font-medium rounded-full hover:bg-blue-50 transition-all shadow-lg"
                   >
                     Explore Service Details
                     <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                   <Link
                     href="/contact"
-                    className="flex items-center justify-center group px-6 py-3 border border-white text-white rounded-full hover:bg-white/10 transition-all"
+                    className="flex items-center justify-center group px-6 py-3 border-2 border-white text-white rounded-full hover:bg-white/10 transition-all"
                   >
                     Request a Consultation
                   </Link>
@@ -663,8 +663,8 @@ export default function ServicePage({ params }: { params: Promise<{ serviceId: s
                     size="lg" 
                     variant={button.variant === 'default' ? 'default' : 'outline'}
                     className={button.variant === 'default' 
-                      ? "bg-white text-blue-900 hover:bg-gray-100" 
-                      : "border-white text-white hover:bg-white/10"
+                      ? "bg-white text-blue-900 hover:bg-gray-100 px-8 py-6 text-lg" 
+                      : "border border-white text-white hover:bg-white/10 px-8 py-6 text-lg"
                     }
                   >
                     <Link href={button.link || '/contact'}>

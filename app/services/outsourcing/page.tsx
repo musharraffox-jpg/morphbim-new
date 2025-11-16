@@ -167,19 +167,19 @@ export default function OutsourcingPage() {
               </p>
 
               <div className="flex flex-wrap gap-4 mb-8">
-                <Link
-                  href="#services"
-                  className="flex items-center justify-center group px-6 py-3 bg-white text-[#20133d] font-medium rounded-full hover:bg-opacity-90 transition-all"
-                >
-                  Explore Services
-                  <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-                <Link
-                  href="/contact"
-                  className="flex items-center justify-center group px-6 py-3 border border-white text-white rounded-full hover:bg-white/10 transition-all"
-                >
-                  Request a Proposal
-                </Link>
+              <Link
+                href="#services"
+                className="flex items-center justify-center group px-6 py-3 bg-white text-blue-600 font-medium rounded-full hover:bg-blue-50 transition-all shadow-lg"
+              >
+                Explore Services
+                <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+              <Link
+                href="/contact"
+                className="flex items-center justify-center group px-6 py-3 border-2 border-white text-white rounded-full hover:bg-white/10 transition-all"
+              >
+                Request a Proposal
+              </Link>
               </div>
 
               {/* Key Metrics */}
@@ -579,7 +579,7 @@ export default function OutsourcingPage() {
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg">
+              <Button asChild size="lg" variant="outline" className="border border-white text-white hover:bg-white/10 px-8 py-6 text-lg">
                 <Link href="/projects">
                   View Case Studies
                 </Link>
