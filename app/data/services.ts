@@ -317,5 +317,49 @@ export const services: Service[] = [
         { label: 'Explore Our Library', link: '/projects', variant: 'secondary' }
       ]
     }
+  },
+  {
+    id: 'outsourcing',
+    title: 'BIM Outsourcing Services',
+    description: 'End-to-end BIM outsourcing solutions that scale your operations without increasing overhead costs.',
+    overview: 'At MorphVision LLP, we support global AEC firms by providing comprehensive BIM Outsourcing Services with accuracy, reliability, and timely delivery. Our team works as an extension of your in-house BIM department, helping you scale quickly without increasing overhead costs.',
+    features: ['Architectural BIM Outsourcing', 'Structural BIM Outsourcing', 'MEPF BIM Outsourcing', 'Scan-to-BIM Outsourcing', '4D/5D BIM Support', 'BIM Documentation & Drafting'],
+    image: '/images/services/outsourcing.jpeg',
+    heroHeadline: 'Scale Without Limits. Deliver Without Compromise.',
+    heroSubheadline: 'Extend your BIM capabilities with our global team of experts.',
+    whoWeAre: {
+      image: '/images/services/who/outsourcing.jpeg',
+      title: 'Your Extended BIM Team',
+      paragraph: 'We operate as a seamless extension of your in-house BIM department, delivering world-class results while you maintain focus on core business objectives. Our proven engagement models ensure flexibility, quality, and cost-effectiveness.'
+    },
+    coreServices: [
+      { icon: 'Building2', title: 'Architectural BIM Outsourcing', description: 'LOD-specific architectural BIM models, detailed drawings, and coordinated documentation.' },
+      { icon: 'Layers3', title: 'Structural BIM Outsourcing', description: 'Structural modeling, rebar detailing, clash-free drawings, and shop-drawing support.' },
+      { icon: 'Wrench', title: 'MEPF BIM Outsourcing', description: 'HVAC, Electrical, Plumbing, and Firefighting modeling with clash detection and coordination reports.' },
+      { icon: 'Target', title: 'Scan-to-BIM Outsourcing', description: 'Converting point cloud data into high-accuracy BIM models for architectural, structural, and MEP requirements.' },
+      { icon: 'Clock', title: '4D/5D BIM Support', description: 'Construction sequencing, scheduling, quantity take-offs, and cost integration.' },
+      { icon: 'Layers', title: 'BIM Documentation & Drafting', description: 'CAD to BIM conversion, sheet preparation, BOQs, and tender documentation.' }
+    ],
+    projectGallery: [
+      { image: '/assets/projects/outsourcing-1.jpg', title: 'Global Healthcare Project', location: 'Multiple Locations', scope: 'Architectural & MEP Outsourcing', highlights: ['50+ team members', '24/7 delivery model', '99.2% on-time delivery'] },
+      { image: '/assets/projects/outsourcing-2.jpg', title: 'Industrial Facility Expansion', location: 'Europe & Asia', scope: 'Full BIM Lifecycle', highlights: ['Multi-timezone coordination', 'Integrated workflows', 'Cost savings: 40%'] },
+      { image: '/assets/projects/outsourcing-3.jpg', title: 'Commercial Development', location: 'North America', scope: 'Structural Outsourcing', highlights: ['Dedicated team model', 'Real-time collaboration', 'Quality score: 98%'] }
+    ],
+    whyChooseUs: [
+      { icon: 'Users2', text: 'Experienced Team Across Industries' },
+      { icon: 'CheckCircle', text: 'Skilled in Autodesk Suite' },
+      { icon: 'Target', text: 'Flexible Engagement Models' },
+      { icon: 'ShieldCheck', text: 'Strict QC Processes' },
+      { icon: 'Clock', text: 'Global Delivery Capability' }
+    ],
+    finalCta: {
+      image: '/assets/cta-outsourcing.jpg',
+      title: 'Scale Your BIM Operations Today',
+      subtext: 'Discover how our outsourcing services can transform your project delivery capabilities.',
+      buttons: [
+        { label: 'Request a Proposal', link: '/contact', variant: 'default' },
+        { label: 'View Case Studies', link: '/projects', variant: 'secondary' }
+      ]
+    }
   }
 ]

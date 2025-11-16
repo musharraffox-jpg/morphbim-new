@@ -281,8 +281,8 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.7 }}
           >
-            <span className='inline-flex items-center justify-center w-6 h-6 rounded-full bg-pulse-500 text-white text-sm font-bold'>01</span>
-            <span className='text-white/90 text-base sm:text-lg tracking-wide font-medium'>Your Vision, Our Innovation</span>
+            <span className='inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#20133d] text-white text-sm font-bold'>01</span>
+            <span className='text-white/90 text-base sm:text-lg tracking-wide font-medium'>Transforming the Built Environment</span>
           </motion.div>
           <motion.h1
             className='text-white text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight drop-shadow-[0_2px_16px_rgba(0,0,0,0.9)] mb-4 sm:mb-6'
@@ -290,8 +290,8 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            Train Frontier Models.<br className='hidden sm:inline' />
-            Deploy Enterprise AI.
+            Building Information Modeling.<br className='hidden sm:inline' />
+            <span className='bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text'>Digital Design Excellence.</span>
           </motion.h1>
           <motion.p
             className='text-white/80 max-w-2xl mx-auto text-lg sm:text-xl mb-8 sm:mb-12 font-normal drop-shadow-[0_2px_16px_rgba(0,0,0,0.9)]'
@@ -299,7 +299,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.8 }}
           >
-            Turing delivers top-tier talent, data, and tools to help AI labs improve model performance—and enables enterprises to turn those models into powerful, production-ready systems.
+            MorphVision delivers comprehensive BIM and digital design solutions that elevate architecture, engineering, and construction projects. We transform complex design challenges into precise, coordinated, and constructible models.
           </motion.p>
           <motion.div
             className='flex flex-col sm:flex-row gap-4 justify-center'
